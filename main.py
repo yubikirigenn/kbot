@@ -247,6 +247,17 @@ def bot_worker():
     collection_thread = threading.Thread(target=initial_collection, daemon=True)
     collection_thread.start()
 
+    # === 過去の通知を無視するための初期化 ===
+    print("[BOT] 過去の通知履歴をスキップしています...")
+    initial_notifications = api.get_notifications(limit=30)
+    for n in initial_notifications:
+        if isinstance(n, dict):
+            post_id = str(n.get("postId") or n.get("post", {}).get("id") or "")
+            if post_id:
+                seen_ids.add(post_id)
+                save_seen_id(post_id)
+    print(f"[BOT] 過去の通知 {len(initial_notifications)}件 をスキップしました。")
+
     print(f"[BOT] 稼働開始！通知ポーリング間隔: {POLL_INTERVAL}秒")
 
     # 最後にインクリメンタル更新を行った時刻
