@@ -372,11 +372,35 @@ class HealthCheckHandler(http.server.BaseHTTPRequestHandler):
             self.end_headers()
             self.wfile.write(f"kbot is {bot_status}".encode("utf-8"))
 
+    def do_HEAD(self):
+        if self.path.startswith("/images/"):
+            filename = self.path.split("/images/", 1)[1]
+            from api.karotter import KarotterAPI
+            image_data = KarotterAPI.get_image(filename)
+            if image_data:
+                self.send_response(200)
+                self.send_header("Content-Type", "image/png")
+                self.send_header("Content-Length", str(len(image_data)))
+                self.send_header("Cache-Control", "public, max-age=86400")
+                self.end_headers()
+            else:
+                self.send_response(404)
+                self.send_header("Content-Type", "text/plain")
+                self.end_headers()
+        else:
+            self.send_response(200)
+            self.send_header("Content-Type", "text/plain; charset=utf-8")
+            self.end_headers()
+
     def log_message(self, format, *args):
-        # ヘルスチェックのアクセスログを抑制（ログが埋まるのを防ぐ）
-        if "/images/" in (args[0] if args else ""):
-            return  # 画像リクエストもログ抑制
-        pass
+        # アクセスログをすべて抑制するか、安全にチェックする
+        # HTTPStatusオブジェクトが渡されることがあるため、文字列化してチェック
+        try:
+            req_line = str(args[0]) if args else ""
+            if "/images/" in req_line:
+                return
+        except Exception:
+            pass
 
 
 def main():
