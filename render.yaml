@@ -3,7 +3,7 @@ services:
     name: kbot
     runtime: python
     buildCommand: pip install -r requirements.txt
-    startCommand: python main.py
+    startCommand: python -u main.py
     envVars:
       - key: KBOT_USERNAME
         sync: false
