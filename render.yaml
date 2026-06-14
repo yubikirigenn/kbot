@@ -1,0 +1,15 @@
+services:
+  - type: worker
+    name: kbot
+    runtime: python
+    buildCommand: pip install -r requirements.txt
+    startCommand: python main.py
+    envVars:
+      - key: KBOT_USERNAME
+        sync: false
+      - key: KBOT_PASSWORD
+        sync: false
+      - key: KAROTTER_API_KEY
+        sync: false
+      - key: PYTHON_VERSION
+        value: "3.11.0"
