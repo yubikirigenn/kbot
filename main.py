@@ -113,17 +113,22 @@ def bot_worker():
     seen_ids = load_seen_ids()
 
     # 初回データ収集（別スレッドで実行し、メンション監視をブロックしない）
+    bot_status = "collecting"
+    
     def initial_collection():
+        global bot_status
         print("[BOT] 初回ユーザーデータ収集をバックグラウンドで開始...")
         try:
             collector.full_collect()
         except Exception as e:
             print(f"[BOT] 初回収集でエラー（続行します）: {e}")
+        finally:
+            bot_status = "running"
+            print("[BOT] 初回データ収集が完了しました！これより通常のリプライ処理を開始します。")
 
     collection_thread = threading.Thread(target=initial_collection, daemon=True)
     collection_thread.start()
 
-    bot_status = "running"
     print(f"[BOT] 稼働開始！通知ポーリング間隔: {POLL_INTERVAL}秒")
 
     # 最後にインクリメンタル更新を行った時刻
