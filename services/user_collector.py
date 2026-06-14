@@ -16,6 +16,7 @@ class UserCollector:
         collected = set()
 
         for q in queries:
+            print(f"[COLLECT] 検索クエリ '{q}' を実行中...")
             for page in range(1, 6):  # 最大5ページ
                 users, pagination = self.api.search_users(q, limit=50, page=page)
                 if not users:
@@ -26,6 +27,7 @@ class UserCollector:
                         collected.add(username)
                         self.cache.update_user_from_search(u)
                 total_pages = pagination.get("pages", 1)
+                print(f"[COLLECT]   -> クエリ '{q}' ページ {page}/{total_pages} 完了 (計 {len(collected)}人発見)")
                 if page >= total_pages:
                     break
 
@@ -61,8 +63,8 @@ class UserCollector:
                 self.cache.update_user(username, user_data)
                 enriched += 1
 
-            # 50件ごとに保存
-            if (i + 1) % 50 == 0:
+            # 10件ごとに保存・ログ出力（小刻みにする）
+            if (i + 1) % 10 == 0:
                 self.cache.save()
                 print(f"[COLLECT]   進捗: {i+1}/{len(usernames)} ({enriched}件更新)")
 

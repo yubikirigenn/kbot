@@ -181,6 +181,14 @@ def bot_worker():
 
                 print(f"[BOT] メンション受信: @{author_username} -> {content[:80]}")
 
+                # 収集中であれば専用メッセージを返す
+                if bot_status == "collecting":
+                    print(f"[BOT] 収集中メンション対応: @{author_username}")
+                    api.post_reply("現在ランキングデータを初回収集中です。完了までもうしばらくお待ちください！🙇‍♂️ #kbot", post_id)
+                    seen_ids.add(post_id)
+                    save_seen_id(post_id)
+                    continue
+
                 command, _ = parse_command(content)
                 print(f"[BOT] コマンド: {command or '(総合情報)'}")
 
