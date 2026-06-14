@@ -14,6 +14,10 @@ import threading
 import http.server
 import socketserver
 
+# Render等でのログ遅延を防ぐため、標準出力を強制的にアンバッファリング（ラインバッファ）する
+if hasattr(sys.stdout, 'reconfigure'):
+    sys.stdout.reconfigure(line_buffering=True)
+
 from config import USERNAME, POLL_INTERVAL, CACHE_UPDATE_INTERVAL, SEEN_FILE
 from api.auth import AuthManager
 from api.karotter import KarotterAPI
