@@ -1,6 +1,7 @@
-.env
-__pycache__/
-*.pyc
+data/fonts/
 data/users_cache.json
 data/seen_notifications.txt
-*.log
+__pycache__/
+*.pyc
+test_*.py
+.env

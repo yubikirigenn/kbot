@@ -59,28 +59,132 @@ def save_seen_id(item_id):
             f.write(f"{item_id}\n")
 
 
+# === GitHub キャッシュ永続化 ===
+
+def restore_cache_from_github():
+    """GitHub cache ブランチからキャッシュファイルをダウンロードして復元"""
+    import urllib.request
+    import json
+    cache_url = os.environ.get("CACHE_GITHUB_URL", "")
+    if not cache_url:
+        print("[CACHE] CACHE_GITHUB_URL not set, skipping restore")
+        return False
+
+    try:
+        print(f"[CACHE] Restoring cache from GitHub...")
+        req = urllib.request.Request(cache_url)
+        with urllib.request.urlopen(req, timeout=15) as resp:
+            data = json.loads(resp.read().decode("utf-8"))
+        
+        os.makedirs(os.path.dirname("data/users_cache.json"), exist_ok=True)
+        with open("data/users_cache.json", "w", encoding="utf-8") as f:
+            json.dump(data, f, ensure_ascii=False, indent=2)
+        
+        print(f"[CACHE] Restored {len(data)} users from GitHub cache")
+        return True
+    except Exception as e:
+        print(f"[CACHE] Failed to restore from GitHub: {e}")
+        return False
+
+
+def backup_cache_to_github(cache):
+    """GitHub API を使って cache ブランチにキャッシュファイルをバックアップ"""
+    import urllib.request
+    import json
+    import base64
+
+    github_token = os.environ.get("GITHUB_TOKEN", "")
+    github_repo = os.environ.get("GITHUB_REPO", "")  # "owner/repo"
+    if not github_token or not github_repo:
+        return False
+
+    try:
+        cache_data = json.dumps(cache.users, ensure_ascii=False, indent=2)
+        content_b64 = base64.b64encode(cache_data.encode("utf-8")).decode("utf-8")
+
+        api_url = f"https://api.github.com/repos/{github_repo}/contents/data/users_cache.json"
+
+        # 既存ファイルのSHAを取得（更新するため）
+        sha = None
+        try:
+            req = urllib.request.Request(
+                f"{api_url}?ref=cache",
+                headers={
+                    "Authorization": f"token {github_token}",
+                    "Accept": "application/vnd.github.v3+json"
+                }
+            )
+            with urllib.request.urlopen(req, timeout=15) as resp:
+                existing = json.loads(resp.read().decode("utf-8"))
+                sha = existing.get("sha")
+        except Exception:
+            pass
+
+        payload = {
+            "message": f"[auto] Cache backup ({cache.user_count()} users)",
+            "content": content_b64,
+            "branch": "cache"
+        }
+        if sha:
+            payload["sha"] = sha
+
+        data = json.dumps(payload).encode("utf-8")
+        req = urllib.request.Request(
+            api_url,
+            data=data,
+            method="PUT",
+            headers={
+                "Authorization": f"token {github_token}",
+                "Accept": "application/vnd.github.v3+json",
+                "Content-Type": "application/json"
+            }
+        )
+        with urllib.request.urlopen(req, timeout=30) as resp:
+            if resp.status in [200, 201]:
+                print(f"[CACHE] Backup to GitHub success ({cache.user_count()} users)")
+                return True
+
+    except Exception as e:
+        print(f"[CACHE] Backup to GitHub failed: {e}")
+    return False
+
+
 # === コマンド実行 ===
 
-def execute_command(command, author_username, api, cache, collector):
-    """コマンドを実行して応答テキストを返す"""
+def execute_command(command, target_username, author_username, api, cache, collector):
+    """
+    コマンドを実行して (応答テキスト, media_urls or None) を返す。
+    target_username: 対象ユーザー（指定されていればそのユーザー、なければ送信者自身）
+    """
+    # 対象ユーザーのリアルタイム情報を取得（指定ユーザーまたは送信者本人）
+    effective_user = target_username or author_username
+
     if command is None:
-        collector.enrich_single_user(author_username)
-        user_data = cache.get_user(author_username)
+        # 総合情報表示
+        if not collector.enrich_single_user(effective_user):
+            # リアルタイム取得に失敗 → キャッシュデータがあればそれを使う
+            user_data = cache.get_user(effective_user)
+            if not user_data:
+                return format_error(f"@{effective_user} のデータを取得できませんでした。"), None
+            # キャッシュから返す旨をメッセージに含める（取得失敗時のみ）
+        
+        user_data = cache.get_user(effective_user)
         if not user_data:
-            return format_error(f"@{author_username} のデータを取得できませんでした。")
-        posts_rank, posts_total = cache.get_ranking("posts", author_username)
-        followers_rank, followers_total = cache.get_ranking("followers", author_username)
+            return format_error(f"@{effective_user} のデータを取得できませんでした。"), None
+        posts_rank, posts_total = cache.get_ranking("posts", effective_user)
+        followers_rank, followers_total = cache.get_ranking("followers", effective_user)
         ranks = {
             "posts": (posts_rank, posts_total),
             "followers": (followers_rank, followers_total),
         }
-        return format_general_info(author_username, user_data, ranks)
+        return format_general_info(effective_user, user_data, ranks), None
+
     elif command == "posts":
-        return handle_posts(author_username, api, cache, collector)
+        return handle_posts(effective_user, api, cache, collector), None
     elif command == "rate":
-        return handle_rate(author_username, api, cache, collector)
+        return handle_rate(effective_user, api, cache, collector), None
     elif command == "followers":
-        return handle_followers(author_username, api, cache, collector)
+        return handle_followers(effective_user, api, cache, collector), None
     elif command == "ranking_posts":
         return handle_ranking_posts(api, cache)
     elif command == "ranking_rate":
@@ -91,7 +195,7 @@ def execute_command(command, author_username, api, cache, collector):
         return handle_ranking_help()
     elif command == "unknown":
         return handle_ranking_help()
-    return None
+    return None, None
 
 
 # === Bot処理スレッド ===
@@ -112,23 +216,33 @@ def bot_worker():
         time.sleep(30)
 
     api = KarotterAPI(auth)
+
+    # GitHubからキャッシュを復元（再起動時のゼロダウンタイム化）
+    restore_cache_from_github()
+
     cache = RankingCache()
     collector = UserCollector(api, cache)
     seen_ids = load_seen_ids()
 
+    # キャッシュに既にデータがあれば即座に稼働開始、バックグラウンドで更新
+    if cache.user_count() > 50:
+        bot_status = "running"
+        print(f"[BOT] キャッシュから {cache.user_count()} ユーザーを復元済み。即座に稼働開始！")
+    else:
+        bot_status = "collecting"
+
     # 初回データ収集（別スレッドで実行し、メンション監視をブロックしない）
-    bot_status = "collecting"
-    
     def initial_collection():
         global bot_status
-        print("[BOT] 初回ユーザーデータ収集をバックグラウンドで開始...")
+        print("[BOT] ユーザーデータ収集をバックグラウンドで開始...")
         try:
             collector.full_collect()
         except Exception as e:
-            print(f"[BOT] 初回収集でエラー（続行します）: {e}")
+            print(f"[BOT] 収集でエラー（続行します）: {e}")
         finally:
-            bot_status = "running"
-            print("[BOT] 初回データ収集が完了しました！これより通常のリプライ処理を開始します。")
+            if bot_status != "running":
+                bot_status = "running"
+            print("[BOT] データ収集が完了しました！")
 
     collection_thread = threading.Thread(target=initial_collection, daemon=True)
     collection_thread.start()
@@ -137,7 +251,9 @@ def bot_worker():
 
     # 最後にインクリメンタル更新を行った時刻
     last_update_time = time.time()
+    last_backup_time = time.time()
     loop_count = 0
+    BACKUP_INTERVAL = 3600  # 1時間ごとにGitHubにバックアップ
 
     while True:
         try:
@@ -154,6 +270,14 @@ def bot_worker():
                 except Exception as e:
                     print(f"[BOT] インクリメンタル更新エラー: {e}")
                 last_update_time = time.time()
+
+            # 定期的にGitHubにバックアップ
+            if time.time() - last_backup_time > BACKUP_INTERVAL:
+                try:
+                    backup_cache_to_github(cache)
+                except Exception as e:
+                    print(f"[BOT] バックアップエラー: {e}")
+                last_backup_time = time.time()
 
             # 通知を取得
             notifications = api.get_notifications()
@@ -190,21 +314,23 @@ def bot_worker():
 
                 print(f"[BOT] メンション受信: @{author_username} -> {content[:80]}")
 
-                # 収集中であれば専用メッセージを返す
-                if bot_status == "collecting":
+                # 収集中であれば専用メッセージを返す（ただしキャッシュがあれば通常処理）
+                if bot_status == "collecting" and cache.user_count() < 50:
                     print(f"[BOT] 収集中メンション対応: @{author_username}")
                     api.post_reply("現在ランキングデータを初回収集中です。完了までもうしばらくお待ちください！🙇‍♂️ #kbot", post_id)
                     seen_ids.add(post_id)
                     save_seen_id(post_id)
                     continue
 
-                command, _ = parse_command(content)
-                print(f"[BOT] コマンド: {command or '(総合情報)'}")
+                command, target_user = parse_command(content)
+                print(f"[BOT] コマンド: {command or '(総合情報)'}, ターゲット: {target_user or author_username}")
 
-                response = execute_command(command, author_username, api, cache, collector)
-                if response:
-                    api.post_reply(response, post_id)
-                    print(f"[BOT] 返信完了")
+                result = execute_command(command, target_user, author_username, api, cache, collector)
+                if result:
+                    response_text, media_urls = result
+                    if response_text:
+                        api.post_reply(response_text, post_id, media_urls=media_urls)
+                        print(f"[BOT] 返信完了 (画像: {'あり' if media_urls else 'なし'})")
 
                 seen_ids.add(post_id)
                 save_seen_id(post_id)

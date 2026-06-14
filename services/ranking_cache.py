@@ -47,6 +47,8 @@ class RankingCache:
         created_at = user_data.get("createdAt", "")
         is_bot = user_data.get("isBotAccount", False)
         is_private = user_data.get("isPrivate", False)
+        display_name = user_data.get("displayName") or user_data.get("name") or username
+        avatar_url = user_data.get("avatarUrl") or user_data.get("profileImageUrl") or ""
 
         # レート計算
         rate = 0.0
@@ -68,6 +70,8 @@ class RankingCache:
             "rate": rate,
             "isBot": is_bot,
             "isPrivate": is_private,
+            "displayName": display_name,
+            "avatarUrl": avatar_url,
             "updatedAt": datetime.now(timezone.utc).isoformat()
         }
 
