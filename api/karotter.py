@@ -49,35 +49,45 @@ class KarotterAPI:
             return data.get("users", []), data.get("pagination", {})
         return [], {}
 
-    def upload_media(self, image_bytes, filename=None):
-        """Supabase Storageに直接アップロードし、公開URLを返す"""
+    # === 画像ホスティング（自サーバー配信） ===
+    # メモリ上に画像を保持し、kbot自身のHTTPサーバーから配信する
+    _image_store = {}  # {filename: bytes}
+
+    @classmethod
+    def store_image(cls, image_bytes, filename=None):
+        """画像をメモリに保存し、配信用のパスを返す"""
         if filename is None:
             filename = f"kbot_{uuid.uuid4().hex}.png"
-        print(f"[API] Uploading media to Supabase ({filename})...")
-        supabase_url = os.environ.get("SUPABASE_URL", "https://idsowzwvvhiwjxaxtjvl.supabase.co")
-        supabase_key = os.environ.get("SUPABASE_KEY", "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imlkc293end2dmhpd2p4YXh0anZsIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc4MDc0MzM0OSwiZXhwIjoyMDk2MzE5MzQ5fQ.k1V3XaemOAgzmJgxiDLITjkYaV0E3boWctjHJu68aSM")
+        cls._image_store[filename] = image_bytes
+        # 古い画像を削除（最大20枚まで保持）
+        if len(cls._image_store) > 20:
+            oldest = list(cls._image_store.keys())[0]
+            del cls._image_store[oldest]
+        return filename
 
-        url = f"{supabase_url}/storage/v1/object/bot_media/{filename}"
-        headers = {
-            "Authorization": f"Bearer {supabase_key}",
-            "apikey": supabase_key,
-            "Content-Type": "image/png"
-        }
-        try:
-            res = requests.post(url, headers=headers, data=image_bytes, timeout=30)
-            if res.status_code in [200, 201]:
-                public_url = f"{supabase_url}/storage/v1/object/public/bot_media/{filename}"
-                print(f"[API] Upload success: {public_url}")
-                return public_url
-            elif "Duplicate" in res.text:
-                public_url = f"{supabase_url}/storage/v1/object/public/bot_media/{filename}"
-                print(f"[API] File already exists: {public_url}")
-                return public_url
-            else:
-                print(f"[API] Supabase upload failed: {res.status_code} {res.text}")
-        except Exception as e:
-            print(f"[API] Media upload error: {e}")
-        return None
+    @classmethod
+    def get_image(cls, filename):
+        """保存済み画像のバイト列を返す"""
+        return cls._image_store.get(filename)
+
+    def upload_media(self, image_bytes, filename=None):
+        """画像を自サーバーに保存し、公開URLを返す"""
+        if filename is None:
+            filename = f"kbot_{uuid.uuid4().hex}.png"
+        
+        KarotterAPI.store_image(image_bytes, filename)
+        
+        # Render上では RENDER_EXTERNAL_HOSTNAME が設定される
+        hostname = os.environ.get("RENDER_EXTERNAL_HOSTNAME", "")
+        if hostname:
+            public_url = f"https://{hostname}/images/{filename}"
+        else:
+            # ローカル開発時
+            port = os.environ.get("PORT", "8080")
+            public_url = f"http://localhost:{port}/images/{filename}"
+        
+        print(f"[API] Image stored: {public_url}")
+        return public_url
 
     def get_recommended_users(self):
         """推奨ユーザーリストを取得"""
