@@ -23,7 +23,23 @@ from commands.ranking import (
     handle_ranking_followers, handle_ranking_help
 )
 from utils.formatter import format_general_info, format_ranking_help, format_error
+import http.server
+import socketserver
 
+# === ダミーWebサーバー（Render Free Tier対策） ===
+def run_dummy_server():
+    port = int(os.environ.get("PORT", 8080))
+    # 単純な200 OKを返すハンドラ
+    class HealthCheckHandler(http.server.BaseHTTPRequestHandler):
+        def do_GET(self):
+            self.send_response(200)
+            self.send_header("Content-type", "text/plain")
+            self.end_headers()
+            self.wfile.write(b"kbot is running!")
+            
+    with socketserver.TCPServer(("", port), HealthCheckHandler) as httpd:
+        print(f"🌐 ダミーWebサーバー起動 (ポート {port})")
+        httpd.serve_forever()
 
 # === 処理済み通知の管理 ===
 
@@ -106,6 +122,10 @@ def main():
     print("=" * 50)
     print(f"🤖 kbot 起動中... (@{USERNAME})")
     print("=" * 50)
+    
+    # ダミーWebサーバーを別スレッドで起動
+    web_thread = threading.Thread(target=run_dummy_server, daemon=True)
+    web_thread.start()
 
     # 初期化
     auth = AuthManager()
