@@ -57,17 +57,25 @@ def _text_width(font, text):
             return len(text) * 10
 
 
+KAROTTER_BASE_URL = "https://api.karotter.com"
+
+
 def fetch_avatar(url):
     """アバター画像をダウンロードしてPIL Imageとして返す"""
     try:
-        if not url or "default" in url:
+        if not url:
+            return _default_avatar()
+        # 相対パスをフルURLに変換
+        if url.startswith("/"):
+            url = KAROTTER_BASE_URL + url
+        if not url.startswith("http"):
             return _default_avatar()
         import requests
         res = requests.get(url, timeout=5)
         if res.status_code == 200:
             return Image.open(io.BytesIO(res.content)).convert("RGBA")
-    except Exception:
-        pass
+    except Exception as e:
+        print(f"[IMG] Avatar fetch failed ({url[:50]}): {e}")
     return _default_avatar()
 
 
