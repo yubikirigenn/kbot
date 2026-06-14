@@ -87,11 +87,11 @@ class KarotterAPI:
         if res and res.status_code in [200, 201]:
             resp_json = res.json()
             new_id = str(resp_json.get("id") or resp_json.get("post", {}).get("id") or "")
-            print(f"✅ 返信投稿成功 (ID: {new_id}): {text[:50]}...")
+            print(f"[API] Reply posted (ID: {new_id}): {text[:50]}...")
             return new_id
         else:
             code = res.status_code if res else "Unknown"
-            print(f"❌ 返信投稿失敗: HTTP {code}")
+            print(f"[API] Reply failed: HTTP {code}")
         return None
 
     def post_karoto(self, text):
@@ -108,7 +108,7 @@ class KarotterAPI:
         if res and res.status_code in [200, 201]:
             resp_json = res.json()
             new_id = str(resp_json.get("id") or resp_json.get("post", {}).get("id") or "")
-            print(f"✅ 投稿成功 (ID: {new_id}): {text[:50]}...")
+            print(f"[API] Post success (ID: {new_id}): {text[:50]}...")
             return new_id
         return None
 
@@ -126,5 +126,5 @@ class KarotterAPI:
                 data = res.json()
                 return data.get("post") or data
         except Exception as e:
-            print(f"⚠️ Developer API エラー: {e}")
+            print(f"[API] Developer API error: {e}")
         return None

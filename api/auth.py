@@ -25,12 +25,12 @@ class AuthManager:
                     self.token = r.json().get("accessToken")
                     self.session.headers.update({"Authorization": f"Bearer {self.token}"})
                     self.last_login_time = time.time()
-                    print(f"✅ ログイン成功 (@{USERNAME})")
+                    print(f"[AUTH] Login success (@{USERNAME})")
                     return True
                 else:
-                    print(f"⚠️ ログイン失敗 (HTTP {r.status_code})")
+                    print(f"[AUTH] Login failed (HTTP {r.status_code})")
             except Exception as e:
-                print(f"⚠️ ログインエラー (リトライ {attempt+1}/3): {e}")
+                print(f"[AUTH] Login error (retry {attempt+1}/3): {e}")
                 time.sleep(10 * (attempt + 1))
         return False
 
@@ -43,18 +43,18 @@ class AuthManager:
         """認証付きリクエスト。エラー時はリトライし、401時は自動再ログインしてリトライ"""
         url = f"{KAROTTER_INTERNAL_URL}{endpoint}"
         kwargs.setdefault("timeout", 20)
-        
+
         for attempt in range(retries):
             try:
                 res = self.session.request(method, url, **kwargs)
                 if res.status_code == 401:
-                    print(f"⚠️ 401検知({endpoint})。再ログインしてリトライ...")
+                    print(f"[AUTH] 401 detected ({endpoint}). Re-login...")
                     if self.login():
                         res = self.session.request(method, url, **kwargs)
                 return res
             except Exception as e:
-                print(f"⚠️ API通信エラー (リトライ {attempt+1}/{retries} - {endpoint}): {e}")
+                print(f"[AUTH] API error (retry {attempt+1}/{retries} - {endpoint}): {e}")
                 time.sleep(5 * (attempt + 1))
-        
-        print(f"❌ API通信エラー ({endpoint}): リトライ上限到達")
+
+        print(f"[AUTH] API error ({endpoint}): max retries reached")
         return None
