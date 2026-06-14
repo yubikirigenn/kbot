@@ -112,13 +112,16 @@ def bot_worker():
     collector = UserCollector(api, cache)
     seen_ids = load_seen_ids()
 
-    # 初回データ収集（失敗しても続行）
-    bot_status = "collecting"
-    print("[BOT] 初回ユーザーデータ収集を開始...")
-    try:
-        collector.full_collect()
-    except Exception as e:
-        print(f"[BOT] 初回収集でエラー（続行します）: {e}")
+    # 初回データ収集（別スレッドで実行し、メンション監視をブロックしない）
+    def initial_collection():
+        print("[BOT] 初回ユーザーデータ収集をバックグラウンドで開始...")
+        try:
+            collector.full_collect()
+        except Exception as e:
+            print(f"[BOT] 初回収集でエラー（続行します）: {e}")
+
+    collection_thread = threading.Thread(target=initial_collection, daemon=True)
+    collection_thread.start()
 
     bot_status = "running"
     print(f"[BOT] 稼働開始！通知ポーリング間隔: {POLL_INTERVAL}秒")
