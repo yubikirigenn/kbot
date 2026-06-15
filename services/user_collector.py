@@ -123,7 +123,7 @@ class UserCollector:
 
             needs_enrichment = [
                 username for username, data in self.cache.users.items()
-                if not data.get("createdAt") or not data.get("updatedAt")
+                if not data.get("createdAt") or not data.get("updatedAt") or data.get("postsCount", 0) == 0
             ]
             if needs_enrichment:
                 self.enrich_user_details(needs_enrichment)
