@@ -21,8 +21,8 @@ def handle_compare(api, cache, collector, parsed):
 
     if not data_a or not data_b:
         missing = []
-        if not data_a: missing.append(f"@{user_a}")
-        if not data_b: missing.append(f"@{user_b}")
+        if not data_a: missing.append(f"{user_a}")
+        if not data_b: missing.append(f"{user_b}")
         return format_error(f"{' と '.join(missing)} のデータを取得できませんでした。"), None
 
     img = draw_comparison_image(user_a, data_a, user_b, data_b)
@@ -30,4 +30,4 @@ def handle_compare(api, cache, collector, parsed):
     img.save(buf, format="PNG")
     image_bytes = buf.getvalue()
 
-    return f"🔥 @{user_a} VS @{user_b} #kbot", [image_bytes]
+    return f"🔥 {user_a} VS {user_b} #kbot", [image_bytes]
