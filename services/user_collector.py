@@ -121,10 +121,26 @@ class UserCollector:
             self.collect_from_search()
             self.collect_from_recommended()
 
+            # 1. 必須更新（データ欠損・0件バグ）
             needs_enrichment = [
                 username for username, data in self.cache.users.items()
                 if not data.get("createdAt") or not data.get("updatedAt") or data.get("postsCount", 0) == 0
             ]
+
+            # 2. 定期ローテーション更新（古い順に最大200件ずつ更新）
+            # 必須更新に含まれていないユーザーを対象とする
+            existing_users = [
+                (username, data.get("updatedAt", "")) 
+                for username, data in self.cache.users.items() 
+                if username not in needs_enrichment
+            ]
+            # updatedAt が古い順にソート（""は一番古くなる）
+            existing_users.sort(key=lambda x: x[1])
+            
+            rotation_count = 200
+            for username, _ in existing_users[:rotation_count]:
+                needs_enrichment.append(username)
+
             if needs_enrichment:
                 self.enrich_user_details(needs_enrichment)
 
