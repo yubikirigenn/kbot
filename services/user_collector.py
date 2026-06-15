@@ -6,8 +6,10 @@ import string
 
 class UserCollector:
     def __init__(self, api, cache):
+        import threading
         self.api = api
         self.cache = cache
+        self._lock = threading.Lock()
 
     def collect_from_search(self):
         """検索APIでユーザーを収集（フォロワー数のみ）"""
@@ -82,40 +84,50 @@ class UserCollector:
         return False
 
     def full_collect(self):
-        """フル収集（起動時に1回実行）"""
-        print("=" * 50)
-        print("[COLLECT] ユーザーデータの全体収集を開始")
-        print("=" * 50)
+        """全体のユーザーを収集"""
+        if not self._lock.acquire(blocking=False):
+            print("[COLLECT] 既に収集処理が実行中のため、スキップします。")
+            return
 
-        # Step 1: 検索APIでユーザー名を収集
-        self.collect_from_search()
+        try:
+            print("="*50)
+            print("[COLLECT] ユーザーデータの全体収集を開始")
+            print("="*50)
 
-        # Step 2: 推奨ユーザーからも収集
-        self.collect_from_recommended()
+            self.collect_from_search()
+            self.collect_from_recommended()
 
-        # Step 3: 詳細データを取得
-        needs_enrichment = [
-            username for username, data in self.cache.users.items()
-            if not data.get("createdAt") or not data.get("updatedAt")
-        ]
-        if needs_enrichment:
-            self.enrich_user_details(needs_enrichment)
+            # 全ユーザーの詳細データを取得
+            needs_enrichment = [
+                username for username, data in self.cache.users.items()
+            ]
+            if needs_enrichment:
+                self.enrich_user_details(needs_enrichment)
 
-        print(f"[COLLECT] 全体収集完了: {self.cache.user_count()}ユーザー "
-              f"(アクティブ: {self.cache.active_user_count()})")
+            print(f"[COLLECT] 全体収集完了: {self.cache.user_count()}ユーザー "
+                  f"(アクティブ: {self.cache.active_user_count()})")
+        finally:
+            self._lock.release()
 
     def incremental_update(self):
         """インクリメンタル更新（定期実行）"""
-        print("[COLLECT] ユーザーデータの差分更新中...")
+        if not self._lock.acquire(blocking=False):
+            print("[COLLECT] 既に収集処理が実行中のため、インクリメンタル更新をスキップします。")
+            return
 
-        self.collect_from_search()
-        self.collect_from_recommended()
+        try:
+            print("[COLLECT] ユーザーデータの差分更新中...")
 
-        needs_enrichment = [
-            username for username, data in self.cache.users.items()
-            if not data.get("createdAt") or not data.get("updatedAt")
-        ]
-        if needs_enrichment:
-            self.enrich_user_details(needs_enrichment)
+            self.collect_from_search()
+            self.collect_from_recommended()
 
-        print(f"[COLLECT] 差分更新完了: {self.cache.user_count()}ユーザー")
+            needs_enrichment = [
+                username for username, data in self.cache.users.items()
+                if not data.get("createdAt") or not data.get("updatedAt")
+            ]
+            if needs_enrichment:
+                self.enrich_user_details(needs_enrichment)
+
+            print(f"[COLLECT] 差分更新完了: {self.cache.user_count()}ユーザー")
+        finally:
+            self._lock.release()
