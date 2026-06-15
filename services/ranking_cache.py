@@ -41,14 +41,25 @@ class RankingCache:
         if not user_data or not username:
             return
 
-        posts_count = user_data.get("postsCount", 0)
-        followers_count = user_data.get("followersCount", 0)
-        following_count = user_data.get("followingCount", 0)
-        created_at = user_data.get("createdAt", "")
-        is_bot = user_data.get("isBotAccount", False)
-        is_private = user_data.get("isPrivate", False)
-        display_name = user_data.get("displayName") or user_data.get("name") or username
-        avatar_url = user_data.get("avatarUrl") or user_data.get("profileImageUrl") or ""
+        old_data = self.users.get(username, {})
+
+        # API側が負荷等で0や空を返すことがあるため、古いデータがある場合は欠損を補完・保護する
+        new_posts = user_data.get("postsCount", 0)
+        posts_count = max(old_data.get("postsCount", 0), new_posts) if new_posts == 0 else new_posts
+
+        new_followers = user_data.get("followersCount", 0)
+        followers_count = max(old_data.get("followersCount", 0), new_followers) if new_followers == 0 else new_followers
+
+        new_following = user_data.get("followingCount", 0)
+        following_count = max(old_data.get("followingCount", 0), new_following) if new_following == 0 else new_following
+
+        created_at = user_data.get("createdAt", "") or old_data.get("createdAt", "")
+        
+        is_bot = user_data.get("isBotAccount", old_data.get("isBot", False))
+        is_private = user_data.get("isPrivate", old_data.get("isPrivate", False))
+        
+        display_name = user_data.get("displayName") or user_data.get("name") or old_data.get("displayName") or username
+        avatar_url = user_data.get("avatarUrl") or user_data.get("profileImageUrl") or old_data.get("avatarUrl") or ""
 
         # レート計算
         rate = 0.0
