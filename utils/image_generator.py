@@ -309,7 +309,7 @@ def draw_comparison_image(username_a, data_a, username_b, data_b):
     ensure_fonts()
 
     width = 640
-    height = 420
+    height = 480
     padding = 20
     header_h = 60
 
@@ -376,7 +376,20 @@ def draw_comparison_image(username_a, data_a, username_b, data_b):
 
         # ステータス
         stats_y = av_y + av_size + 80
+        
+        created_at_str = "不明"
+        created_at_raw = u_data.get("createdAt")
+        if created_at_raw:
+            try:
+                import datetime
+                dt = datetime.datetime.fromisoformat(created_at_raw.replace("Z", "+00:00"))
+                jst = datetime.timezone(datetime.timedelta(hours=9))
+                created_at_str = dt.astimezone(jst).strftime("%Y/%m/%d")
+            except Exception:
+                pass
+
         stats = [
+            ("開始日", created_at_str),
             ("投稿数", f"{u_data.get('postsCount', 0):,}件"),
             ("フォロワー", f"{u_data.get('followersCount', 0):,}人"),
             ("レート", f"{u_data.get('rate', 0.0):.2f}/h")
@@ -389,7 +402,7 @@ def draw_comparison_image(username_a, data_a, username_b, data_b):
             # 中央揃え
             draw.text((base_x + (side_w - lw)//2, stats_y), label, font=font_label, fill=GRAY)
             draw.text((base_x + (side_w - vw)//2, stats_y + 15), val, font=font_val, fill=DARK)
-            stats_y += 55
+            stats_y += 50
 
     draw_user_side(username_a, data_a, True)
     draw_user_side(username_b, data_b, False)

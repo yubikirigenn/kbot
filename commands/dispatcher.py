@@ -15,7 +15,7 @@ def parse_command(content):
         return {"cmd": None, "target": None}
 
     # VSコマンドのチェック
-    vs_match = re.search(r"@(\w+)\s+vs\s+@(\w+)", clean, re.IGNORECASE)
+    vs_match = re.search(r"@?(\w+)\s+vs\s+@?(\w+)", clean, re.IGNORECASE)
     if vs_match:
         return {
             "cmd": "compare",
