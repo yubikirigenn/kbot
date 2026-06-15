@@ -361,7 +361,7 @@ class HealthCheckHandler(http.server.BaseHTTPRequestHandler):
     def do_GET(self):
         if self.path.startswith("/images/"):
             # 画像配信
-            filename = self.path.split("/images/", 1)[1]
+            filename = self.path.split("/images/", 1)[1].split("?")[0]
             from api.karotter import KarotterAPI
             image_data = KarotterAPI.get_image(filename)
             if image_data:
@@ -385,7 +385,7 @@ class HealthCheckHandler(http.server.BaseHTTPRequestHandler):
 
     def do_HEAD(self):
         if self.path.startswith("/images/"):
-            filename = self.path.split("/images/", 1)[1]
+            filename = self.path.split("/images/", 1)[1].split("?")[0]
             from api.karotter import KarotterAPI
             image_data = KarotterAPI.get_image(filename)
             if image_data:
