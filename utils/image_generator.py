@@ -204,7 +204,8 @@ def draw_ranking_image(title, metric_name, top_users):
         if isinstance(val, float):
             val_str = f"{val:.2f}"
         else:
-            val_str = f"{val:,}件"
+            unit = "人" if metric_name == "フォロワー数" else "件"
+            val_str = f"{val:,}{unit}"
 
         avatar = fetch_avatar(u.get("avatarUrl"))
 
