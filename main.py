@@ -169,11 +169,13 @@ def backup_cache_to_github(cache):
 
 # === コマンド実行 ===
 
-def execute_command(command, target_username, author_username, api, cache, collector):
+def execute_command(parsed, author_username, api, cache, collector, history_manager=None):
     """
     コマンドを実行して (応答テキスト, media_urls or None) を返す。
-    target_username: 対象ユーザー（指定されていればそのユーザー、なければ送信者自身）
     """
+    command = parsed.get("cmd")
+    target_username = parsed.get("target")
+
     # 対象ユーザーのリアルタイム情報を取得（指定ユーザーまたは送信者本人）
     effective_user = target_username or author_username
 
@@ -204,11 +206,14 @@ def execute_command(command, target_username, author_username, api, cache, colle
     elif command == "followers":
         return handle_followers(effective_user, api, cache, collector), None
     elif command == "ranking_posts":
-        return handle_ranking_posts(api, cache)
+        return handle_ranking_posts(api, cache, parsed, history_manager)
     elif command == "ranking_rate":
-        return handle_ranking_rate(api, cache)
+        return handle_ranking_rate(api, cache, parsed, history_manager)
     elif command == "ranking_followers":
-        return handle_ranking_followers(api, cache)
+        return handle_ranking_followers(api, cache, parsed, history_manager)
+    elif command == "compare":
+        from commands.compare import handle_compare
+        return handle_compare(api, cache, collector, parsed)
     elif command == "ranking_help":
         return handle_ranking_help()
     elif command == "unknown":
@@ -244,6 +249,10 @@ def bot_worker():
     restore_cache_from_github()
 
     cache = RankingCache()
+    
+    from services.history_manager import HistoryManager
+    history_manager = HistoryManager()
+    
     collector = UserCollector(collector_api, cache)  # 収集用APIを使用
     seen_ids = load_seen_ids()
 
@@ -317,6 +326,34 @@ def bot_worker():
                         print(f"[BOT] バックアップエラー: {e}")
                 threading.Thread(target=run_backup, daemon=True).start()
 
+            # 日間・週間スナップショットの更新チェック
+            from datetime import datetime, timezone, timedelta
+            jst = timezone(timedelta(hours=9))
+            now_jst = datetime.now(jst)
+            
+            # 日間チェック（日付が変わっていたらスナップショット更新）
+            if history_manager.daily_timestamp:
+                try:
+                    last_daily_dt = datetime.fromisoformat(history_manager.daily_timestamp).astimezone(jst)
+                    if last_daily_dt.date() < now_jst.date():
+                        history_manager.save_snapshot(cache, "day")
+                except Exception:
+                    pass
+            elif cache.user_count() > 0:
+                history_manager.save_snapshot(cache, "day")
+                
+            # 週間チェック（月曜日になっていて、かつ週が新しければ更新）
+            if history_manager.weekly_timestamp:
+                try:
+                    last_weekly_dt = datetime.fromisoformat(history_manager.weekly_timestamp).astimezone(jst)
+                    # iso年とiso週番号を比較
+                    if last_weekly_dt.isocalendar()[:2] < now_jst.isocalendar()[:2]:
+                        history_manager.save_snapshot(cache, "week")
+                except Exception:
+                    pass
+            elif cache.user_count() > 0:
+                history_manager.save_snapshot(cache, "week")
+
             # 通知を取得
             notifications = api.get_notifications()
 
@@ -360,10 +397,13 @@ def bot_worker():
                     save_seen_id(post_id)
                     continue
 
-                command, target_user = parse_command(content)
-                print(f"[BOT] コマンド: {command or '(総合情報)'}, ターゲット: {target_user or author_username}")
+                parsed = parse_command(content)
+                command = parsed.get("cmd")
+                target_user = parsed.get("target")
+                
+                print(f"[BOT] コマンド: {command or '(総合情報)'}, パラメータ: {parsed}")
 
-                result = execute_command(command, target_user, author_username, api, cache, collector)
+                result = execute_command(parsed, author_username, api, cache, collector, history_manager)
                 if result:
                     response_text, media_files = result
                     if response_text:

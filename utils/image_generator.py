@@ -134,11 +134,11 @@ def draw_ranking_image(title, metric_name, top_users):
     normal_item_h = 55
     footer_h = 35
 
-    top3_count = min(3, len(top_users))
-    normal_count = max(0, len(top_users) - 3)
-    separator_h = 15 if top3_count > 0 else 0
+    large_count = sum(1 for u in top_users if u.get("rank", 4) <= 3)
+    compact_count = len(top_users) - large_count
+    separator_h = 15 if large_count > 0 else 0
 
-    content_h = (top3_count * top3_item_h) + separator_h + (normal_count * normal_item_h)
+    content_h = (large_count * top3_item_h) + separator_h + (compact_count * normal_item_h)
     height = header_h + padding + content_h + footer_h
 
     # === 描画開始 ===
@@ -204,14 +204,23 @@ def draw_ranking_image(title, metric_name, top_users):
         if isinstance(val, float):
             val_str = f"{val:.2f}"
         else:
-            unit = "人" if metric_name == "フォロワー数" else "件"
+            unit = "人" if metric_name in ("フォロワー数", "フォロワー数増加") else "件"
             val_str = f"{val:,}{unit}"
+            
+        if u.get("is_delta"):
+            prefix = "+" if val > 0 else ""
+            val_str = f"{prefix}{val_str}"
 
         avatar = fetch_avatar(u.get("avatarUrl"))
+        
+        # ターゲット指定の場合は背景を薄い黄色にしてハイライト
+        if u.get("is_target"):
+            item_h = top3_item_h if rank <= 3 else normal_item_h
+            _draw_rounded_rect(draw, [padding - 5, cur_y - 5, width - padding + 5, cur_y + item_h - 5], radius=6, fill=(254, 252, 232))
 
-        if i < 3:
+        if rank <= 3:
             # === Top 3: 大きめのカード表示 ===
-            rc = rank_colors[i]
+            rc = rank_colors[rank - 1]
 
             # 順位メダル
             medal_x, medal_y = padding, cur_y + 22
@@ -250,7 +259,7 @@ def draw_ranking_image(title, metric_name, top_users):
             cur_y += top3_item_h
 
             # セパレーター
-            if i < 2 or (i == 2 and normal_count > 0):
+            if rank < 3 or (rank == 3 and compact_count > 0):
                 draw.line([padding, cur_y, width - padding, cur_y], fill=BORDER, width=1)
                 cur_y += 5
 
@@ -291,5 +300,98 @@ def draw_ranking_image(title, metric_name, top_users):
     now_str = datetime.datetime.now(jst).strftime("%Y/%m/%d %H:%M 時点")
     tw = _text_width(font_footer, now_str)
     draw.text((width - tw - padding, height - footer_h + 8), now_str, font=font_footer, fill=TEXT_GRAY)
+
+    return img
+
+
+def draw_comparison_image(username_a, data_a, username_b, data_b):
+    """2人のユーザーを比較する画像を生成"""
+    ensure_fonts()
+
+    width = 640
+    height = 420
+    padding = 20
+    header_h = 60
+
+    img = Image.new("RGBA", (width, height), (255, 255, 255, 255))
+    draw = ImageDraw.Draw(img)
+
+    # フォント
+    font_title = _load_font(FONT_PATH_BOLD, 26)
+    font_vs = _load_font(FONT_PATH_BOLD, 40)
+    font_name = _load_font(FONT_PATH_BOLD, 20)
+    font_uname = _load_font(FONT_PATH_MEDIUM, 14)
+    font_val = _load_font(FONT_PATH_BOLD, 24)
+    font_label = _load_font(FONT_PATH_MEDIUM, 12)
+
+    # カラー
+    BLUE = (59, 130, 246)
+    RED = (239, 68, 68)
+    DARK = (31, 41, 55)
+    GRAY = (136, 143, 155)
+    WHITE = (255, 255, 255)
+    BORDER = (229, 231, 235)
+
+    # ヘッダー
+    _draw_rounded_rect(draw, [0, 0, width, header_h], radius=0, fill=DARK)
+    draw.text((padding, 15), "User Comparison", font=font_title, fill=WHITE)
+
+    # 外枠
+    draw.rectangle([0, 0, width - 1, height - 1], outline=DARK, width=3)
+
+    # 中央VSライン
+    center_x = width // 2
+    draw.line([center_x, header_h, center_x, height], fill=BORDER, width=2)
+
+    # VSバッジ
+    vs_w = 60
+    vs_h = 60
+    _draw_rounded_rect(draw, [center_x - vs_w//2, header_h + 30, center_x + vs_w//2, header_h + 30 + vs_h], radius=30, fill=DARK)
+    vw = _text_width(font_vs, "VS")
+    draw.text((center_x - vw/2, header_h + 36), "VS", font=font_vs, fill=WHITE)
+
+    # 左右の描画関数
+    def draw_user_side(u_name, u_data, is_left):
+        base_x = 0 if is_left else center_x
+        side_w = center_x
+        color = BLUE if is_left else RED
+
+        # アバター
+        av_size = 80
+        av_x = base_x + (side_w - av_size) // 2
+        av_y = header_h + 20
+        avatar = fetch_avatar(u_data.get("avatarUrl", ""))
+        av = circle_avatar(avatar, av_size)
+        img.paste(av, (av_x, av_y), av)
+        draw.ellipse([av_x - 3, av_y - 3, av_x + av_size + 3, av_y + av_size + 3], outline=color, width=3)
+
+        # 名前
+        name = u_data.get("displayName", u_name)[:12]
+        nw = _text_width(font_name, name)
+        draw.text((base_x + (side_w - nw)//2, av_y + av_size + 15), name, font=font_name, fill=DARK)
+        
+        un = f"@{u_name}"
+        unw = _text_width(font_uname, un)
+        draw.text((base_x + (side_w - unw)//2, av_y + av_size + 40), un, font=font_uname, fill=GRAY)
+
+        # ステータス
+        stats_y = av_y + av_size + 80
+        stats = [
+            ("投稿数", f"{u_data.get('postsCount', 0):,}件"),
+            ("フォロワー", f"{u_data.get('followersCount', 0):,}人"),
+            ("レート", f"{u_data.get('rate', 0.0):.2f}/h")
+        ]
+        
+        for label, val in stats:
+            lw = _text_width(font_label, label)
+            vw = _text_width(font_val, val)
+            
+            # 中央揃え
+            draw.text((base_x + (side_w - lw)//2, stats_y), label, font=font_label, fill=GRAY)
+            draw.text((base_x + (side_w - vw)//2, stats_y + 15), val, font=font_val, fill=DARK)
+            stats_y += 55
+
+    draw_user_side(username_a, data_a, True)
+    draw_user_side(username_b, data_b, False)
 
     return img

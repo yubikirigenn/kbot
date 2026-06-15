@@ -6,41 +6,76 @@ from config import COMMAND_ALIASES, USERNAME
 
 def parse_command(content):
     """
-    メンションテキストからコマンドとターゲットユーザーを解析
-    @kbot rt → ("rate", None)
-    @kbot rps → ("ranking_posts", None)
-    @kbot rt @someone → ("rate", "someone")
-    @kbot ranking posts → ("ranking_posts", None)
-    @kbot → (None, None)  # コマンドなし = 総合情報
+    メンションテキストからコマンドと各種オプションを解析
+    戻り値: dict
     """
-    # メンションを除去（@kbot 部分のみ）
     clean = re.sub(rf"(?i)@{USERNAME}\s*", "", content).strip()
 
     if not clean:
-        return None, None  # コマンドなし→総合情報表示
+        return {"cmd": None, "target": None}
 
-    # "ranking XXX" パターンを先にチェック
-    ranking_match = re.match(r"^ranking\s+(\w+)", clean, re.IGNORECASE)
-    if ranking_match:
-        sub = ranking_match.group(1).lower()
+    # VSコマンドのチェック
+    vs_match = re.search(r"@(\w+)\s+vs\s+@(\w+)", clean, re.IGNORECASE)
+    if vs_match:
+        return {
+            "cmd": "compare",
+            "target": vs_match.group(1),
+            "target2": vs_match.group(2)
+        }
+
+    parts = clean.split()
+    cmd_name = parts[0].lower()
+    
+    # ranking XXX パターン対応
+    if cmd_name == "ranking" and len(parts) > 1:
+        sub = parts[1].lower()
         full_cmd = f"ranking {sub}"
         if full_cmd in COMMAND_ALIASES:
-            # ranking コマンドの後にユーザー指定があるか
-            rest = clean[ranking_match.end():].strip()
-            target = _extract_target_user(rest)
-            return COMMAND_ALIASES[full_cmd], target
+            cmd_name = full_cmd
+            parts = [cmd_name] + parts[2:]
 
-    # 単一コマンドをチェック
-    parts = clean.split()
-    cmd = parts[0].lower()
-    if cmd in COMMAND_ALIASES:
-        # コマンドの後の残りからユーザー指定を抽出
-        rest = " ".join(parts[1:]).strip()
-        target = _extract_target_user(rest)
-        return COMMAND_ALIASES[cmd], target
+    if cmd_name in COMMAND_ALIASES:
+        resolved_cmd = COMMAND_ALIASES[cmd_name]
+        
+        period = None
+        start = 1
+        end = 10
+        target = None
+        
+        # コマンド以降の引数を解析
+        rest_parts = parts[1:] if cmd_name not in COMMAND_ALIASES or " " not in cmd_name else parts[1:] # space in ranking posts is already handled
+        
+        if " " in cmd_name: # ranking posts
+            pass # parts is already updated
+            
+        for p in rest_parts:
+            pl = p.lower()
+            if pl in ("day", "week"):
+                period = pl
+            elif re.match(r"^\d+-\d+$", p):
+                try:
+                    s, e = map(int, p.split("-"))
+                    start, end = min(s, e), max(s, e)
+                except ValueError:
+                    pass
+            elif p.startswith("@"):
+                t = _extract_target_user(p)
+                if t: target = t
+            else:
+                # @なしでもターゲットとして抽出試行
+                if not target:
+                    t = _extract_target_user(p)
+                    if t: target = t
 
-    # 不明なコマンド → ヘルプ表示
-    return "unknown", clean
+        return {
+            "cmd": resolved_cmd,
+            "period": period,
+            "start": start,
+            "end": end,
+            "target": target
+        }
+
+    return {"cmd": "unknown", "raw": clean}
 
 
 def _extract_target_user(text):
