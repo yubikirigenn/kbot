@@ -332,21 +332,21 @@ def draw_comparison_image(username_a, data_a, username_b, data_b):
     WHITE = (255, 255, 255)
     BORDER = (229, 231, 235)
 
-    # ヘッダー
-    _draw_rounded_rect(draw, [0, 0, width, header_h], radius=0, fill=DARK)
-    draw.text((padding, 15), "User Comparison", font=font_title, fill=WHITE)
+    # ヘッダー (ベースカラーを青に変更)
+    _draw_rounded_rect(draw, [0, 0, width, header_h], radius=0, fill=BLUE)
+    draw.text((padding, 15), "ユーザー比較", font=font_title, fill=WHITE)
 
-    # 外枠
-    draw.rectangle([0, 0, width - 1, height - 1], outline=DARK, width=3)
+    # 外枠 (青)
+    draw.rectangle([0, 0, width - 1, height - 1], outline=BLUE, width=3)
 
     # 中央VSライン
     center_x = width // 2
     draw.line([center_x, header_h, center_x, height], fill=BORDER, width=2)
 
-    # VSバッジ
+    # VSバッジ (青)
     vs_w = 60
     vs_h = 60
-    _draw_rounded_rect(draw, [center_x - vs_w//2, header_h + 30, center_x + vs_w//2, header_h + 30 + vs_h], radius=30, fill=DARK)
+    _draw_rounded_rect(draw, [center_x - vs_w//2, header_h + 30, center_x + vs_w//2, header_h + 30 + vs_h], radius=30, fill=BLUE)
     vw = _text_width(font_vs, "VS")
     draw.text((center_x - vw/2, header_h + 36), "VS", font=font_vs, fill=WHITE)
 
