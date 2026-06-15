@@ -7,7 +7,7 @@ from config import HASHTAG, BOT_MENTION
 def format_posts(username, posts_count, rank, total_users):
     """投稿数コマンドの応答"""
     lines = [
-        f"{username} の投稿数は…",
+        f"@{username} の投稿数は…",
         f"{posts_count:,}件",
         f"現在 {rank}位（{total_users}人中）！",
         "📝",
@@ -20,7 +20,7 @@ def format_posts(username, posts_count, rank, total_users):
 def format_rate(username, rate, days, posts_count, rank, total_users):
     """投稿レートコマンドの応答"""
     lines = [
-        f"{username} の投稿レートは…",
+        f"@{username} の投稿レートは…",
         f"{rate:.2f} カロート/h",
         f"（登録 {days}日 / 総投稿 {posts_count:,}）",
         f"現在 {rank}位（{total_users}人中）！",
@@ -34,7 +34,7 @@ def format_rate(username, rate, days, posts_count, rank, total_users):
 def format_followers(username, followers_count, rank, total_users):
     """フォロワー数コマンドの応答"""
     lines = [
-        f"{username} のフォロワー数は…",
+        f"@{username} のフォロワー数は…",
         f"{followers_count:,}人",
         f"現在 {rank}位（{total_users}人中）！",
         "👥",
@@ -105,7 +105,7 @@ def format_general_info(username, data, ranks):
     followers_rank, followers_total = ranks.get("followers", (None, 0))
 
     lines = [
-        f"{username} のランキング情報",
+        f"@{username} のランキング情報",
         "",
         f"👥 フォロワー: {followers_count:,}人",
     ]
