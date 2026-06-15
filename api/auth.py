@@ -43,18 +43,29 @@ class AuthManager:
         """認証付きリクエスト。エラー時はリトライし、401時は自動再ログインしてリトライ"""
         url = f"{KAROTTER_INTERNAL_URL}{endpoint}"
         kwargs.setdefault("timeout", 20)
+        
+        # FormData送信時はセッションのContent-Typeを一時的に除去
+        custom_headers = kwargs.get("headers")
+        original_ct = self.session.headers.get("Content-Type")
+        if custom_headers and "Content-Type" in custom_headers:
+            self.session.headers.pop("Content-Type", None)
 
-        for attempt in range(retries):
-            try:
-                res = self.session.request(method, url, **kwargs)
-                if res.status_code == 401:
-                    print(f"[AUTH] 401 detected ({endpoint}). Re-login...")
-                    if self.login():
-                        res = self.session.request(method, url, **kwargs)
-                return res
-            except Exception as e:
-                print(f"[AUTH] API error (retry {attempt+1}/{retries} - {endpoint}): {e}")
-                time.sleep(5 * (attempt + 1))
+        try:
+            for attempt in range(retries):
+                try:
+                    res = self.session.request(method, url, **kwargs)
+                    if res.status_code == 401:
+                        print(f"[AUTH] 401 detected ({endpoint}). Re-login...")
+                        if self.login():
+                            res = self.session.request(method, url, **kwargs)
+                    return res
+                except Exception as e:
+                    print(f"[AUTH] API error (retry {attempt+1}/{retries} - {endpoint}): {e}")
+                    time.sleep(5 * (attempt + 1))
 
-        print(f"[AUTH] API error ({endpoint}): max retries reached")
-        return None
+            print(f"[AUTH] API error ({endpoint}): max retries reached")
+            return None
+        finally:
+            # Content-Typeを元に戻す
+            if original_ct:
+                self.session.headers["Content-Type"] = original_ct

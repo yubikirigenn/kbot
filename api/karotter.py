@@ -114,28 +114,72 @@ class KarotterAPI:
 
     # === 投稿 ===
 
-    def post_reply(self, text, parent_id, media_urls=None):
-        """返信を投稿"""
+    def post_reply(self, text, parent_id, media_files=None):
+        """返信を投稿（media_filesがあればFormDataで画像を添付）
+        
+        Args:
+            text: 返信テキスト
+            parent_id: 返信先の投稿ID
+            media_files: list of bytes (画像バイナリデータ) or None
+        """
         self._throttle()
-        payload = {
-            "content": text,
-            "parentId": parent_id,
-            "replyId": parent_id,
-            "isAiGenerated": False,
-            "isPromotional": False,
-            "visibility": "PUBLIC",
-            "replyRestriction": "EVERYONE"
-        }
-        if media_urls:
-            payload["mediaUrls"] = media_urls
-
-        res = self.auth.request("POST", "/posts", json=payload)
+        
+        if media_files:
+            # FormData方式（画像添付あり）
+            import io
+            from requests_toolbelt import MultipartEncoder
+            
+            fields = {
+                "content": text,
+                "parentId": str(parent_id),
+                "replyId": str(parent_id),
+                "isAiGenerated": "false",
+                "isPromotional": "false",
+                "visibility": "PUBLIC",
+                "replyRestriction": "EVERYONE",
+            }
+            
+            # 画像ファイルを追加
+            parts = []
+            for key, val in fields.items():
+                parts.append((key, val))
+            
+            for i, img_bytes in enumerate(media_files):
+                filename = f"ranking_{i}.png"
+                parts.append(("media", (filename, io.BytesIO(img_bytes), "image/png")))
+            
+            encoder = MultipartEncoder(fields=parts)
+            headers = {"Content-Type": encoder.content_type}
+            
+            res = self.auth.request(
+                "POST", "/posts", 
+                data=encoder, 
+                headers=headers
+            )
+        else:
+            # JSON方式（テキストのみ）
+            payload = {
+                "content": text,
+                "parentId": parent_id,
+                "replyId": parent_id,
+                "isAiGenerated": False,
+                "isPromotional": False,
+                "visibility": "PUBLIC",
+                "replyRestriction": "EVERYONE"
+            }
+            res = self.auth.request("POST", "/posts", json=payload)
+        
         if res and res.status_code in [200, 201]:
             print(f"[API] Reply sent successfully to post {parent_id}")
             return True
         else:
             status = res.status_code if res else "Unknown"
-            print(f"[API] Reply failed: HTTP {status}")
+            body = ""
+            try:
+                body = res.text[:200] if res else ""
+            except:
+                pass
+            print(f"[API] Reply failed: HTTP {status} {body}")
             return False
 
     def post_karoto(self, text):

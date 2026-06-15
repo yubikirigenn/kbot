@@ -65,16 +65,34 @@ def restore_cache_from_github():
     """GitHub cache ブランチからキャッシュファイルをダウンロードして復元"""
     import urllib.request
     import json
-    cache_url = os.environ.get("CACHE_GITHUB_URL", "")
-    if not cache_url:
-        print("[CACHE] CACHE_GITHUB_URL not set, skipping restore")
+    import base64
+
+    github_token = os.environ.get("GITHUB_TOKEN", "")
+    github_repo = os.environ.get("GITHUB_REPO", "")
+    if not github_token or not github_repo:
+        print("[CACHE] GITHUB_TOKEN/GITHUB_REPO not set, skipping restore")
         return False
 
     try:
-        print(f"[CACHE] Restoring cache from GitHub...")
-        req = urllib.request.Request(cache_url)
+        print(f"[CACHE] Restoring cache from GitHub ({github_repo})...")
+        api_url = f"https://api.github.com/repos/{github_repo}/contents/data/users_cache.json?ref=cache"
+        req = urllib.request.Request(
+            api_url,
+            headers={
+                "Authorization": f"token {github_token}",
+                "Accept": "application/vnd.github.v3+json"
+            }
+        )
         with urllib.request.urlopen(req, timeout=15) as resp:
-            data = json.loads(resp.read().decode("utf-8"))
+            file_info = json.loads(resp.read().decode("utf-8"))
+        
+        # Base64エンコードされたコンテンツをデコード
+        content_b64 = file_info.get("content", "")
+        data = json.loads(base64.b64decode(content_b64).decode("utf-8"))
+        
+        if not data or len(data) == 0:
+            print("[CACHE] GitHub cache is empty, starting fresh")
+            return False
         
         os.makedirs(os.path.dirname("data/users_cache.json"), exist_ok=True)
         with open("data/users_cache.json", "w", encoding="utf-8") as f:
@@ -342,10 +360,10 @@ def bot_worker():
 
                 result = execute_command(command, target_user, author_username, api, cache, collector)
                 if result:
-                    response_text, media_urls = result
+                    response_text, media_files = result
                     if response_text:
-                        api.post_reply(response_text, post_id, media_urls=media_urls)
-                        print(f"[BOT] 返信完了 (画像: {'あり' if media_urls else 'なし'})")
+                        api.post_reply(response_text, post_id, media_files=media_files)
+                        print(f"[BOT] 返信完了 (画像: {'あり' if media_files else 'なし'})")
 
                 seen_ids.add(post_id)
                 save_seen_id(post_id)
