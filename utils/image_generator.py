@@ -240,7 +240,8 @@ def draw_ranking_image(title, metric_name, top_users):
             draw.text((val_x, cur_y + 25), val_str, font=font_val_lg, fill=val_color)
 
             # バーチャート
-            bar_max_w = val_x - name_x - 20
+            uname_w = _text_width(font_uname_lg, f"@{u['username']}")
+            bar_max_w = max(10, int(val_x - (name_x + uname_w) - 20))
             bar_w = max(8, int((u["value"] / max_val) * bar_max_w))
             bar_y = cur_y + 48
             _draw_rounded_rect(draw, [val_x - bar_w - 10, bar_y, val_x - 10, bar_y + 8], radius=4, fill=BLUE_BAR)
@@ -277,7 +278,8 @@ def draw_ranking_image(title, metric_name, top_users):
             draw.text((val_x, cur_y + 15), val_str, font=font_val_sm, fill=TEXT_GRAY)
 
             # バーチャート
-            bar_max_w = val_x - name_x - 20
+            uname_w = _text_width(font_uname_sm, f"@{u['username']}")
+            bar_max_w = max(10, int(val_x - (name_x + uname_w) - 15))
             bar_w = max(5, int((u["value"] / max_val) * bar_max_w))
             bar_y = cur_y + 32
             _draw_rounded_rect(draw, [val_x - bar_w - 10, bar_y, val_x - 10, bar_y + 6], radius=3, fill=BORDER)
@@ -285,7 +287,8 @@ def draw_ranking_image(title, metric_name, top_users):
             cur_y += normal_item_h
 
     # === フッター ===
-    now_str = datetime.datetime.now().strftime("%Y/%m/%d %H:%M 時点")
+    jst = datetime.timezone(datetime.timedelta(hours=9))
+    now_str = datetime.datetime.now(jst).strftime("%Y/%m/%d %H:%M 時点")
     tw = _text_width(font_footer, now_str)
     draw.text((width - tw - padding, height - footer_h + 8), now_str, font=font_footer, fill=TEXT_GRAY)
 

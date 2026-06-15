@@ -77,10 +77,10 @@ class KarotterAPI:
         
         KarotterAPI.store_image(image_bytes, filename)
         
-        # Render上では RENDER_EXTERNAL_HOSTNAME が設定される
-        hostname = os.environ.get("RENDER_EXTERNAL_HOSTNAME", "")
-        if hostname:
-            public_url = f"https://{hostname}/images/{filename}"
+        # Render上では RENDER_EXTERNAL_URL (https://kbot-xxxx.onrender.com) が設定される
+        external_url = os.environ.get("RENDER_EXTERNAL_URL", "")
+        if external_url:
+            public_url = f"{external_url.rstrip('/')}/images/{filename}"
         else:
             # ローカル開発時
             port = os.environ.get("PORT", "8080")

@@ -274,21 +274,25 @@ def bot_worker():
             if loop_count % 60 == 0:
                 print(f"[BOT] 監視中... (キャッシュ: {cache.user_count()}ユーザー)")
 
-            # 定期的にインクリメンタル更新
+            # 定期的にインクリメンタル更新（別スレッドで実行しポーリングをブロックしない）
             if time.time() - last_update_time > CACHE_UPDATE_INTERVAL:
-                try:
-                    collector.incremental_update()
-                except Exception as e:
-                    print(f"[BOT] インクリメンタル更新エラー: {e}")
                 last_update_time = time.time()
+                def run_update():
+                    try:
+                        collector.incremental_update()
+                    except Exception as e:
+                        print(f"[BOT] インクリメンタル更新エラー: {e}")
+                threading.Thread(target=run_update, daemon=True).start()
 
-            # 定期的にGitHubにバックアップ
+            # 定期的にGitHubにバックアップ（別スレッド）
             if time.time() - last_backup_time > BACKUP_INTERVAL:
-                try:
-                    backup_cache_to_github(cache)
-                except Exception as e:
-                    print(f"[BOT] バックアップエラー: {e}")
                 last_backup_time = time.time()
+                def run_backup():
+                    try:
+                        backup_cache_to_github(cache)
+                    except Exception as e:
+                        print(f"[BOT] バックアップエラー: {e}")
+                threading.Thread(target=run_backup, daemon=True).start()
 
             # 通知を取得
             notifications = api.get_notifications()
