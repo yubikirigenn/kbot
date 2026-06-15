@@ -4,8 +4,7 @@ import os
 import json
 from datetime import datetime, timezone
 
-from config import DATA_DIR
-
+DATA_DIR = os.path.join(os.path.dirname(__file__), "..", "data")
 DAILY_HISTORY_FILE = os.path.join(DATA_DIR, "history_daily.json")
 WEEKLY_HISTORY_FILE = os.path.join(DATA_DIR, "history_weekly.json")
 
