@@ -235,11 +235,16 @@ def bot_worker():
 
     api = KarotterAPI(auth)
 
+    # 収集用に別のAPIインスタンスを作成（スロットリングが干渉しないように）
+    collector_auth = AuthManager()
+    collector_auth.login()
+    collector_api = KarotterAPI(collector_auth)
+
     # GitHubからキャッシュを復元（再起動時のゼロダウンタイム化）
     restore_cache_from_github()
 
     cache = RankingCache()
-    collector = UserCollector(api, cache)
+    collector = UserCollector(collector_api, cache)  # 収集用APIを使用
     seen_ids = load_seen_ids()
 
     # キャッシュに既にデータがあれば即座に稼働開始、バックグラウンドで更新
