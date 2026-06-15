@@ -373,7 +373,7 @@ def bot_worker():
                     continue
 
                 # メンション確認
-                if f"@{USERNAME}" not in content.lower() and notification_type != "REPLY":
+                if f"@{USERNAME.lower()}" not in content.lower():
                     seen_ids.add(post_id)
                     save_seen_id(post_id)
                     continue

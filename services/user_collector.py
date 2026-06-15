@@ -121,10 +121,16 @@ class UserCollector:
             self.collect_from_search()
             self.collect_from_recommended()
 
-            # 1. 必須更新（データ欠損・0件バグ）
+            # Top20ユーザーの抽出（投稿数とフォロワー数）
+            top_posts = [u[0] for u in self.cache.get_top_n("posts", 20)] if hasattr(self.cache, 'get_top_n') else []
+            top_followers = [u[0] for u in self.cache.get_top_n("followers", 20)] if hasattr(self.cache, 'get_top_n') else []
+            top_users = set(top_posts + top_followers)
+
+            # 1. 必須更新（データ欠損・0件バグ・上位20名）
             needs_enrichment = [
                 username for username, data in self.cache.users.items()
                 if not data.get("createdAt") or not data.get("updatedAt") or data.get("postsCount", 0) == 0
+                or username in top_users
             ]
 
             # 2. 定期ローテーション更新（古い順に最大200件ずつ更新）
