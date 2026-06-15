@@ -352,10 +352,10 @@ def bot_worker():
 
                 print(f"[BOT] メンション受信: @{author_username} -> {content[:80]}")
 
-                # 収集中であれば専用メッセージを返す（ただしキャッシュがあれば通常処理）
-                if bot_status == "collecting" and cache.user_count() < 50:
-                    print(f"[BOT] 収集中メンション対応: @{author_username}")
-                    api.post_reply("現在ランキングデータを初回収集中です。完了までもうしばらくお待ちください！🙇‍♂️ #kbot", post_id)
+                # キャッシュが完全に空の場合のみ収集中メッセージを返す
+                if cache.user_count() == 0:
+                    print(f"[BOT] データ未収集のためメッセージ返信: @{author_username}")
+                    api.post_reply("現在ランキングデータを収集中です。もうしばらくお待ちください！🙇‍♂️ #kbot", post_id)
                     seen_ids.add(post_id)
                     save_seen_id(post_id)
                     continue
