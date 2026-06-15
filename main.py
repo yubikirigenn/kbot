@@ -67,8 +67,8 @@ def restore_cache_from_github():
     import json
     import base64
 
-    github_token = os.environ.get("GITHUB_TOKEN", "")
-    github_repo = os.environ.get("GITHUB_REPO", "")
+    github_token = os.environ.get("GITHUB_TOKEN", "").strip()
+    github_repo = os.environ.get("GITHUB_REPO", "").strip()
     if not github_token or not github_repo:
         print("[CACHE] GITHUB_TOKEN/GITHUB_REPO not set, skipping restore")
         return False
@@ -111,8 +111,8 @@ def backup_cache_to_github(cache):
     import json
     import base64
 
-    github_token = os.environ.get("GITHUB_TOKEN", "")
-    github_repo = os.environ.get("GITHUB_REPO", "")  # "owner/repo"
+    github_token = os.environ.get("GITHUB_TOKEN", "").strip()
+    github_repo = os.environ.get("GITHUB_REPO", "").strip()  # "owner/repo"
     if not github_token or not github_repo:
         return False
 
@@ -275,7 +275,7 @@ def bot_worker():
     initial_notifications = api.get_notifications(limit=30)
     for n in initial_notifications:
         if isinstance(n, dict):
-            post_id = str(n.get("postId") or n.get("post", {}).get("id") or "")
+            post_id = str(n.get("postId") or (n.get("post") or {}).get("id") or "")
             if post_id:
                 seen_ids.add(post_id)
                 save_seen_id(post_id)
