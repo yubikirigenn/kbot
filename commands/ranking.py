@@ -118,8 +118,15 @@ def _handle_generic_ranking(api, cache, parsed, history_manager, sort_key, title
     
     # 差分表示用のフラグをセット
     for r in ranking_data:
-        if period in ("day", "week"):
+        if period in ("day", "week") and sort_key != "rate":
             r["is_delta"] = True
+
+    if period in ("day", "week") and sort_key == "rate":
+        metric_disp = metric_name
+    elif period in ("day", "week"):
+        metric_disp = metric_name + "増加"
+    else:
+        metric_disp = metric_name
 
     image_bytes = _generate_image_bytes(title, metric_disp, ranking_data)
     
