@@ -88,20 +88,19 @@ class HistoryManager:
         for username, current_data in cache.users.items():
             past_data = snapshot.get(username, {})
             
-            # 過去のデータがない（新規ユーザー）場合は、現在の値をそのまま増加分とするか、0とするか。
-            # 通常、新規ユーザーがいきなり全投稿数分の増加としてランキング上位を独占するのは避けたいため、
-            # 新規ユーザーの過去値は現在の値と同じ（増分0）として扱う。
+            # 過去のデータがない（新規ユーザー）場合、過去値は0とする。
+            # （その日のうちに登録して活動した分はすべて「増加分」として正当に評価するため）
             past_posts = past_data.get("postsCount")
             if past_posts is None:
-                past_posts = current_data.get("postsCount", 0)
+                past_posts = 0
                 
             past_followers = past_data.get("followersCount")
             if past_followers is None:
-                past_followers = current_data.get("followersCount", 0)
+                past_followers = 0
                 
             past_rate = past_data.get("rate")
             if past_rate is None:
-                past_rate = current_data.get("rate", 0.0)
+                past_rate = 0.0
 
             cur_posts = current_data.get("postsCount", 0)
             cur_followers = current_data.get("followersCount", 0)
