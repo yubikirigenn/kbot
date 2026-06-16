@@ -262,18 +262,14 @@ def bot_worker():
     # 初回データ収集（別スレッドで実行し、メンション監視をブロックしない）
     def initial_collection():
         global bot_status
-        if cache.user_count() > 50:
-            print("[BOT] 十分なキャッシュがあるため、起動時の全体収集をスキップします。")
-            bot_status = "running"
-            return
-
-        print("[BOT] キャッシュが少ないため、ユーザーデータの全体収集をバックグラウンドで開始...")
+        print("[BOT] ユーザーデータ収集をバックグラウンドで開始...")
         try:
             collector.full_collect()
         except Exception as e:
             print(f"[BOT] 収集でエラー（続行します）: {e}")
         finally:
-            bot_status = "running"
+            if bot_status != "running":
+                bot_status = "running"
             print("[BOT] データ収集が完了しました！")
 
     collection_thread = threading.Thread(target=initial_collection, daemon=True)
