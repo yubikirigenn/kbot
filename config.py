@@ -36,7 +36,7 @@ POLL_INTERVAL = 5           # 通知ポーリング間隔（秒）
 API_SLEEP = 2.5             # APIリクエスト間隔（秒）
 USER_CACHE_FILE = "data/users_cache.json"
 SEEN_FILE = "data/seen_notifications.txt"
-CACHE_UPDATE_INTERVAL = 1800  # ユーザーキャッシュ更新間隔（秒）= 30分
+CACHE_UPDATE_INTERVAL = 60  # ユーザーキャッシュ更新間隔（秒）= 1分
 
 # === ハッシュタグ ===
 HASHTAG = "#kbot"
