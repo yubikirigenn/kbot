@@ -61,110 +61,106 @@ def save_seen_id(item_id):
 
 # === GitHub キャッシュ永続化 ===
 
+def _download_file_from_github(repo, token, filepath, dest_path):
+    import urllib.request, json, base64, os
+    try:
+        api_url = f"https://api.github.com/repos/{repo}/contents/{filepath}?ref=cache"
+        req = urllib.request.Request(
+            api_url,
+            headers={"Authorization": f"token {token}", "Accept": "application/vnd.github.v3+json"}
+        )
+        with urllib.request.urlopen(req, timeout=15) as resp:
+            file_info = json.loads(resp.read().decode("utf-8"))
+        
+        content_b64 = file_info.get("content", "")
+        data = json.loads(base64.b64decode(content_b64).decode("utf-8"))
+        if data:
+            os.makedirs(os.path.dirname(dest_path), exist_ok=True)
+            with open(dest_path, "w", encoding="utf-8") as f:
+                json.dump(data, f, ensure_ascii=False, indent=2)
+            print(f"[CACHE] Restored {filepath}")
+            return data
+    except Exception as e:
+        print(f"[CACHE] Failed to restore {filepath}: {e}")
+    return None
+
 def restore_cache_from_github():
     """GitHub cache ブランチからキャッシュファイルをダウンロードして復元"""
-    import urllib.request
-    import json
-    import base64
-
     github_token = os.environ.get("GITHUB_TOKEN", "").strip()
     github_repo = os.environ.get("GITHUB_REPO", "").strip()
     if not github_token or not github_repo:
         print("[CACHE] GITHUB_TOKEN/GITHUB_REPO not set, skipping restore")
         return False
 
-    try:
-        print(f"[CACHE] Restoring cache from GitHub ({github_repo})...")
-        api_url = f"https://api.github.com/repos/{github_repo}/contents/data/users_cache.json?ref=cache"
-        req = urllib.request.Request(
-            api_url,
-            headers={
-                "Authorization": f"token {github_token}",
-                "Accept": "application/vnd.github.v3+json"
-            }
-        )
-        with urllib.request.urlopen(req, timeout=15) as resp:
-            file_info = json.loads(resp.read().decode("utf-8"))
-        
-        # Base64エンコードされたコンテンツをデコード
-        content_b64 = file_info.get("content", "")
-        data = json.loads(base64.b64decode(content_b64).decode("utf-8"))
-        
-        if not data or len(data) == 0:
-            print("[CACHE] GitHub cache is empty, starting fresh")
-            return False
-        
-        os.makedirs(os.path.dirname("data/users_cache.json"), exist_ok=True)
-        with open("data/users_cache.json", "w", encoding="utf-8") as f:
-            json.dump(data, f, ensure_ascii=False, indent=2)
-        
-        print(f"[CACHE] Restored {len(data)} users from GitHub cache")
-        return True
-    except Exception as e:
-        print(f"[CACHE] Failed to restore from GitHub: {e}")
+    print(f"[CACHE] Restoring data from GitHub ({github_repo})...")
+    
+    # ユーザーキャッシュ
+    users_data = _download_file_from_github(github_repo, github_token, "data/users_cache.json", "data/users_cache.json")
+    
+    # 日間・週間スナップショット
+    _download_file_from_github(github_repo, github_token, "data/history_daily.json", "data/history_daily.json")
+    _download_file_from_github(github_repo, github_token, "data/history_weekly.json", "data/history_weekly.json")
+
+    return bool(users_data)
+
+
+def _upload_file_to_github(repo, token, filepath, source_path, message):
+    import urllib.request, json, base64, os
+    if not os.path.exists(source_path):
         return False
-
-
-def backup_cache_to_github(cache):
-    """GitHub API を使って cache ブランチにキャッシュファイルをバックアップ"""
-    import urllib.request
-    import json
-    import base64
-
-    github_token = os.environ.get("GITHUB_TOKEN", "").strip()
-    github_repo = os.environ.get("GITHUB_REPO", "").strip()  # "owner/repo"
-    if not github_token or not github_repo:
-        return False
-
+        
     try:
-        cache_data = json.dumps(cache.users, ensure_ascii=False, indent=2)
-        content_b64 = base64.b64encode(cache_data.encode("utf-8")).decode("utf-8")
+        with open(source_path, "r", encoding="utf-8") as f:
+            content = f.read()
+            
+        content_b64 = base64.b64encode(content.encode("utf-8")).decode("utf-8")
+        api_url = f"https://api.github.com/repos/{repo}/contents/{filepath}"
 
-        api_url = f"https://api.github.com/repos/{github_repo}/contents/data/users_cache.json"
-
-        # 既存ファイルのSHAを取得（更新するため）
         sha = None
         try:
             req = urllib.request.Request(
                 f"{api_url}?ref=cache",
-                headers={
-                    "Authorization": f"token {github_token}",
-                    "Accept": "application/vnd.github.v3+json"
-                }
+                headers={"Authorization": f"token {token}", "Accept": "application/vnd.github.v3+json"}
             )
             with urllib.request.urlopen(req, timeout=15) as resp:
-                existing = json.loads(resp.read().decode("utf-8"))
-                sha = existing.get("sha")
+                sha = json.loads(resp.read().decode("utf-8")).get("sha")
         except Exception:
             pass
 
-        payload = {
-            "message": f"[auto] Cache backup ({cache.user_count()} users)",
-            "content": content_b64,
-            "branch": "cache"
-        }
-        if sha:
-            payload["sha"] = sha
+        payload = {"message": message, "content": content_b64, "branch": "cache"}
+        if sha: payload["sha"] = sha
 
-        data = json.dumps(payload).encode("utf-8")
         req = urllib.request.Request(
             api_url,
-            data=data,
-            method="PUT",
-            headers={
-                "Authorization": f"token {github_token}",
-                "Accept": "application/vnd.github.v3+json",
-                "Content-Type": "application/json"
-            }
+            data=json.dumps(payload).encode("utf-8"),
+            headers={"Authorization": f"token {token}", "Accept": "application/vnd.github.v3+json", "Content-Type": "application/json"},
+            method="PUT"
         )
-        with urllib.request.urlopen(req, timeout=30) as resp:
-            if resp.status in [200, 201]:
-                print(f"[CACHE] Backup to GitHub success ({cache.user_count()} users)")
-                return True
-
+        with urllib.request.urlopen(req, timeout=15) as resp:
+            pass
+        return True
     except Exception as e:
-        print(f"[CACHE] Backup to GitHub failed: {e}")
-    return False
+        print(f"[CACHE] Failed to backup {filepath}: {e}")
+        return False
+
+def backup_cache_to_github(cache):
+    """GitHub API を使って cache ブランチにキャッシュファイルをバックアップ"""
+    import os
+    github_token = os.environ.get("GITHUB_TOKEN", "").strip()
+    github_repo = os.environ.get("GITHUB_REPO", "").strip()
+    if not github_token or not github_repo:
+        return False
+
+    cache.save()
+    
+    success = False
+    if _upload_file_to_github(github_repo, github_token, "data/users_cache.json", "data/users_cache.json", f"[auto] Cache backup ({cache.user_count()} users)"):
+        success = True
+    
+    _upload_file_to_github(github_repo, github_token, "data/history_daily.json", "data/history_daily.json", "[auto] Daily history backup")
+    _upload_file_to_github(github_repo, github_token, "data/history_weekly.json", "data/history_weekly.json", "[auto] Weekly history backup")
+
+    return success
 
 
 # === コマンド実行 ===
