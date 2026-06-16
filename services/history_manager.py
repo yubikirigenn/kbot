@@ -78,11 +78,24 @@ class HistoryManager:
         戻り値: {username: {"postsCount": delta, "followersCount": delta, "rate": delta}}
         """
         snapshot = self.daily_snapshot if period == "day" else self.weekly_snapshot
+        snapshot_timestamp = self.daily_timestamp if period == "day" else self.weekly_timestamp
         
         # スナップショットが空の場合は、現在をスナップショットとして保存し、差分0を返す
         if not snapshot:
             self.save_snapshot(cache, period)
             snapshot = self.daily_snapshot if period == "day" else self.weekly_snapshot
+            snapshot_timestamp = self.daily_timestamp if period == "day" else self.weekly_timestamp
+
+        now = datetime.now(timezone.utc)
+        hours_passed = 1.0
+        if snapshot_timestamp:
+            try:
+                st_dt = datetime.fromisoformat(snapshot_timestamp)
+                hours_passed = (now - st_dt).total_seconds() / 3600.0
+                if hours_passed <= 0:
+                    hours_passed = 1.0
+            except Exception:
+                pass
 
         deltas = {}
         for username, current_data in cache.users.items():
@@ -97,19 +110,20 @@ class HistoryManager:
             past_followers = past_data.get("followersCount")
             if past_followers is None:
                 past_followers = 0
-                
-            past_rate = past_data.get("rate")
-            if past_rate is None:
-                past_rate = 0.0
 
             cur_posts = current_data.get("postsCount", 0)
             cur_followers = current_data.get("followersCount", 0)
-            cur_rate = current_data.get("rate", 0.0)
+
+            delta_posts = max(0, cur_posts - past_posts)
+            delta_followers = cur_followers - past_followers
+            
+            # レートは単純な差分ではなく、「期間内の純粋なレート（増分投稿数 ÷ 経過時間）」とする
+            calc_rate = round(delta_posts / hours_passed, 4)
 
             deltas[username] = {
-                "postsCount": max(0, cur_posts - past_posts),
-                "followersCount": cur_followers - past_followers, # フォロワーは減ることもある
-                "rate": cur_rate - past_rate
+                "postsCount": delta_posts,
+                "followersCount": delta_followers,
+                "rate": calc_rate
             }
         
         return deltas
