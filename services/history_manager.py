@@ -101,18 +101,33 @@ class HistoryManager:
         for username, current_data in cache.users.items():
             past_data = snapshot.get(username, {})
             
-            # 過去のデータがない（新規ユーザー）場合、過去値は0とする。
-            # （その日のうちに登録して活動した分はすべて「増加分」として正当に評価するため）
             past_posts = past_data.get("postsCount")
-            if past_posts is None:
-                past_posts = 0
-                
             past_followers = past_data.get("followersCount")
-            if past_followers is None:
-                past_followers = 0
 
             cur_posts = current_data.get("postsCount", 0)
             cur_followers = current_data.get("followersCount", 0)
+            created_at = current_data.get("createdAt")
+
+            if past_posts is None:
+                # スナップショットに存在しない場合、
+                # アカウント作成日が「スナップショット作成日時」より後であれば新規登録者とみなし過去値を0とする
+                # 昔からいるユーザーがBotに初めて認知されただけの場合は、現在の値を過去値として増分を0にする
+                is_new_account = False
+                if snapshot_timestamp and created_at:
+                    try:
+                        st_dt = datetime.fromisoformat(snapshot_timestamp)
+                        c_dt = datetime.fromisoformat(created_at.replace("Z", "+00:00"))
+                        if c_dt > st_dt:
+                            is_new_account = True
+                    except Exception:
+                        pass
+                
+                if is_new_account:
+                    past_posts = 0
+                    past_followers = 0
+                else:
+                    past_posts = cur_posts
+                    past_followers = cur_followers
 
             delta_posts = max(0, cur_posts - past_posts)
             delta_followers = cur_followers - past_followers
