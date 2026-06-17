@@ -5,10 +5,11 @@ import string
 
 
 class UserCollector:
-    def __init__(self, api, cache):
+    def __init__(self, api, cache, history_manager=None):
         import threading
         self.api = api
         self.cache = cache
+        self.history_manager = history_manager
         self._lock = threading.Lock()
 
     def collect_from_search(self):
@@ -131,6 +132,22 @@ class UserCollector:
             top_followers = [u[0] for u in self.cache.get_top_n("followers", 30)] if hasattr(self.cache, 'get_top_n') else []
             top_rate = [u[0] for u in self.cache.get_top_n("rate", 30)] if hasattr(self.cache, 'get_top_n') else []
             top_users = set(top_posts + top_followers + top_rate)
+
+            # さらに日間・週間の活動量上位ユーザーも優先更新対象に加える
+            if self.history_manager:
+                try:
+                    for period in ["day", "week"]:
+                        deltas = self.history_manager.get_deltas(self.cache, period)
+                        # delta_posts上位30名
+                        sorted_d = sorted(deltas.items(), key=lambda x: x[1].get("postsCount", 0), reverse=True)
+                        for uname, _ in sorted_d[:30]:
+                            top_users.add(uname)
+                        # rate上位30名
+                        sorted_r = sorted(deltas.items(), key=lambda x: x[1].get("rate", 0), reverse=True)
+                        for uname, _ in sorted_r[:30]:
+                            top_users.add(uname)
+                except Exception as e:
+                    print(f"[COLLECT] 日間/週間上位の抽出に失敗しました: {e}")
 
             # 1. 必須更新（データ欠損・上位ユーザー）
             needs_enrichment = [

@@ -249,7 +249,7 @@ def bot_worker():
     from services.history_manager import HistoryManager
     history_manager = HistoryManager()
     
-    collector = UserCollector(collector_api, cache)  # 収集用APIを使用
+    collector = UserCollector(collector_api, cache, history_manager)  # 収集用APIを使用
     seen_ids = load_seen_ids()
 
     # キャッシュに既にデータがあれば即座に稼働開始、バックグラウンドで更新
