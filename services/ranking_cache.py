@@ -44,23 +44,14 @@ class RankingCache:
         old_data = self.users.get(username, {})
 
         # API側が負荷等で0や空を返すことがあるため、古いデータがある場合は欠損を補完・保護する
-        new_posts = user_data.get("postsCount")
-        if new_posts is not None:
-            posts_count = new_posts
-        else:
-            posts_count = old_data.get("postsCount", 0)
+        new_posts = user_data.get("postsCount", 0)
+        posts_count = max(old_data.get("postsCount", 0), new_posts) if new_posts == 0 else new_posts
 
-        new_followers = user_data.get("followersCount")
-        if new_followers is not None:
-            followers_count = new_followers
-        else:
-            followers_count = old_data.get("followersCount", 0)
+        new_followers = user_data.get("followersCount", 0)
+        followers_count = max(old_data.get("followersCount", 0), new_followers) if new_followers == 0 else new_followers
 
-        new_following = user_data.get("followingCount")
-        if new_following is not None:
-            following_count = new_following
-        else:
-            following_count = old_data.get("followingCount", 0)
+        new_following = user_data.get("followingCount", 0)
+        following_count = max(old_data.get("followingCount", 0), new_following) if new_following == 0 else new_following
 
         created_at = user_data.get("createdAt", "") or old_data.get("createdAt", "")
         
