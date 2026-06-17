@@ -44,14 +44,23 @@ class RankingCache:
         old_data = self.users.get(username, {})
 
         # API側が負荷等で0や空を返すことがあるため、古いデータがある場合は欠損を補完・保護する
-        new_posts = user_data.get("postsCount", 0)
-        posts_count = max(old_data.get("postsCount", 0), new_posts) if new_posts == 0 else new_posts
+        new_posts = user_data.get("postsCount")
+        if new_posts is not None:
+            posts_count = new_posts
+        else:
+            posts_count = old_data.get("postsCount", 0)
 
-        new_followers = user_data.get("followersCount", 0)
-        followers_count = max(old_data.get("followersCount", 0), new_followers) if new_followers == 0 else new_followers
+        new_followers = user_data.get("followersCount")
+        if new_followers is not None:
+            followers_count = new_followers
+        else:
+            followers_count = old_data.get("followersCount", 0)
 
-        new_following = user_data.get("followingCount", 0)
-        following_count = max(old_data.get("followingCount", 0), new_following) if new_following == 0 else new_following
+        new_following = user_data.get("followingCount")
+        if new_following is not None:
+            following_count = new_following
+        else:
+            following_count = old_data.get("followingCount", 0)
 
         created_at = user_data.get("createdAt", "") or old_data.get("createdAt", "")
         
@@ -61,13 +70,14 @@ class RankingCache:
         display_name = user_data.get("displayName") or user_data.get("name") or old_data.get("displayName") or username
         avatar_url = user_data.get("avatarUrl") or user_data.get("profileImageUrl") or old_data.get("avatarUrl") or ""
 
-        # レート計算
+        # 内部キャッシュ用レート計算（表示・ソート用は後で動的計算）
         rate = 0.0
         if created_at and posts_count > 0:
             try:
                 created_dt = datetime.fromisoformat(created_at.replace("Z", "+00:00"))
                 now = datetime.now(timezone.utc)
                 hours = (now - created_dt).total_seconds() / 3600
+                hours = max(hours, 1.0) # 1時間未満は1時間に丸めて無限レートを防ぐ
                 if hours > 0:
                     rate = round(posts_count / hours, 4)
             except Exception:
@@ -105,23 +115,43 @@ class RankingCache:
         self.users[username]["followersCount"] = user_data.get("followersCount", 0)
         self.users[username]["followingCount"] = user_data.get("followingCount", 0)
         self.users[username]["isBot"] = user_data.get("isBotAccount", False)
+        self.users[username]["isPrivate"] = user_data.get("isPrivate", self.users[username].get("isPrivate", False))
+
+    def _get_dynamic_rate(self, data, now):
+        """現在時刻での動的レート計算"""
+        posts_count = data.get("postsCount", 0)
+        created_at = data.get("createdAt")
+        if not created_at or posts_count <= 0:
+            return 0.0
+        try:
+            created_dt = datetime.fromisoformat(created_at.replace("Z", "+00:00"))
+            hours = (now - created_dt).total_seconds() / 3600
+            hours = max(hours, 1.0)
+            return round(posts_count / hours, 4)
+        except Exception:
+            return 0.0
 
     def get_active_users(self):
         """アクティブユーザー（Bot・非公開を除く、投稿数1以上）をフィルタリング"""
-        return {
-            username: data for username, data in self.users.items()
-            if not data.get("isBot", False)
-            and not data.get("isPrivate", False)
-            and data.get("postsCount", 0) > 0
-        }
+        now = datetime.now(timezone.utc)
+        result = {}
+        for username, data in self.users.items():
+            if not data.get("isBot", False) and not data.get("isPrivate", False) and data.get("postsCount", 0) > 0:
+                user_copy = data.copy()
+                user_copy["rate"] = self._get_dynamic_rate(data, now)
+                result[username] = user_copy
+        return result
 
     def get_all_users_for_followers(self):
         """フォロワーランキング用ユーザー（Bot除外、投稿なくてもOK）"""
-        return {
-            username: data for username, data in self.users.items()
-            if not data.get("isBot", False)
-            and not data.get("isPrivate", False)
-        }
+        now = datetime.now(timezone.utc)
+        result = {}
+        for username, data in self.users.items():
+            if not data.get("isBot", False) and not data.get("isPrivate", False):
+                user_copy = data.copy()
+                user_copy["rate"] = self._get_dynamic_rate(data, now)
+                result[username] = user_copy
+        return result
 
     def get_ranking(self, sort_key, username):
         """指定キーでソートして、指定ユーザーの順位を返す"""

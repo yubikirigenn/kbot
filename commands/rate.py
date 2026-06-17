@@ -6,8 +6,6 @@ from utils.formatter import format_rate, format_error
 
 def handle_rate(username, api, cache, collector):
     """ユーザーの投稿レートを表示"""
-    # ユーザーデータを即時更新
-    collector.enrich_single_user(username)
     user_data = cache.get_user(username)
 
     if not user_data or not user_data.get("createdAt"):

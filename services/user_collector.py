@@ -11,31 +11,38 @@ class UserCollector:
         self.cache = cache
         self.history_manager = history_manager
         self._lock = threading.Lock()
+        
+        # 検索クエリ分割用
+        self._search_queries = list(string.ascii_lowercase) + list(string.digits) + ["_"]
+        self._search_index = 0
 
     def collect_from_search(self):
-        """検索APIでユーザーを収集（フォロワー数のみ）"""
-        print("[COLLECT] 検索APIでユーザーを収集中...")
-        queries = list(string.ascii_lowercase) + list(string.digits) + ["_"]
+        """検索APIでユーザーを収集（分割して1回1クエリのみ実行）"""
+        if not self._search_queries:
+            return set()
+            
+        q = self._search_queries[self._search_index]
+        self._search_index = (self._search_index + 1) % len(self._search_queries)
+        
+        print(f"[COLLECT] 検索APIでユーザーを収集中... (クエリ '{q}')")
         collected = set()
 
-        for q in queries:
-            print(f"[COLLECT] 検索クエリ '{q}' を実行中...")
-            for page in range(1, 6):  # 最大5ページ
-                users, pagination = self.api.search_users(q, limit=50, page=page)
-                if not users:
-                    break
-                for u in users:
-                    username = u.get("username", "")
-                    if username and username not in collected:
-                        collected.add(username)
-                        self.cache.update_user_from_search(u)
-                total_pages = pagination.get("pages", 1)
-                print(f"[COLLECT]   -> クエリ '{q}' ページ {page}/{total_pages} 完了 (計 {len(collected)}人発見)")
-                if page >= total_pages:
-                    break
+        for page in range(1, 6):  # 最大5ページ
+            users, pagination = self.api.search_users(q, limit=50, page=page)
+            if not users:
+                break
+            for u in users:
+                username = u.get("username", "")
+                if username and username not in collected:
+                    collected.add(username)
+                    self.cache.update_user_from_search(u)
+            total_pages = pagination.get("pages", 1)
+            print(f"[COLLECT]   -> クエリ '{q}' ページ {page}/{total_pages} 完了 (計 {len(collected)}人発見)")
+            if page >= total_pages:
+                break
 
         self.cache.save()
-        print(f"[COLLECT] 検索完了: {len(collected)}ユーザーを収集")
+        print(f"[COLLECT] 検索完了: クエリ '{q}' で {len(collected)}ユーザーを収集")
         return collected
 
     def collect_from_recommended(self):

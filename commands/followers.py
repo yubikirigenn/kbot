@@ -5,8 +5,6 @@ from utils.formatter import format_followers, format_error
 
 def handle_followers(username, api, cache, collector):
     """ユーザーのフォロワー数を表示"""
-    # ユーザーデータを即時更新
-    collector.enrich_single_user(username)
     user_data = cache.get_user(username)
 
     if not user_data:

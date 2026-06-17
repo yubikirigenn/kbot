@@ -175,9 +175,12 @@ def execute_command(parsed, author_username, api, cache, collector, history_mana
     # 対象ユーザーのリアルタイム情報を取得（指定ユーザーまたは送信者本人）
     effective_user = target_username or author_username
 
+    # コマンドの種類に関わらず、常に対象ユーザーの最新データを取得
+    enrich_success = collector.enrich_single_user(effective_user)
+
     if command is None:
         # 総合情報表示
-        if not collector.enrich_single_user(effective_user):
+        if not enrich_success:
             # リアルタイム取得に失敗 → キャッシュデータがあればそれを使う
             user_data = cache.get_user(effective_user)
             if not user_data:
