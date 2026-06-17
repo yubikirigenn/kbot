@@ -64,6 +64,11 @@ class UserCollector:
             if user_data:
                 self.cache.update_user(username, user_data)
                 enriched += 1
+            else:
+                # 取得失敗時（404など）も無限ループでキューを詰まらせないよう更新日時だけ進める
+                if username in self.cache.users:
+                    from datetime import datetime, timezone
+                    self.cache.users[username]["updatedAt"] = datetime.now(timezone.utc).isoformat()
 
             # 10件ごとに保存・ログ出力（小刻みにする）
             if (i + 1) % 10 == 0:
@@ -127,10 +132,10 @@ class UserCollector:
             top_rate = [u[0] for u in self.cache.get_top_n("rate", 30)] if hasattr(self.cache, 'get_top_n') else []
             top_users = set(top_posts + top_followers + top_rate)
 
-            # 1. 必須更新（データ欠損・0件バグ・上位ユーザー）
+            # 1. 必須更新（データ欠損・上位ユーザー）
             needs_enrichment = [
                 username for username, data in self.cache.users.items()
-                if not data.get("createdAt") or not data.get("updatedAt") or data.get("postsCount", 0) == 0
+                if not data.get("createdAt") or not data.get("updatedAt")
                 or username in top_users
             ]
 
