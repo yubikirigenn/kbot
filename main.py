@@ -332,15 +332,18 @@ def bot_worker():
             now_jst = datetime.now(jst)
             
             # 日間チェック（日付が変わっていたらスナップショット更新）
+            snapshot_updated = False
             if history_manager.daily_timestamp:
                 try:
                     last_daily_dt = datetime.fromisoformat(history_manager.daily_timestamp).astimezone(jst)
                     if last_daily_dt.date() < now_jst.date():
                         history_manager.save_snapshot(cache, "day")
+                        snapshot_updated = True
                 except Exception:
                     pass
             elif cache.user_count() > 0:
                 history_manager.save_snapshot(cache, "day")
+                snapshot_updated = True
                 
             # 週間チェック（月曜日になっていて、かつ週が新しければ更新）
             if history_manager.weekly_timestamp:
@@ -349,10 +352,21 @@ def bot_worker():
                     # iso年とiso週番号を比較
                     if last_weekly_dt.isocalendar()[:2] < now_jst.isocalendar()[:2]:
                         history_manager.save_snapshot(cache, "week")
+                        snapshot_updated = True
                 except Exception:
                     pass
             elif cache.user_count() > 0:
                 history_manager.save_snapshot(cache, "week")
+                snapshot_updated = True
+
+            if snapshot_updated:
+                def run_snapshot_backup():
+                    try:
+                        backup_cache_to_github(cache)
+                        print("[BOT] スナップショットを即時バックアップしました。")
+                    except Exception as e:
+                        print(f"[BOT] 即時バックアップエラー: {e}")
+                threading.Thread(target=run_snapshot_backup, daemon=True).start()
 
             # 通知を取得
             notifications = api.get_notifications()
