@@ -304,9 +304,12 @@ def draw_ranking_image(title, metric_name, top_users):
     return img
 
 
-def draw_comparison_image(username_a, data_a, username_b, data_b):
+def draw_comparison_image(username_a, data_a, username_b, data_b, ranks_a=None, ranks_b=None):
     """2人のユーザーを比較する画像を生成"""
     ensure_fonts()
+
+    if ranks_a is None: ranks_a = {}
+    if ranks_b is None: ranks_b = {}
 
     width = 640
     height = 480
@@ -322,6 +325,7 @@ def draw_comparison_image(username_a, data_a, username_b, data_b):
     font_name = _load_font(FONT_PATH_BOLD, 20)
     font_uname = _load_font(FONT_PATH_MEDIUM, 14)
     font_val = _load_font(FONT_PATH_BOLD, 24)
+    font_rank = _load_font(FONT_PATH_BOLD, 14)
     font_label = _load_font(FONT_PATH_MEDIUM, 12)
 
     # カラー
@@ -331,6 +335,7 @@ def draw_comparison_image(username_a, data_a, username_b, data_b):
     GRAY = (136, 143, 155)
     WHITE = (255, 255, 255)
     BORDER = (229, 231, 235)
+    GOLD = (212, 175, 55)
 
     # ヘッダー (ベースカラーを青に変更)
     _draw_rounded_rect(draw, [0, 0, width, header_h], radius=0, fill=BLUE)
@@ -351,7 +356,7 @@ def draw_comparison_image(username_a, data_a, username_b, data_b):
     draw.text((center_x - vw/2, header_h + 36), "VS", font=font_vs, fill=WHITE)
 
     # 左右の描画関数
-    def draw_user_side(u_name, u_data, is_left):
+    def draw_user_side(u_name, u_data, is_left, ranks):
         base_x = 0 if is_left else center_x
         side_w = center_x
         color = BLUE if is_left else RED
@@ -389,22 +394,32 @@ def draw_comparison_image(username_a, data_a, username_b, data_b):
                 pass
 
         stats = [
-            ("開始日", created_at_str),
-            ("投稿数", f"{u_data.get('postsCount', 0):,}件"),
-            ("フォロワー", f"{u_data.get('followersCount', 0):,}人"),
-            ("レート", f"{u_data.get('rate', 0.0):.2f}/h")
+            ("開始日", created_at_str, None),
+            ("投稿数", f"{u_data.get('postsCount', 0):,}件", ranks.get("posts")),
+            ("フォロワー", f"{u_data.get('followersCount', 0):,}人", ranks.get("followers")),
+            ("レート", f"{u_data.get('rate', 0.0):.2f}/h", None)
         ]
         
-        for label, val in stats:
+        for label, val, rank in stats:
             lw = _text_width(font_label, label)
-            vw = _text_width(font_val, val)
             
-            # 中央揃え
+            # 中央揃え（ラベル）
             draw.text((base_x + (side_w - lw)//2, stats_y), label, font=font_label, fill=GRAY)
-            draw.text((base_x + (side_w - vw)//2, stats_y + 15), val, font=font_val, fill=DARK)
+            
+            # 中央揃え（値）
+            vw = _text_width(font_val, val)
+            val_x = base_x + (side_w - vw)//2
+            draw.text((val_x, stats_y + 15), val, font=font_val, fill=DARK)
+            
+            # 順位表示（値の右上に小さく）
+            if rank is not None:
+                rank_str = f"{rank}位"
+                rw = _text_width(font_rank, rank_str)
+                draw.text((val_x + vw + 5, stats_y + 18), rank_str, font=font_rank, fill=GOLD if rank <= 3 else GRAY)
+
             stats_y += 50
 
-    draw_user_side(username_a, data_a, True)
-    draw_user_side(username_b, data_b, False)
+    draw_user_side(username_a, data_a, True, ranks_a)
+    draw_user_side(username_b, data_b, False, ranks_b)
 
     return img

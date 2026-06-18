@@ -25,7 +25,17 @@ def handle_compare(api, cache, collector, parsed):
         if not data_b: missing.append(f"{user_b}")
         return format_error(f"{' と '.join(missing)} のデータを取得できませんでした。"), None
 
-    img = draw_comparison_image(user_a, data_a, user_b, data_b)
+    # ランキング順位を取得
+    ranks_a = {
+        "followers": cache.get_ranking("followers", user_a)[0],
+        "posts": cache.get_ranking("posts", user_a)[0]
+    }
+    ranks_b = {
+        "followers": cache.get_ranking("followers", user_b)[0],
+        "posts": cache.get_ranking("posts", user_b)[0]
+    }
+
+    img = draw_comparison_image(user_a, data_a, user_b, data_b, ranks_a, ranks_b)
     buf = io.BytesIO()
     img.save(buf, format="PNG")
     image_bytes = buf.getvalue()
