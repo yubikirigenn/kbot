@@ -5,9 +5,15 @@ import string
 
 
 class UserCollector:
-    def __init__(self, api, cache, history_manager=None):
+    def __init__(self, api_pool, cache, history_manager=None):
         import threading
-        self.api = api
+        import queue
+        # api_poolがリストでない場合（単一インスタンスの場合）はリストにする
+        self.api_pool = api_pool if isinstance(api_pool, list) else [api_pool]
+        self._api_queue = queue.Queue()
+        for api in self.api_pool:
+            self._api_queue.put(api)
+            
         self.cache = cache
         self.history_manager = history_manager
         self._lock = threading.Lock()
@@ -28,7 +34,7 @@ class UserCollector:
         collected = set()
 
         for page in range(1, 6):  # 最大5ページ
-            users, pagination = self.api.search_users(q, limit=50, page=page)
+            users, pagination = self.api_pool[0].search_users(q, limit=50, page=page)
             if not users:
                 break
             for u in users:
@@ -48,7 +54,7 @@ class UserCollector:
     def collect_from_recommended(self):
         """推奨ユーザーからも収集"""
         print("[COLLECT] 推奨ユーザーを収集中...")
-        users = self.api.get_recommended_users()
+        users = self.api_pool[0].get_recommended_users()
         for u in users:
             username = u.get("username", "")
             if username:
@@ -65,31 +71,47 @@ class UserCollector:
             usernames = list(self.cache.users.keys())
 
         print(f"[COLLECT] ユーザー詳細データを取得中... ({len(usernames)}ユーザー)")
+        
+        import concurrent.futures
+        
         enriched = 0
+        total = len(usernames)
+        
+        def fetch_user(username):
+            api = self._api_queue.get()
+            try:
+                user_data = api.get_user_detail(username)
+                return username, user_data
+            finally:
+                self._api_queue.put(api)
 
-        for i, username in enumerate(usernames):
-            user_data = self.api.get_user_detail(username)
-            if user_data:
-                self.cache.update_user(username, user_data)
-                enriched += 1
-            else:
-                # 取得失敗時（404など）も無限ループでキューを詰まらせないよう更新日時だけ進める
-                if username in self.cache.users:
-                    from datetime import datetime, timezone
-                    self.cache.users[username]["updatedAt"] = datetime.now(timezone.utc).isoformat()
+        with concurrent.futures.ThreadPoolExecutor(max_workers=len(self.api_pool)) as executor:
+            future_to_user = {executor.submit(fetch_user, uname): uname for uname in usernames}
+            for i, future in enumerate(concurrent.futures.as_completed(future_to_user)):
+                username, user_data = future.result()
+                
+                with self._lock:
+                    if user_data:
+                        self.cache.update_user(username, user_data)
+                        enriched += 1
+                    else:
+                        if username in self.cache.users:
+                            from datetime import datetime, timezone
+                            self.cache.users[username]["updatedAt"] = datetime.now(timezone.utc).isoformat()
+                            
+                    if (i + 1) % 10 == 0:
+                        self.cache.save()
+                        print(f"[COLLECT]   進捗: {i+1}/{total} ({enriched}件更新)")
 
-            # 10件ごとに保存・ログ出力（小刻みにする）
-            if (i + 1) % 10 == 0:
-                self.cache.save()
-                print(f"[COLLECT]   進捗: {i+1}/{len(usernames)} ({enriched}件更新)")
-
-        self.cache.save()
-        print(f"[COLLECT] 詳細データ取得完了: {enriched}/{len(usernames)}件更新")
+        with self._lock:
+            self.cache.save()
+            
+        print(f"[COLLECT] 詳細データ取得完了: {enriched}/{total}件更新")
         return enriched
 
     def enrich_single_user(self, username):
         """特定のユーザーの詳細を即座に取得・更新"""
-        user_data = self.api.get_user_detail(username)
+        user_data = self.api_pool[0].get_user_detail(username)
         if user_data:
             self.cache.update_user(username, user_data)
             self.cache.save()
@@ -173,7 +195,8 @@ class UserCollector:
             # updatedAt が古い順にソート（""は一番古くなる）
             existing_users.sort(key=lambda x: x[1])
             
-            rotation_count = 200
+            # api_poolの数に応じて1度に更新する件数を増やす（1アカウントあたり200件）
+            rotation_count = 200 * len(self.api_pool)
             for username, _ in existing_users[:rotation_count]:
                 needs_enrichment.append(username)
 

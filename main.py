@@ -240,9 +240,26 @@ def bot_worker():
     api = KarotterAPI(auth)
 
     # 収集用に別のAPIインスタンスを作成（スロットリングが干渉しないように）
-    collector_auth = AuthManager()
-    collector_auth.login()
-    collector_api = KarotterAPI(collector_auth)
+    from config import KAROTTER_ACCOUNTS
+    collector_apis = []
+    
+    if KAROTTER_ACCOUNTS:
+        accounts = [acc.strip() for acc in KAROTTER_ACCOUNTS.split(",") if ":" in acc]
+        for i, acc in enumerate(accounts):
+            u, p = acc.split(":", 1)
+            c_auth = AuthManager(username=u, password=p)
+            if c_auth.login():
+                collector_apis.append(KarotterAPI(c_auth))
+                print(f"[BOT] 収集用サブアカウント {i+1} ログイン成功 (@{u})")
+            else:
+                print(f"[BOT] 収集用サブアカウント {i+1} ログイン失敗 (@{u})")
+                
+    if not collector_apis:
+        # KAROTTER_ACCOUNTSの設定がない、または全て失敗した場合はメインアカウントを使用
+        collector_auth = AuthManager()
+        collector_auth.login()
+        collector_apis.append(KarotterAPI(collector_auth))
+        print("[BOT] 収集用メインアカウント ログイン成功")
 
     # GitHubからキャッシュを復元（再起動時のゼロダウンタイム化）
     restore_cache_from_github()
@@ -252,7 +269,7 @@ def bot_worker():
     from services.history_manager import HistoryManager
     history_manager = HistoryManager()
     
-    collector = UserCollector(collector_api, cache, history_manager)  # 収集用APIを使用
+    collector = UserCollector(collector_apis, cache, history_manager)  # 収集用APIプールを使用
     seen_ids = load_seen_ids()
 
     # キャッシュに既にデータがあれば即座に稼働開始、バックグラウンドで更新

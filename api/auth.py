@@ -6,15 +6,17 @@ from config import KAROTTER_INTERNAL_URL, USERNAME, PASSWORD
 
 
 class AuthManager:
-    def __init__(self):
+    def __init__(self, username=None, password=None):
         self.session = requests.Session()
         self.session.headers.update({"Content-Type": "application/json"})
         self.token = None
         self.last_login_time = 0
+        self.username = username or USERNAME
+        self.password = password or PASSWORD
 
     def login(self):
         """ログインしてBearerトークンを取得"""
-        payload = {"identifier": USERNAME, "password": PASSWORD, "gender": "other"}
+        payload = {"identifier": self.username, "password": self.password, "gender": "other"}
         for attempt in range(3):
             try:
                 r = requests.post(
@@ -25,7 +27,7 @@ class AuthManager:
                     self.token = r.json().get("accessToken")
                     self.session.headers.update({"Authorization": f"Bearer {self.token}"})
                     self.last_login_time = time.time()
-                    print(f"[AUTH] Login success (@{USERNAME})")
+                    print(f"[AUTH] Login success (@{self.username})")
                     return True
                 else:
                     print(f"[AUTH] Login failed (HTTP {r.status_code})")

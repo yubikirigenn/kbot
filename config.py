@@ -9,6 +9,7 @@ load_dotenv()
 USERNAME = os.getenv("KBOT_USERNAME", "kbot")
 PASSWORD = os.getenv("KBOT_PASSWORD", "")
 KAROTTER_API_KEY = os.getenv("KAROTTER_API_KEY", "")
+KAROTTER_ACCOUNTS = os.getenv("KAROTTER_ACCOUNTS", "")  # カンマ区切りの user:pass リスト
 
 # === API URL ===
 KAROTTER_INTERNAL_URL = "https://api.karotter.com/api"
