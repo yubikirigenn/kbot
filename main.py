@@ -239,25 +239,26 @@ def bot_worker():
 
     api = KarotterAPI(auth)
 
-    # 収集用にメインアカウントのAPIインスタンスを作成
-    collector_apis = []
+    # 収集用にメインアカウントのAPIインスタンスを作成（優先更新専用）
+    priority_apis = []
     collector_auth = AuthManager()
     if collector_auth.login():
-        collector_apis.append(KarotterAPI(collector_auth))
-        print("[BOT] 収集用メインアカウント ログイン成功")
+        priority_apis.append(KarotterAPI(collector_auth))
+        print("[BOT] 優先収集用メインアカウント ログイン成功")
     
-    # さらにKAROTTER_ACCOUNTSが設定されていれば、サブアカウントを並列ワーカーとして追加
+    # さらにKAROTTER_ACCOUNTSが設定されていれば、サブアカウントを一般更新専用ワーカーとして追加
     from config import KAROTTER_ACCOUNTS
+    normal_apis = []
     if KAROTTER_ACCOUNTS:
         accounts = [acc.strip() for acc in KAROTTER_ACCOUNTS.split(",") if ":" in acc]
         for i, acc in enumerate(accounts):
             u, p = acc.split(":", 1)
             c_auth = AuthManager(username=u, password=p)
             if c_auth.login():
-                collector_apis.append(KarotterAPI(c_auth))
-                print(f"[BOT] 収集用サブアカウント {i+1} ログイン成功 (@{u})")
+                normal_apis.append(KarotterAPI(c_auth))
+                print(f"[BOT] 一般収集用サブアカウント {i+1} ログイン成功 (@{u})")
             else:
-                print(f"[BOT] 収集用サブアカウント {i+1} ログイン失敗 (@{u})")
+                print(f"[BOT] 一般収集用サブアカウント {i+1} ログイン失敗 (@{u})")
 
     # GitHubからキャッシュを復元（再起動時のゼロダウンタイム化）
     restore_cache_from_github()
@@ -267,7 +268,7 @@ def bot_worker():
     from services.history_manager import HistoryManager
     history_manager = HistoryManager()
     
-    collector = UserCollector(collector_apis, cache, history_manager)  # 収集用APIプールを使用
+    collector = UserCollector(priority_apis, normal_apis, cache, history_manager)  # 役割分離したAPIプールを使用
     seen_ids = load_seen_ids()
 
     # キャッシュに既にデータがあれば即座に稼働開始、バックグラウンドで更新
@@ -287,7 +288,8 @@ def bot_worker():
 
         print("[BOT] キャッシュが少ないため、ユーザーデータの全体収集をバックグラウンドで開始...")
         try:
-            collector.full_collect()
+            collector.update_priority_users()
+            collector.update_normal_users()
         except Exception as e:
             print(f"[BOT] 収集でエラー（続行します）: {e}")
         finally:
@@ -327,12 +329,21 @@ def bot_worker():
             # 定期的にインクリメンタル更新（別スレッドで実行しポーリングをブロックしない）
             if time.time() - last_update_time > CACHE_UPDATE_INTERVAL:
                 last_update_time = time.time()
-                def run_update():
+                
+                def run_priority():
                     try:
-                        collector.incremental_update()
+                        collector.update_priority_users()
                     except Exception as e:
-                        print(f"[BOT] インクリメンタル更新エラー: {e}")
-                threading.Thread(target=run_update, daemon=True).start()
+                        print(f"[BOT] 優先更新エラー: {e}")
+                        
+                def run_normal():
+                    try:
+                        collector.update_normal_users()
+                    except Exception as e:
+                        print(f"[BOT] 一般更新エラー: {e}")
+                        
+                threading.Thread(target=run_priority, daemon=True).start()
+                threading.Thread(target=run_normal, daemon=True).start()
 
             # 定期的にGitHubにバックアップ（別スレッド）
             if time.time() - last_backup_time > BACKUP_INTERVAL:

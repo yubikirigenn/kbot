@@ -5,18 +5,26 @@ import string
 
 
 class UserCollector:
-    def __init__(self, api_pool, cache, history_manager=None):
+    def __init__(self, priority_api_pool, normal_api_pool, cache, history_manager=None):
         import threading
         import queue
-        # api_poolがリストでない場合（単一インスタンスの場合）はリストにする
-        self.api_pool = api_pool if isinstance(api_pool, list) else [api_pool]
-        self._api_queue = queue.Queue()
-        for api in self.api_pool:
-            self._api_queue.put(api)
+        
+        self.priority_api_pool = priority_api_pool if isinstance(priority_api_pool, list) else [priority_api_pool]
+        self._priority_api_queue = queue.Queue()
+        for api in self.priority_api_pool:
+            self._priority_api_queue.put(api)
+
+        self.normal_api_pool = normal_api_pool if isinstance(normal_api_pool, list) else [normal_api_pool]
+        self._normal_api_queue = queue.Queue()
+        for api in self.normal_api_pool:
+            self._normal_api_queue.put(api)
             
         self.cache = cache
         self.history_manager = history_manager
         self._lock = threading.RLock()
+        
+        self._priority_run_lock = threading.Lock()
+        self._normal_run_lock = threading.Lock()
         
         # 検索クエリ分割用
         self._search_queries = list(string.ascii_lowercase) + list(string.digits) + ["_"]
@@ -32,9 +40,11 @@ class UserCollector:
         
         print(f"[COLLECT] 検索APIでユーザーを収集中... (クエリ '{q}')")
         collected = set()
+        
+        api = self.normal_api_pool[0] if self.normal_api_pool else self.priority_api_pool[0]
 
         for page in range(1, 6):  # 最大5ページ
-            users, pagination = self.api_pool[0].search_users(q, limit=50, page=page)
+            users, pagination = api.search_users(q, limit=50, page=page)
             if not users:
                 break
             for u in users:
@@ -54,7 +64,8 @@ class UserCollector:
     def collect_from_recommended(self):
         """推奨ユーザーからも収集"""
         print("[COLLECT] 推奨ユーザーを収集中...")
-        users = self.api_pool[0].get_recommended_users()
+        api = self.normal_api_pool[0] if self.normal_api_pool else self.priority_api_pool[0]
+        users = api.get_recommended_users()
         for u in users:
             username = u.get("username", "")
             if username:
@@ -62,15 +73,14 @@ class UserCollector:
         self.cache.save()
         print(f"[COLLECT] 推奨ユーザー: {len(users)}件収集")
 
-    def enrich_user_details(self, usernames=None):
+    def _enrich_user_details_with_pool(self, usernames, api_queue, pool_size, tag="COLLECT"):
         """
-        ユーザー詳細データ（postsCount, createdAt）を取得して
-        キャッシュを充実させる
+        指定されたユーザー詳細を指定されたAPIプールで並列取得
         """
-        if usernames is None:
-            usernames = list(self.cache.users.keys())
-
-        print(f"[COLLECT] ユーザー詳細データを取得中... ({len(usernames)}ユーザー)")
+        if not usernames:
+            return 0
+            
+        print(f"[{tag}] ユーザー詳細データを取得中... ({len(usernames)}ユーザー)")
         
         import concurrent.futures
         
@@ -78,14 +88,14 @@ class UserCollector:
         total = len(usernames)
         
         def fetch_user(username):
-            api = self._api_queue.get()
+            api = api_queue.get()
             try:
                 user_data = api.get_user_detail(username)
                 return username, user_data
             finally:
-                self._api_queue.put(api)
+                api_queue.put(api)
 
-        with concurrent.futures.ThreadPoolExecutor(max_workers=len(self.api_pool)) as executor:
+        with concurrent.futures.ThreadPoolExecutor(max_workers=pool_size) as executor:
             future_to_user = {executor.submit(fetch_user, uname): uname for uname in usernames}
             for i, future in enumerate(concurrent.futures.as_completed(future_to_user)):
                 username, user_data = future.result()
@@ -101,108 +111,107 @@ class UserCollector:
                             
                     if (i + 1) % 10 == 0:
                         self.cache.save()
-                        print(f"[COLLECT]   進捗: {i+1}/{total} ({enriched}件更新)")
+                        print(f"[{tag}]   進捗: {i+1}/{total} ({enriched}件更新)")
 
         with self._lock:
             self.cache.save()
             
-        print(f"[COLLECT] 詳細データ取得完了: {enriched}/{total}件更新")
+        print(f"[{tag}] 詳細データ取得完了: {enriched}/{total}件更新")
         return enriched
 
     def enrich_single_user(self, username):
         """特定のユーザーの詳細を即座に取得・更新"""
-        user_data = self.api_pool[0].get_user_detail(username)
+        api = self.normal_api_pool[0] if self.normal_api_pool else self.priority_api_pool[0]
+        user_data = api.get_user_detail(username)
         if user_data:
-            self.cache.update_user(username, user_data)
-            self.cache.save()
+            with self._lock:
+                self.cache.update_user(username, user_data)
+                self.cache.save()
             return True
         return False
 
-    def full_collect(self):
-        """全体のユーザーを収集"""
-        if not self._lock.acquire(blocking=False):
-            print("[COLLECT] 既に収集処理が実行中のため、スキップします。")
+    def update_priority_users(self):
+        """上位層のユーザーを優先的に更新する（メインアカウント専用）"""
+        if not self._priority_run_lock.acquire(blocking=False):
+            print("[PRIORITY] 既に優先更新が実行中のためスキップします。")
             return
-
-        try:
-            print("="*50)
-            print("[COLLECT] ユーザーデータの全体収集を開始")
-            print("="*50)
-
-            self.collect_from_search()
-            self.collect_from_recommended()
-
-            # 全ユーザーの詳細データを取得
-            needs_enrichment = [
-                username for username, data in self.cache.users.items()
-            ]
-            if needs_enrichment:
-                self.enrich_user_details(needs_enrichment)
-
-            print(f"[COLLECT] 全体収集完了: {self.cache.user_count()}ユーザー "
-                  f"(アクティブ: {self.cache.active_user_count()})")
-        finally:
-            self._lock.release()
-
-    def incremental_update(self):
-        """インクリメンタル更新（定期実行）"""
-        if not self._lock.acquire(blocking=False):
-            print("[COLLECT] 既に収集処理が実行中のため、インクリメンタル更新をスキップします。")
-            return
-
-        try:
-            print("[COLLECT] ユーザーデータの差分更新中...")
-
-            self.collect_from_search()
-            self.collect_from_recommended()
-
-            # Top30ユーザーの抽出（投稿数、フォロワー数、レート）
-            top_posts = [u[0] for u in self.cache.get_top_n("posts", 30)] if hasattr(self.cache, 'get_top_n') else []
-            top_followers = [u[0] for u in self.cache.get_top_n("followers", 30)] if hasattr(self.cache, 'get_top_n') else []
-            top_rate = [u[0] for u in self.cache.get_top_n("rate", 30)] if hasattr(self.cache, 'get_top_n') else []
-            top_users = set(top_posts + top_followers + top_rate)
-
-            # さらに日間・週間の活動量上位ユーザーも優先更新対象に加える
-            if self.history_manager:
-                try:
-                    for period in ["day", "week"]:
-                        deltas = self.history_manager.get_deltas(self.cache, period)
-                        # delta_posts上位30名
-                        sorted_d = sorted(deltas.items(), key=lambda x: x[1].get("postsCount", 0), reverse=True)
-                        for uname, _ in sorted_d[:30]:
-                            top_users.add(uname)
-                        # rate上位30名
-                        sorted_r = sorted(deltas.items(), key=lambda x: x[1].get("rate", 0), reverse=True)
-                        for uname, _ in sorted_r[:30]:
-                            top_users.add(uname)
-                except Exception as e:
-                    print(f"[COLLECT] 日間/週間上位の抽出に失敗しました: {e}")
-
-            # 1. 必須更新（データ欠損・上位ユーザー）
-            needs_enrichment = [
-                username for username, data in self.cache.users.items()
-                if not data.get("createdAt") or not data.get("updatedAt")
-                or username in top_users
-            ]
-
-            # 2. 定期ローテーション更新（古い順に最大200件ずつ更新）
-            # 必須更新に含まれていないユーザーを対象とする
-            existing_users = [
-                (username, data.get("updatedAt", "")) 
-                for username, data in self.cache.users.items() 
-                if username not in needs_enrichment
-            ]
-            # updatedAt が古い順にソート（""は一番古くなる）
-            existing_users.sort(key=lambda x: x[1])
             
-            # api_poolの数に応じて1度に更新する件数を増やす（1アカウントあたり200件）
-            rotation_count = 200 * len(self.api_pool)
-            for username, _ in existing_users[:rotation_count]:
-                needs_enrichment.append(username)
+        try:
+            print("[PRIORITY] 優先ユーザー（上位層）の更新を開始します...")
+            
+            with self._lock:
+                # Top30ユーザーの抽出（投稿数、フォロワー数、レート）
+                top_posts = [u[0] for u in self.cache.get_top_n("posts", 30)] if hasattr(self.cache, 'get_top_n') else []
+                top_followers = [u[0] for u in self.cache.get_top_n("followers", 30)] if hasattr(self.cache, 'get_top_n') else []
+                top_rate = [u[0] for u in self.cache.get_top_n("rate", 30)] if hasattr(self.cache, 'get_top_n') else []
+                top_users = set(top_posts + top_followers + top_rate)
+
+                # さらに日間・週間の活動量上位ユーザーも優先更新対象に加える
+                if self.history_manager:
+                    try:
+                        for period in ["day", "week"]:
+                            deltas = self.history_manager.get_deltas(self.cache, period)
+                            sorted_d = sorted(deltas.items(), key=lambda x: x[1].get("postsCount", 0), reverse=True)
+                            for uname, _ in sorted_d[:30]:
+                                top_users.add(uname)
+                            sorted_r = sorted(deltas.items(), key=lambda x: x[1].get("rate", 0), reverse=True)
+                            for uname, _ in sorted_r[:30]:
+                                top_users.add(uname)
+                    except Exception as e:
+                        print(f"[PRIORITY] 日間/週間上位の抽出に失敗しました: {e}")
+
+                # 必須更新（データ欠損）も優先に含める
+                needs_enrichment = [
+                    username for username, data in self.cache.users.items()
+                    if not data.get("createdAt") or not data.get("updatedAt")
+                    or username in top_users
+                ]
+                
+            if needs_enrichment:
+                self._enrich_user_details_with_pool(
+                    needs_enrichment, 
+                    self._priority_api_queue, 
+                    len(self.priority_api_pool),
+                    tag="PRIORITY"
+                )
+        finally:
+            self._priority_run_lock.release()
+            
+    def update_normal_users(self):
+        """一般ユーザーを地道に更新する（サブアカウント専用）"""
+        if not self._normal_run_lock.acquire(blocking=False):
+            print("[NORMAL] 既に一般更新が実行中のためスキップします。")
+            return
+            
+        try:
+            print("[NORMAL] 一般ユーザーのローテーション更新を開始します...")
+            
+            # 定期的な新規ユーザー検索もここで実行
+            self.collect_from_search()
+            self.collect_from_recommended()
+            
+            with self._lock:
+                # updatedAt が古い順に取得
+                existing_users = [
+                    (username, data.get("updatedAt", "")) 
+                    for username, data in self.cache.users.items() 
+                ]
+                existing_users.sort(key=lambda x: x[1])
+                
+                # APIプールの数に応じて1度に更新する件数を決める（1アカウントあたり200件）
+                rotation_count = 200 * len(self.normal_api_pool) if self.normal_api_pool else 200
+                needs_enrichment = [username for username, _ in existing_users[:rotation_count]]
 
             if needs_enrichment:
-                self.enrich_user_details(needs_enrichment)
-
-            print(f"[COLLECT] 差分更新完了: {self.cache.user_count()}ユーザー")
+                # normal_api_pool が空の場合は fallback として priority を使う
+                q = self._normal_api_queue if self.normal_api_pool else self._priority_api_queue
+                size = len(self.normal_api_pool) if self.normal_api_pool else len(self.priority_api_pool)
+                
+                self._enrich_user_details_with_pool(
+                    needs_enrichment, 
+                    q, 
+                    size,
+                    tag="NORMAL"
+                )
         finally:
-            self._lock.release()
+            self._normal_run_lock.release()
