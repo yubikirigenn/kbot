@@ -12,9 +12,9 @@ def handle_compare(api, cache, collector, parsed):
     if not user_a or not user_b:
         return format_error("比較する2人のユーザーを指定してください。(例: @kbot @userA vs @userB)"), None
 
-    # 最新情報を取得
-    collector.enrich_single_user(user_a)
-    collector.enrich_single_user(user_b)
+    # 最新情報を取得し、正規化されたユーザー名を取得
+    user_a = collector.enrich_single_user(user_a)
+    user_b = collector.enrich_single_user(user_b)
 
     data_a = cache.get_user(user_a)
     data_b = cache.get_user(user_b)

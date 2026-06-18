@@ -120,15 +120,16 @@ class UserCollector:
         return enriched
 
     def enrich_single_user(self, username):
-        """特定のユーザーの詳細を即座に取得・更新"""
-        api = self.normal_api_pool[0] if self.normal_api_pool else self.priority_api_pool[0]
+        """特定のユーザーの詳細を即座に取得・更新し、正規化されたユーザー名を返す"""
+        api = self.priority_api_pool[0]
         user_data = api.get_user_detail(username)
         if user_data:
+            canonical_username = user_data.get("username", username)
             with self._lock:
-                self.cache.update_user(username, user_data)
+                self.cache.update_user(canonical_username, user_data)
                 self.cache.save()
-            return True
-        return False
+            return canonical_username
+        return username
 
     def update_priority_users(self):
         """上位層のユーザーを優先的に更新する（メインアカウント専用）"""
