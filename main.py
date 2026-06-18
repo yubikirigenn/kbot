@@ -239,10 +239,15 @@ def bot_worker():
 
     api = KarotterAPI(auth)
 
-    # 収集用に別のAPIインスタンスを作成（スロットリングが干渉しないように）
-    from config import KAROTTER_ACCOUNTS
+    # 収集用にメインアカウントのAPIインスタンスを作成
     collector_apis = []
+    collector_auth = AuthManager()
+    if collector_auth.login():
+        collector_apis.append(KarotterAPI(collector_auth))
+        print("[BOT] 収集用メインアカウント ログイン成功")
     
+    # さらにKAROTTER_ACCOUNTSが設定されていれば、サブアカウントを並列ワーカーとして追加
+    from config import KAROTTER_ACCOUNTS
     if KAROTTER_ACCOUNTS:
         accounts = [acc.strip() for acc in KAROTTER_ACCOUNTS.split(",") if ":" in acc]
         for i, acc in enumerate(accounts):
@@ -253,13 +258,6 @@ def bot_worker():
                 print(f"[BOT] 収集用サブアカウント {i+1} ログイン成功 (@{u})")
             else:
                 print(f"[BOT] 収集用サブアカウント {i+1} ログイン失敗 (@{u})")
-                
-    if not collector_apis:
-        # KAROTTER_ACCOUNTSの設定がない、または全て失敗した場合はメインアカウントを使用
-        collector_auth = AuthManager()
-        collector_auth.login()
-        collector_apis.append(KarotterAPI(collector_auth))
-        print("[BOT] 収集用メインアカウント ログイン成功")
 
     # GitHubからキャッシュを復元（再起動時のゼロダウンタイム化）
     restore_cache_from_github()
