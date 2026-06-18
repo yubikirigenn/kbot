@@ -16,7 +16,7 @@ class UserCollector:
             
         self.cache = cache
         self.history_manager = history_manager
-        self._lock = threading.Lock()
+        self._lock = threading.RLock()
         
         # 検索クエリ分割用
         self._search_queries = list(string.ascii_lowercase) + list(string.digits) + ["_"]
