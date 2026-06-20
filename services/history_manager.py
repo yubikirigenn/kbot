@@ -98,8 +98,12 @@ class HistoryManager:
                 pass
 
         deltas = {}
+        snapshot_dirty = False
+
         for username, current_data in cache.users.items():
-            past_data = snapshot.get(username, {})
+            # 大文字小文字を無視して一致する過去のキーをスナップショットから安全に検索
+            past_key = next((k for k in snapshot.keys() if k.lower() == username.lower()), None)
+            past_data = snapshot.get(past_key, {}) if past_key else {}
             
             past_posts = past_data.get("postsCount")
             past_followers = past_data.get("followersCount")
@@ -128,6 +132,15 @@ class HistoryManager:
                 else:
                     past_posts = cur_posts
                     past_followers = cur_followers
+                
+                # 補完した過去値をスナップショットに記録する
+                # (大文字小文字のズレで別人扱いにしないため、元の表記 username をキーにする)
+                snapshot[username] = {
+                    "postsCount": past_posts,
+                    "followersCount": past_followers,
+                    "rate": current_data.get("rate", 0.0)
+                }
+                snapshot_dirty = True
 
             delta_posts = max(0, cur_posts - past_posts)
             delta_followers = cur_followers - past_followers
@@ -140,5 +153,27 @@ class HistoryManager:
                 "followersCount": delta_followers,
                 "rate": calc_rate
             }
+            
+        # 補完が発生した場合はスナップショットファイルを再保存
+        if snapshot_dirty:
+            self._save_modified_snapshot(period)
         
         return deltas
+
+    def _save_modified_snapshot(self, period):
+        """get_deltas 内で補完されたスナップショットをディスクに保存"""
+        snapshot = self.daily_snapshot if period == "day" else self.weekly_snapshot
+        snapshot_timestamp = self.daily_timestamp if period == "day" else self.weekly_timestamp
+        
+        save_data = {
+            "timestamp": snapshot_timestamp,
+            "users": snapshot
+        }
+        
+        file_path = DAILY_HISTORY_FILE if period == "day" else WEEKLY_HISTORY_FILE
+        try:
+            with open(file_path, "w", encoding="utf-8") as f:
+                json.dump(save_data, f, ensure_ascii=False, indent=2)
+            print(f"📂 {period} のスナップショット（補完データ追加）を永続化しました。")
+        except Exception as e:
+            print(f"⚠️ {period} 履歴の自動永続化エラー: {e}")

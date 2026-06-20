@@ -360,33 +360,51 @@ def bot_worker():
             jst = timezone(timedelta(hours=9))
             now_jst = datetime.now(jst)
             
-            # 日間チェック（日付が変わっていたらスナップショット更新）
-            snapshot_updated = False
+            # 日間/週間スナップショットの更新が必要かどうかのフラグ
+            need_daily_snapshot = False
+            need_weekly_snapshot = False
+            
             if history_manager.daily_timestamp:
                 try:
                     last_daily_dt = datetime.fromisoformat(history_manager.daily_timestamp).astimezone(jst)
                     if last_daily_dt.date() < now_jst.date():
-                        history_manager.save_snapshot(cache, "day")
-                        snapshot_updated = True
+                        need_daily_snapshot = True
                 except Exception:
                     pass
             elif cache.user_count() > 0:
-                history_manager.save_snapshot(cache, "day")
-                snapshot_updated = True
+                need_daily_snapshot = True
                 
-            # 週間チェック（月曜日になっていて、かつ週が新しければ更新）
             if history_manager.weekly_timestamp:
                 try:
                     last_weekly_dt = datetime.fromisoformat(history_manager.weekly_timestamp).astimezone(jst)
-                    # iso年とiso週番号を比較
                     if last_weekly_dt.isocalendar()[:2] < now_jst.isocalendar()[:2]:
-                        history_manager.save_snapshot(cache, "week")
-                        snapshot_updated = True
+                        need_weekly_snapshot = True
                 except Exception:
                     pass
             elif cache.user_count() > 0:
-                history_manager.save_snapshot(cache, "week")
-                snapshot_updated = True
+                need_weekly_snapshot = True
+                
+            # 更新が必要なスナップショットがあれば、保存する前に同期更新を実行
+            snapshot_updated = False
+            if need_daily_snapshot or need_weekly_snapshot:
+                try:
+                    collector.enrich_top_users_for_snapshot()
+                except Exception as e:
+                    print(f"[BOT] スナップショット保存前の同期更新でエラー（続行します）: {e}")
+                
+                if need_daily_snapshot:
+                    try:
+                        history_manager.save_snapshot(cache, "day")
+                        snapshot_updated = True
+                    except Exception as e:
+                        print(f"[BOT] 日間スナップショット保存エラー: {e}")
+                        
+                if need_weekly_snapshot:
+                    try:
+                        history_manager.save_snapshot(cache, "week")
+                        snapshot_updated = True
+                    except Exception as e:
+                        print(f"[BOT] 週間スナップショット保存エラー: {e}")
 
             if snapshot_updated:
                 def run_snapshot_backup():

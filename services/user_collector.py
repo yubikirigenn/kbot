@@ -132,7 +132,7 @@ class UserCollector:
         return username
 
     def update_priority_users(self):
-        """上位層のユーザーを優先的に更新する（メインアカウント専用）"""
+        """上位層のユーザーを優先的に更新する（メインアカウント専用。最大15件制限）"""
         if not self._priority_run_lock.acquire(blocking=False):
             print("[PRIORITY] 既に優先更新が実行中のためスキップします。")
             return
@@ -161,12 +161,15 @@ class UserCollector:
                     except Exception as e:
                         print(f"[PRIORITY] 日間/週間上位の抽出に失敗しました: {e}")
 
-                # 必須更新（データ欠損）も優先に含める
-                needs_enrichment = [
-                    username for username, data in self.cache.users.items()
-                    if not data.get("createdAt") or not data.get("updatedAt")
-                    or username in top_users
+                # 優先度（更新日時 updatedAt が古い順）にソートして、上位15件のみを今回の更新対象とする
+                target_users = [
+                    (username, self.cache.users[username].get("updatedAt", ""))
+                    for username in top_users
+                    if username in self.cache.users
                 ]
+                target_users.sort(key=lambda x: x[1])  # updatedAt が古い順
+                
+                needs_enrichment = [username for username, _ in target_users[:15]]
                 
             if needs_enrichment:
                 self._enrich_user_details_with_pool(
@@ -179,7 +182,7 @@ class UserCollector:
             self._priority_run_lock.release()
             
     def update_normal_users(self):
-        """一般ユーザーを地道に更新する（サブアカウント専用）"""
+        """一般ユーザーを地道に更新する（サブアカウント専用。データ欠損を最優先）"""
         if not self._normal_run_lock.acquire(blocking=False):
             print("[NORMAL] 既に一般更新が実行中のためスキップします。")
             return
@@ -192,16 +195,28 @@ class UserCollector:
             self.collect_from_recommended()
             
             with self._lock:
-                # updatedAt が古い順に取得
+                # 1. まずデータ欠損（createdAt/updatedAtなし）のユーザーを抽出
+                missing_users = [
+                    username for username, data in self.cache.users.items()
+                    if not data.get("createdAt") or not data.get("updatedAt")
+                ]
+                
+                # 2. それ以外の一般ユーザーを updatedAt が古い順に取得
                 existing_users = [
                     (username, data.get("updatedAt", "")) 
-                    for username, data in self.cache.users.items() 
+                    for username, data in self.cache.users.items()
+                    if username not in missing_users
                 ]
                 existing_users.sort(key=lambda x: x[1])
                 
                 # APIプールの数に応じて1度に更新する件数を決める（1アカウントあたり200件）
                 rotation_count = 200 * len(self.normal_api_pool) if self.normal_api_pool else 200
-                needs_enrichment = [username for username, _ in existing_users[:rotation_count]]
+                
+                # 欠損ユーザーを最優先で詰め、足りない分を古いユーザーで補う
+                needs_enrichment = missing_users[:rotation_count]
+                if len(needs_enrichment) < rotation_count:
+                    fill_count = rotation_count - len(needs_enrichment)
+                    needs_enrichment.extend([username for username, _ in existing_users[:fill_count]])
 
             if needs_enrichment:
                 # normal_api_pool が空の場合は fallback として priority を使う
@@ -216,3 +231,24 @@ class UserCollector:
                 )
         finally:
             self._normal_run_lock.release()
+
+    def enrich_top_users_for_snapshot(self):
+        """スナップショット保存前に、最重要ユーザー（Top15）のデータを同期的に更新する"""
+        print("[SNAPSHOT_SYNC] スナップショット作成前の重要ユーザー同期更新を開始...")
+        
+        with self._lock:
+            # 投稿数、フォロワー数、レートの各上位15名の和集合を取得
+            top_posts = [u[0] for u in self.cache.get_top_n("posts", 15)] if hasattr(self.cache, 'get_top_n') else []
+            top_followers = [u[0] for u in self.cache.get_top_n("followers", 15)] if hasattr(self.cache, 'get_top_n') else []
+            top_rate = [u[0] for u in self.cache.get_top_n("rate", 15)] if hasattr(self.cache, 'get_top_n') else []
+            top_users = list(set(top_posts + top_followers + top_rate))
+
+        # スレッドプールを使って同期更新を実行（優先プールを使用）
+        if top_users:
+            self._enrich_user_details_with_pool(
+                top_users,
+                self._priority_api_queue,
+                len(self.priority_api_pool),
+                tag="SNAPSHOT_SYNC"
+            )
+        print("[SNAPSHOT_SYNC] 同期更新が完了しました。")
