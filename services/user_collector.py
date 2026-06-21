@@ -101,14 +101,59 @@ class UserCollector:
                 username, user_data = future.result()
                 
                 with self._lock:
+                    cache_before_posts = self.cache.users.get(username, {}).get("postsCount")
+                    api_posts = user_data.get("postsCount") if user_data else None
+                    update_user_called = False
+                    user_data_is_none = user_data is None
+
                     if user_data:
                         self.cache.update_user(username, user_data)
                         enriched += 1
+                        update_user_called = True
                     else:
                         if username in self.cache.users:
                             from datetime import datetime, timezone
                             self.cache.users[username]["updatedAt"] = datetime.now(timezone.utc).isoformat()
-                            
+                    
+                    cache_after_posts = self.cache.users.get(username, {}).get("postsCount")
+
+                    is_trace_target = username in ['zc', 'gotoh', 'miyaaa_96', 'DA']
+                    is_anomaly = False
+                    event_type = ""
+
+                    if user_data_is_none:
+                        is_anomaly = True
+                        event_type = "API_FAIL"
+                    else:
+                        if cache_after_posts != api_posts:
+                            is_anomaly = True
+                            event_type = "CACHE_NOT_UPDATED"
+                        elif cache_before_posts is not None and api_posts is not None and api_posts < cache_before_posts:
+                            is_anomaly = True
+                            event_type = "API_VAL_ANOMALY"
+
+                    if is_trace_target and not is_anomaly:
+                        event_type = "TRACE"
+                    
+                    if is_anomaly or is_trace_target:
+                        import json
+                        import threading
+                        from datetime import datetime, timezone
+                        now_str = datetime.now(timezone.utc).isoformat()
+                        log_entry = {
+                            "trace_id": f"{now_str}-{username}",
+                            "time": now_str,
+                            "thread": threading.current_thread().name,
+                            "username": username,
+                            "event": event_type,
+                            "api_posts": api_posts,
+                            "cache_before_posts": cache_before_posts,
+                            "cache_after_posts": cache_after_posts,
+                            "update_user_called": update_user_called,
+                            "user_data_is_none": user_data_is_none
+                        }
+                        print(json.dumps(log_entry), flush=True)
+
                     if (i + 1) % 10 == 0:
                         self.cache.save()
                         print(f"[{tag}]   進捗: {i+1}/{total} ({enriched}件更新)")
