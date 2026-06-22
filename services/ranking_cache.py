@@ -34,6 +34,23 @@ class RankingCache:
     def save(self):
         """キャッシュファイルに保存"""
         with self._lock:
+            import inspect
+            import os
+            import json
+            from datetime import datetime, timezone
+            try:
+                print(json.dumps({
+                    "event": "SAVE",
+                    "pid": os.getpid(),
+                    "thread": threading.current_thread().name,
+                    "caller": inspect.stack()[1].function if len(inspect.stack()) > 1 else "unknown",
+                    "zc": self.users.get("zc", {}).get("postsCount"),
+                    "gotoh": self.users.get("gotoh", {}).get("postsCount"),
+                    "time": datetime.now(timezone.utc).isoformat()
+                }), flush=True)
+            except Exception as le:
+                print(f"⚠️ ログ書き出しエラー: {le}")
+
             try:
                 self._ensure_data_dir()
                 with open(USER_CACHE_FILE, "w", encoding="utf-8") as f:

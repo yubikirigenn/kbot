@@ -86,6 +86,10 @@ def _download_file_from_github(repo, token, filepath, dest_path):
 
 def restore_cache_from_github():
     """GitHub cache ブランチからキャッシュファイルをダウンロードして復元"""
+    if os.environ.get("DISABLE_GITHUB_CACHE", "").lower() == "true":
+        print("[CACHE] DISABLE_GITHUB_CACHE is set to true, skipping restore")
+        return False
+
     github_token = os.environ.get("GITHUB_TOKEN", "").strip()
     github_repo = os.environ.get("GITHUB_REPO", "").strip()
     if not github_token or not github_repo:
@@ -146,6 +150,10 @@ def _upload_file_to_github(repo, token, filepath, source_path, message):
 def backup_cache_to_github(cache):
     """GitHub API を使って cache ブランチにキャッシュファイルをバックアップ"""
     import os
+    if os.environ.get("DISABLE_GITHUB_CACHE", "").lower() == "true":
+        print("[CACHE] DISABLE_GITHUB_CACHE is set to true, skipping backup")
+        return False
+
     github_token = os.environ.get("GITHUB_TOKEN", "").strip()
     github_repo = os.environ.get("GITHUB_REPO", "").strip()
     if not github_token or not github_repo:
