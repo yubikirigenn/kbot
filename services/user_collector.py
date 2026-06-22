@@ -110,6 +110,15 @@ class UserCollector:
                     if user_data and not is_deleted:
                         api_posts = user_data.get("postsCount")
 
+                    from utils.anomaly_detector import detector
+                    detector.trace("API_FETCH", f"fetch_{username}", cache_obj=self.cache, extra={
+                        "target_username": username,
+                        "api_posts": api_posts,
+                        "user_data_is_none": user_data_is_none,
+                        "is_deleted": is_deleted,
+                        "tag": tag
+                    })
+
                     if user_data:
                         if is_deleted:
                             self.cache.delete_user(username)

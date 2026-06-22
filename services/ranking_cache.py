@@ -34,22 +34,8 @@ class RankingCache:
     def save(self):
         """キャッシュファイルに保存"""
         with self._lock:
-            import inspect
-            import os
-            import json
-            from datetime import datetime, timezone
-            try:
-                print(json.dumps({
-                    "event": "SAVE",
-                    "pid": os.getpid(),
-                    "thread": threading.current_thread().name,
-                    "caller": inspect.stack()[1].function if len(inspect.stack()) > 1 else "unknown",
-                    "zc": self.users.get("zc", {}).get("postsCount"),
-                    "gotoh": self.users.get("gotoh", {}).get("postsCount"),
-                    "time": datetime.now(timezone.utc).isoformat()
-                }), flush=True)
-            except Exception as le:
-                print(f"⚠️ ログ書き出しエラー: {le}")
+            from utils.anomaly_detector import detector
+            detector.trace("SAVE_BEFORE", "save", cache_obj=self)
 
             try:
                 self._ensure_data_dir()
@@ -58,12 +44,17 @@ class RankingCache:
             except Exception as e:
                 print(f"⚠️ キャッシュ保存エラー: {e}")
 
+            detector.trace("SAVE_AFTER", "save", cache_obj=self)
+
     def update_user(self, username, user_data):
         """ユーザーデータを更新"""
         if not user_data or not username:
             return
 
         with self._lock:
+            from utils.anomaly_detector import detector
+            detector.trace("CACHE_UPDATE_BEFORE", f"update_user_{username}", cache_obj=self, extra={"update_data": {"postsCount": user_data.get("postsCount")}})
+
             old_data = self.users.get(username, {})
 
             # API側が負荷等で0や空を返すことがあるため、古いデータがある場合は欠損を補完・保護する
@@ -109,6 +100,8 @@ class RankingCache:
                 "avatarUrl": avatar_url,
                 "updatedAt": datetime.now(timezone.utc).isoformat()
             }
+            from utils.anomaly_detector import detector
+            detector.trace("CACHE_UPDATE_AFTER", f"update_user_{username}", cache_obj=self)
 
     def update_user_from_search(self, user_data):
         """検索APIの結果からユーザーデータを部分更新（followersCountのみ）"""

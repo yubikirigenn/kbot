@@ -43,6 +43,9 @@ class HistoryManager:
 
     def save_snapshot(self, cache, period):
         """現在のキャッシュ状態をスナップショットとして保存"""
+        from utils.anomaly_detector import detector
+        detector.trace("SNAPSHOT_SAVE_BEFORE", f"save_snapshot_{period}", cache_obj=cache)
+
         snapshot = {}
         for username, data in cache.users.items():
             snapshot[username] = {

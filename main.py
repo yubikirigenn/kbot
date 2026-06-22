@@ -159,6 +159,9 @@ def backup_cache_to_github(cache):
     if not github_token or not github_repo:
         return False
 
+    from utils.anomaly_detector import detector
+    detector.trace("GITHUB_BACKUP_BEFORE", "backup_cache_to_github", cache_obj=cache)
+
     cache.save()
     
     success = False
@@ -168,6 +171,7 @@ def backup_cache_to_github(cache):
     _upload_file_to_github(github_repo, github_token, "data/history_daily.json", "data/history_daily.json", "[auto] Daily history backup")
     _upload_file_to_github(github_repo, github_token, "data/history_weekly.json", "data/history_weekly.json", "[auto] Weekly history backup")
 
+    detector.trace("GITHUB_BACKUP_AFTER", "backup_cache_to_github", cache_obj=cache, extra={"success": success})
     return success
 
 
@@ -273,6 +277,9 @@ def bot_worker():
 
     cache = RankingCache()
     
+    from utils.anomaly_detector import detector
+    detector.trace("GITHUB_RESTORE", "bot_worker_init", cache_obj=cache)
+    
     from services.history_manager import HistoryManager
     history_manager = HistoryManager()
     
@@ -328,6 +335,13 @@ def bot_worker():
 
     while True:
         try:
+            from utils.anomaly_detector import detector
+            with cache._lock:
+                for target in detector.targets:
+                    t_data = cache.users.get(target, {})
+                    posts = t_data.get("postsCount")
+                    detector.check_value(target, posts)
+
             auth.ensure_login()
             loop_count += 1
 
