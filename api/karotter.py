@@ -33,9 +33,12 @@ class KarotterAPI:
         """ユーザー詳細を取得（postsCount, followersCount, createdAt含む）"""
         self._throttle()
         res = self.auth.request("GET", f"/users/{username}")
-        if res and res.status_code == 200:
-            data = res.json()
-            return data.get("user", data)
+        if res:
+            if res.status_code == 200:
+                data = res.json()
+                return data.get("user", data)
+            elif res.status_code == 404:
+                return {"is_deleted": True}
         return None
 
     def search_users(self, query, limit=100, page=1):

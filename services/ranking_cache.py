@@ -209,6 +209,15 @@ class RankingCache:
         with self._lock:
             return self.users.get(username)
 
+    def delete_user(self, username):
+        """ユーザーをキャッシュから削除"""
+        with self._lock:
+            if username in self.users:
+                del self.users[username]
+                print(f"🗑️ キャッシュからユーザーを削除しました: {username}")
+                return True
+        return False
+
     def user_count(self):
         with self._lock:
             return len(self.users)

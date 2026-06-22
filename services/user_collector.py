@@ -102,28 +102,36 @@ class UserCollector:
                 
                 with self._lock:
                     cache_before_posts = self.cache.users.get(username, {}).get("postsCount")
-                    api_posts = user_data.get("postsCount") if user_data else None
                     update_user_called = False
                     user_data_is_none = user_data is None
+                    is_deleted = isinstance(user_data, dict) and user_data.get("is_deleted", False)
+
+                    api_posts = None
+                    if user_data and not is_deleted:
+                        api_posts = user_data.get("postsCount")
 
                     if user_data:
-                        self.cache.update_user(username, user_data)
-                        enriched += 1
-                        update_user_called = True
+                        if is_deleted:
+                            self.cache.delete_user(username)
+                        else:
+                            self.cache.update_user(username, user_data)
+                            enriched += 1
+                            update_user_called = True
                     else:
-                        if username in self.cache.users:
-                            from datetime import datetime, timezone
-                            self.cache.users[username]["updatedAt"] = datetime.now(timezone.utc).isoformat()
+                        pass
                     
-                    cache_after_posts = self.cache.users.get(username, {}).get("postsCount")
+                    cache_after_posts = self.cache.users.get(username, {}).get("postsCount") if username in self.cache.users else None
 
-                    is_trace_target = username in ['zc', 'gotoh', 'miyaaa_96', 'DA']
+                    is_trace_target = username in ['zc', 'gotoh', 'miyaaa_96', 'DA', 'komone_neko222']
                     is_anomaly = False
                     event_type = ""
 
                     if user_data_is_none:
                         is_anomaly = True
                         event_type = "API_FAIL"
+                    elif is_deleted:
+                        is_anomaly = True
+                        event_type = "USER_DELETED"
                     else:
                         if cache_after_posts != api_posts:
                             is_anomaly = True
@@ -144,13 +152,15 @@ class UserCollector:
                             "trace_id": f"{now_str}-{username}",
                             "time": now_str,
                             "thread": threading.current_thread().name,
+                            "source": tag,
                             "username": username,
                             "event": event_type,
                             "api_posts": api_posts,
                             "cache_before_posts": cache_before_posts,
                             "cache_after_posts": cache_after_posts,
                             "update_user_called": update_user_called,
-                            "user_data_is_none": user_data_is_none
+                            "user_data_is_none": user_data_is_none,
+                            "is_deleted": is_deleted
                         }
                         print(json.dumps(log_entry), flush=True)
 
