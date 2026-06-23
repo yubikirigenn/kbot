@@ -1045,7 +1045,7 @@
   },
   "namazakana": {
     "postsCount": 416,
-    "followersCount": 206,
+    "followersCount": 207,
     "followingCount": 239,
     "createdAt": "2026-03-23T10:41:21.698Z",
     "rate": 0.1884,
@@ -4033,7 +4033,7 @@
   },
   "konamikan_bot": {
     "postsCount": 2575,
-    "followersCount": 61,
+    "followersCount": 62,
     "followingCount": 96,
     "createdAt": "2026-06-02T07:47:44.933Z",
     "rate": 5.0958,
@@ -10069,7 +10069,7 @@
   },
   "gonzou_tanaka": {
     "postsCount": 4,
-    "followersCount": 50,
+    "followersCount": 51,
     "followingCount": 49,
     "createdAt": "2026-03-23T04:12:58.430Z",
     "rate": 0.0018,
@@ -13914,7 +13914,7 @@
     "createdAt": "2026-04-09T12:38:04.031Z",
     "rate": 4.2548,
     "isBot": false,
-    "isPrivate": false,
+    "isPrivate": true,
     "displayName": "自認絵の具",
     "avatarUrl": "/uploads/avatars/avatar_33834_1781968632340.webp",
     "updatedAt": "2026-06-23T10:50:29.338133+00:00"
@@ -18361,7 +18361,7 @@
   },
   "aab": {
     "postsCount": 446,
-    "followersCount": 30,
+    "followersCount": 31,
     "followingCount": 6,
     "createdAt": "2026-03-25T09:35:41.356Z",
     "rate": 0.2064,
@@ -27014,7 +27014,7 @@
   "ONmyunGG": {
     "postsCount": 731,
     "followersCount": 54,
-    "followingCount": 61,
+    "followingCount": 62,
     "createdAt": "2026-04-18T16:03:54.540Z",
     "rate": 0.463,
     "isBot": false,
