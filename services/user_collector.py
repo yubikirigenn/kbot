@@ -119,6 +119,23 @@ class UserCollector:
                         "tag": tag
                     })
 
+                    # 生レスポンスログの常時出力
+                    import json
+                    import os
+                    from datetime import datetime, timezone
+                    raw_log = {
+                        "event": "RAW_API_RESPONSE",
+                        "time": datetime.now(timezone.utc).isoformat(),
+                        "pid": os.getpid(),
+                        "thread": threading.current_thread().name,
+                        "tag": tag,
+                        "username": username,
+                        "api_posts": api_posts,
+                        "user_data_is_none": user_data_is_none,
+                        "is_deleted": is_deleted
+                    }
+                    print(json.dumps(raw_log), flush=True)
+
                     if user_data:
                         if is_deleted:
                             self.cache.delete_user(username)
@@ -183,6 +200,40 @@ class UserCollector:
         print(f"[{tag}] 詳細データ取得完了: {enriched}/{total}件更新")
         return enriched
 
+    def _compare_and_log_apis(self, username):
+        """メインアカウントとサブアカウントのAPIレスポンスの生のpostsCountを同時取得して比較・ログ出力"""
+        if not self.normal_api_pool or not self.priority_api_pool:
+            return
+            
+        priority_api = self.priority_api_pool[0]
+        normal_api = self.normal_api_pool[0]
+        
+        # ほぼ同時に取得
+        priority_data = priority_api.get_user_detail(username)
+        normal_data = normal_api.get_user_detail(username)
+        
+        priority_posts = priority_data.get("postsCount") if priority_data else None
+        normal_posts = normal_data.get("postsCount") if normal_data else None
+        
+        import json
+        import os
+        import threading
+        from datetime import datetime, timezone
+        
+        log_entry = {
+            "event": "API_COMPARE",
+            "time": datetime.now(timezone.utc).isoformat(),
+            "pid": os.getpid(),
+            "thread": threading.current_thread().name,
+            "username": username,
+            "priority_account": priority_api.auth.username,
+            "normal_account": normal_api.auth.username,
+            "priority_posts": priority_posts,
+            "normal_posts": normal_posts,
+            "match": priority_posts == normal_posts
+        }
+        print(json.dumps(log_entry), flush=True)
+
     def enrich_single_user(self, username):
         """特定のユーザーの詳細を即座に取得・更新し、正規化されたユーザー名を返す"""
         api = self.priority_api_pool[0]
@@ -236,6 +287,14 @@ class UserCollector:
                 needs_enrichment = [username for username, _ in target_users[:15]]
                 
             if needs_enrichment:
+                # ターゲットユーザーが含まれている場合、API比較を実行
+                for target in ['zc', 'gotoh', 'miyaaa_96']:
+                    if target in needs_enrichment:
+                        try:
+                            self._compare_and_log_apis(target)
+                        except Exception as e:
+                            print(f"[API_COMPARE] 比較処理でエラー: {e}")
+
                 self._enrich_user_details_with_pool(
                     needs_enrichment, 
                     self._priority_api_queue, 
@@ -265,19 +324,32 @@ class UserCollector:
                     if not data.get("createdAt") or not data.get("updatedAt")
                 ]
                 
-                # 2. それ以外の一般ユーザーを updatedAt が古い順に取得
+                # 2. 上位ユーザー（Top30）の抽出
+                top_posts = [u[0] for u in self.cache.get_top_n("posts", 30)] if hasattr(self.cache, 'get_top_n') else []
+                top_followers = [u[0] for u in self.cache.get_top_n("followers", 30)] if hasattr(self.cache, 'get_top_n') else []
+                top_rate = [u[0] for u in self.cache.get_top_n("rate", 30)] if hasattr(self.cache, 'get_top_n') else []
+                top_users = set(top_posts + top_followers + top_rate)
+                
+                # 一般更新で優先的に更新する上位ユーザー（欠損ユーザーではないもの）
+                priority_in_normal = [u for u in top_users if u in self.cache.users and u not in missing_users]
+                priority_in_normal.sort(key=lambda u: self.cache.users[u].get("updatedAt", ""))
+                
+                # 3. それ以外の一般ユーザーを updatedAt が古い順に取得
                 existing_users = [
                     (username, data.get("updatedAt", "")) 
                     for username, data in self.cache.users.items()
-                    if username not in missing_users
+                    if username not in missing_users and username not in top_users
                 ]
                 existing_users.sort(key=lambda x: x[1])
                 
                 # APIプールの数に応じて1度に更新する件数を決める（1アカウントあたり200件）
                 rotation_count = 200 * len(self.normal_api_pool) if self.normal_api_pool else 200
                 
-                # 欠損ユーザーを最優先で詰め、足りない分を古いユーザーで補う
+                # 欠損ユーザーを最優先で詰め、足りない分を上位ユーザー、残りを古いユーザーで補う
                 needs_enrichment = missing_users[:rotation_count]
+                if len(needs_enrichment) < rotation_count:
+                    fill_count = rotation_count - len(needs_enrichment)
+                    needs_enrichment.extend(priority_in_normal[:fill_count])
                 if len(needs_enrichment) < rotation_count:
                     fill_count = rotation_count - len(needs_enrichment)
                     needs_enrichment.extend([username for username, _ in existing_users[:fill_count]])
