@@ -103,96 +103,94 @@ class UserCollector:
             for i, future in enumerate(concurrent.futures.as_completed(future_to_user)):
                 username, user_data = future.result()
                 
-                with self._lock:
-                    cache_before_posts = self.cache.users.get(username, {}).get("postsCount")
-                    update_user_called = False
-                    user_data_is_none = user_data is None
-                    is_deleted = isinstance(user_data, dict) and user_data.get("is_deleted", False)
+                cache_before_posts = self.cache.users.get(username, {}).get("postsCount")
+                update_user_called = False
+                user_data_is_none = user_data is None
+                is_deleted = isinstance(user_data, dict) and user_data.get("is_deleted", False)
 
-                    api_posts = None
-                    if user_data and not is_deleted:
-                        api_posts = user_data.get("postsCount")
+                api_posts = None
+                if user_data and not is_deleted:
+                    api_posts = user_data.get("postsCount")
 
-                    from utils.anomaly_detector import detector
-                    detector.trace("API_FETCH", f"fetch_{username}", cache_obj=self.cache, extra={
-                        "target_username": username,
-                        "api_posts": api_posts,
-                        "user_data_is_none": user_data_is_none,
-                        "is_deleted": is_deleted,
-                        "tag": tag
-                    })
+                from utils.anomaly_detector import detector
+                detector.trace("API_FETCH", f"fetch_{username}", cache_obj=self.cache, extra={
+                    "target_username": username,
+                    "api_posts": api_posts,
+                    "user_data_is_none": user_data_is_none,
+                    "is_deleted": is_deleted,
+                    "tag": tag
+                })
 
-                    # 生レスポンスログの常時出力
-                    raw_log = {
-                        "event": "RAW_API_RESPONSE",
-                        "time": datetime.now(timezone.utc).isoformat(),
-                        "pid": os.getpid(),
+                # 生レスポンスログの常時出力
+                raw_log = {
+                    "event": "RAW_API_RESPONSE",
+                    "time": datetime.now(timezone.utc).isoformat(),
+                    "pid": os.getpid(),
+                    "thread": threading.current_thread().name,
+                    "tag": tag,
+                    "username": username,
+                    "api_posts": api_posts,
+                    "user_data_is_none": user_data_is_none,
+                    "is_deleted": is_deleted
+                }
+                print(json.dumps(raw_log), flush=True)
+
+                if user_data:
+                    if is_deleted:
+                        self.cache.delete_user(username)
+                    else:
+                        self.cache.update_user(username, user_data)
+                        enriched += 1
+                        update_user_called = True
+                else:
+                    pass
+                
+                cache_after_posts = self.cache.users.get(username, {}).get("postsCount") if username in self.cache.users else None
+
+                is_trace_target = username in ['zc', 'gotoh', 'miyaaa_96', 'DA', 'komone_neko222']
+                is_anomaly = False
+                event_type = ""
+
+                if user_data_is_none:
+                    is_anomaly = True
+                    event_type = "API_FAIL"
+                elif is_deleted:
+                    is_anomaly = True
+                    event_type = "USER_DELETED"
+                else:
+                    if cache_after_posts != api_posts:
+                        is_anomaly = True
+                        event_type = "CACHE_NOT_UPDATED"
+                    elif cache_before_posts is not None and api_posts is not None and api_posts < cache_before_posts:
+                        is_anomaly = True
+                        event_type = "API_VAL_ANOMALY"
+
+                if is_trace_target and not is_anomaly:
+                    event_type = "TRACE"
+                
+                if is_anomaly or is_trace_target:
+
+                    now_str = datetime.now(timezone.utc).isoformat()
+                    log_entry = {
+                        "trace_id": f"{now_str}-{username}",
+                        "time": now_str,
                         "thread": threading.current_thread().name,
-                        "tag": tag,
+                        "source": tag,
                         "username": username,
+                        "event": event_type,
                         "api_posts": api_posts,
+                        "cache_before_posts": cache_before_posts,
+                        "cache_after_posts": cache_after_posts,
+                        "update_user_called": update_user_called,
                         "user_data_is_none": user_data_is_none,
                         "is_deleted": is_deleted
                     }
-                    print(json.dumps(raw_log), flush=True)
+                    print(json.dumps(log_entry), flush=True)
 
-                    if user_data:
-                        if is_deleted:
-                            self.cache.delete_user(username)
-                        else:
-                            self.cache.update_user(username, user_data)
-                            enriched += 1
-                            update_user_called = True
-                    else:
-                        pass
-                    
-                    cache_after_posts = self.cache.users.get(username, {}).get("postsCount") if username in self.cache.users else None
+                if (i + 1) % 10 == 0:
+                    self.cache.save()
+                    print(f"[{tag}]   進捗: {i+1}/{total} ({enriched}件更新)")
 
-                    is_trace_target = username in ['zc', 'gotoh', 'miyaaa_96', 'DA', 'komone_neko222']
-                    is_anomaly = False
-                    event_type = ""
-
-                    if user_data_is_none:
-                        is_anomaly = True
-                        event_type = "API_FAIL"
-                    elif is_deleted:
-                        is_anomaly = True
-                        event_type = "USER_DELETED"
-                    else:
-                        if cache_after_posts != api_posts:
-                            is_anomaly = True
-                            event_type = "CACHE_NOT_UPDATED"
-                        elif cache_before_posts is not None and api_posts is not None and api_posts < cache_before_posts:
-                            is_anomaly = True
-                            event_type = "API_VAL_ANOMALY"
-
-                    if is_trace_target and not is_anomaly:
-                        event_type = "TRACE"
-                    
-                    if is_anomaly or is_trace_target:
-
-                        now_str = datetime.now(timezone.utc).isoformat()
-                        log_entry = {
-                            "trace_id": f"{now_str}-{username}",
-                            "time": now_str,
-                            "thread": threading.current_thread().name,
-                            "source": tag,
-                            "username": username,
-                            "event": event_type,
-                            "api_posts": api_posts,
-                            "cache_before_posts": cache_before_posts,
-                            "cache_after_posts": cache_after_posts,
-                            "update_user_called": update_user_called,
-                            "user_data_is_none": user_data_is_none,
-                            "is_deleted": is_deleted
-                        }
-                        print(json.dumps(log_entry), flush=True)
-
-                    if (i + 1) % 10 == 0:
-                        self.cache.save()
-                        print(f"[{tag}]   進捗: {i+1}/{total} ({enriched}件更新)")
-
-        with self._lock:
             self.cache.save()
             
         print(f"[{tag}] 詳細データ取得完了: {enriched}/{total}件更新")

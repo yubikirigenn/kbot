@@ -336,11 +336,10 @@ def bot_worker():
     while True:
         try:
             from utils.anomaly_detector import detector
-            with cache._lock:
-                for target in detector.targets:
-                    t_data = cache.users.get(target, {})
-                    posts = t_data.get("postsCount")
-                    detector.check_value(target, posts)
+            for target in detector.targets:
+                t_data = cache.users.get(target, {})
+                posts = t_data.get("postsCount")
+                detector.check_value(target, posts)
 
             auth.ensure_login()
             loop_count += 1
