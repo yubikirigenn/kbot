@@ -284,6 +284,17 @@ def bot_worker():
     history_manager = HistoryManager()
     
     collector = UserCollector(priority_apis, normal_apis, cache, history_manager)  # 役割分離したAPIプールを使用
+
+    # 【緊急データ復旧フック】起動時に一度だけ yis を最新化して日間スナップショットを強制上書き
+    try:
+        print("[FORCE_RESET] @yis の最新データを取得中...")
+        collector.enrich_single_user("yis")
+        history_manager.force_reset_snapshot(cache)
+        # 本番の GitHub リポジトリへ即時アップロードして上書き保存
+        backup_cache_to_github(cache)
+    except Exception as e:
+        print(f"[FORCE_RESET] エラー: {e}")
+
     seen_ids = load_seen_ids()
 
     # キャッシュに既にデータがあれば即座に稼働開始、バックグラウンドで更新

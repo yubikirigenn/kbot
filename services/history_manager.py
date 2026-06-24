@@ -180,3 +180,11 @@ class HistoryManager:
             print(f"📂 {period} のスナップショット（補完データ追加）を永続化しました。")
         except Exception as e:
             print(f"⚠️ {period} 履歴の自動永続化エラー: {e}")
+
+    def force_reset_snapshot(self, cache):
+        """現在のキャッシュ状態を日間スナップショットとして強制的に保存"""
+        print("[FORCE_RESET] 日間スナップショットの強制リセットを開始します...")
+        self.save_snapshot(cache, "day")
+        yis_posts = self.daily_snapshot.get("yis", {}).get("postsCount") if isinstance(self.daily_snapshot, dict) else None
+        print(f"[FORCE_RESET] リセット後の history_daily.json 内の @yis postsCount: {yis_posts}")
+        print("[FORCE_RESET] 日間スナップショットの強制リセットが完了しました。")
