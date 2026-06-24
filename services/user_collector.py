@@ -2,11 +2,14 @@
 """ユーザー収集 - 検索APIでユーザーを巡回収集し、詳細データをキャッシュに保存"""
 import time
 import string
+import threading
+import json
+import os
+from datetime import datetime, timezone
 
 
 class UserCollector:
     def __init__(self, priority_api_pool, normal_api_pool, cache, history_manager=None):
-        import threading
         import queue
         
         self.priority_api_pool = priority_api_pool if isinstance(priority_api_pool, list) else [priority_api_pool]
@@ -120,9 +123,6 @@ class UserCollector:
                     })
 
                     # 生レスポンスログの常時出力
-                    import json
-                    import os
-                    from datetime import datetime, timezone
                     raw_log = {
                         "event": "RAW_API_RESPONSE",
                         "time": datetime.now(timezone.utc).isoformat(),
@@ -170,9 +170,7 @@ class UserCollector:
                         event_type = "TRACE"
                     
                     if is_anomaly or is_trace_target:
-                        import json
-                        import threading
-                        from datetime import datetime, timezone
+
                         now_str = datetime.now(timezone.utc).isoformat()
                         log_entry = {
                             "trace_id": f"{now_str}-{username}",
@@ -215,10 +213,7 @@ class UserCollector:
         priority_posts = priority_data.get("postsCount") if priority_data else None
         normal_posts = normal_data.get("postsCount") if normal_data else None
         
-        import json
-        import os
-        import threading
-        from datetime import datetime, timezone
+
         
         log_entry = {
             "event": "API_COMPARE",
