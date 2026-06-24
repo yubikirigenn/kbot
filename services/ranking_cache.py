@@ -56,10 +56,22 @@ class RankingCache:
             detector.trace("CACHE_UPDATE_BEFORE", f"update_user_{username}", cache_obj=self, extra={"update_data": {"postsCount": user_data.get("postsCount")}})
 
             old_data = self.users.get(username, {})
+            fail_count = old_data.get("fail_count", 0)
 
-            # API側が負荷等で0や空を返すことがあるため、古いデータがある場合は欠損を補完・保護する
-            new_posts = user_data.get("postsCount", 0)
-            posts_count = max(old_data.get("postsCount", 0), new_posts) if new_posts == 0 else new_posts
+            # APIから取得した new_posts が 0 または None の場合は「無効なAPIレスポンス」とみなす
+            new_posts = user_data.get("postsCount")
+            if new_posts is None or new_posts == 0:
+                # postsCount の上書きおよび updatedAt の更新をスキップ
+                posts_count = old_data.get("postsCount")
+                updated_at = old_data.get("updatedAt", "")
+            else:
+                # 既存の保護ロジック max(old, new) は、old が None の場合にエラーになるため、old が None または 0 の場合はスキップ
+                old_posts = old_data.get("postsCount")
+                if old_posts is None or old_posts == 0:
+                    posts_count = new_posts
+                else:
+                    posts_count = max(old_posts, new_posts)
+                updated_at = datetime.now(timezone.utc).isoformat()
 
             new_followers = user_data.get("followersCount", 0)
             followers_count = max(old_data.get("followersCount", 0), new_followers) if new_followers == 0 else new_followers
@@ -77,7 +89,7 @@ class RankingCache:
 
             # 内部キャッシュ用レート計算（表示・ソート用は後で動的計算）
             rate = 0.0
-            if created_at and posts_count > 0:
+            if created_at and posts_count is not None and posts_count > 0:
                 try:
                     created_dt = datetime.fromisoformat(created_at.replace("Z", "+00:00"))
                     now = datetime.now(timezone.utc)
@@ -98,7 +110,8 @@ class RankingCache:
                 "isPrivate": is_private,
                 "displayName": display_name,
                 "avatarUrl": avatar_url,
-                "updatedAt": datetime.now(timezone.utc).isoformat()
+                "updatedAt": updated_at,
+                "fail_count": fail_count
             }
             from utils.anomaly_detector import detector
             detector.trace("CACHE_UPDATE_AFTER", f"update_user_{username}", cache_obj=self)
@@ -111,14 +124,15 @@ class RankingCache:
         with self._lock:
             if username not in self.users:
                 self.users[username] = {
-                    "postsCount": 0,
+                    "postsCount": None,
                     "followersCount": 0,
                     "followingCount": 0,
                     "createdAt": "",
                     "rate": 0.0,
                     "isBot": user_data.get("isBotAccount", False),
                     "isPrivate": user_data.get("isPrivate", False),
-                    "updatedAt": ""
+                    "updatedAt": "",
+                    "fail_count": 0
                 }
             self.users[username]["followersCount"] = user_data.get("followersCount", 0)
             self.users[username]["followingCount"] = user_data.get("followingCount", 0)
@@ -167,17 +181,9 @@ class RankingCache:
         """指定キーでソートして、指定ユーザーの順位を返す"""
         with self._lock:
             if sort_key == "followers":
-                self._lock.release()
-                try:
-                    pool = self.get_all_users_for_followers()
-                finally:
-                    self._lock.acquire()
+                pool = self.get_all_users_for_followers()
             else:
-                self._lock.release()
-                try:
-                    pool = self.get_active_users()
-                finally:
-                    self._lock.acquire()
+                pool = self.get_active_users()
 
             if sort_key == "rate":
                 sorted_users = sorted(pool.items(), key=lambda x: x[1].get("rate", 0), reverse=True)

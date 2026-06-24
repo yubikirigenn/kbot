@@ -371,9 +371,13 @@ def bot_worker():
                 last_backup_time = time.time()
                 def run_backup():
                     try:
-                        backup_cache_to_github(cache)
+                        success = backup_cache_to_github(cache)
+                        if not success:
+                            import sys
+                            print("[ERROR] GITHUB BACKUP FAILED", file=sys.stderr, flush=True)
                     except Exception as e:
-                        print(f"[BOT] バックアップエラー: {e}")
+                        import sys
+                        print(f"[ERROR] GITHUB BACKUP FAILED: {e}", file=sys.stderr, flush=True)
                 threading.Thread(target=run_backup, daemon=True).start()
 
             # 日間・週間スナップショットの更新チェック
@@ -418,22 +422,29 @@ def bot_worker():
                         history_manager.save_snapshot(cache, "day")
                         snapshot_updated = True
                     except Exception as e:
-                        print(f"[BOT] 日間スナップショット保存エラー: {e}")
+                        import sys
+                        print(f"[FATAL] SNAPSHOT SAVE ERROR: {e}", file=sys.stderr, flush=True)
                         
                 if need_weekly_snapshot:
                     try:
                         history_manager.save_snapshot(cache, "week")
                         snapshot_updated = True
                     except Exception as e:
-                        print(f"[BOT] 週間スナップショット保存エラー: {e}")
+                        import sys
+                        print(f"[FATAL] SNAPSHOT SAVE ERROR: {e}", file=sys.stderr, flush=True)
 
             if snapshot_updated:
                 def run_snapshot_backup():
                     try:
-                        backup_cache_to_github(cache)
-                        print("[BOT] スナップショットを即時バックアップしました。")
+                        success = backup_cache_to_github(cache)
+                        if not success:
+                            import sys
+                            print("[ERROR] GITHUB BACKUP FAILED", file=sys.stderr, flush=True)
+                        else:
+                            print("[BOT] スナップショットを即時バックアップしました。")
                     except Exception as e:
-                        print(f"[BOT] 即時バックアップエラー: {e}")
+                        import sys
+                        print(f"[ERROR] GITHUB BACKUP FAILED: {e}", file=sys.stderr, flush=True)
                 threading.Thread(target=run_snapshot_backup, daemon=True).start()
 
             # 通知を取得
