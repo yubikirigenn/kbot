@@ -157,7 +157,7 @@
   },
   "lze_0080": {
     "postsCount": 697,
-    "followersCount": 983,
+    "followersCount": 984,
     "followingCount": 1891,
     "createdAt": "2026-03-23T10:02:31.179Z",
     "rate": 0.3095,
@@ -196,7 +196,7 @@
   },
   "M1": {
     "postsCount": 318,
-    "followersCount": 902,
+    "followersCount": 903,
     "followingCount": 1758,
     "createdAt": "2026-03-23T02:21:58.102Z",
     "rate": 0.1407,
@@ -209,7 +209,7 @@
   },
   "siratori_hakuga": {
     "postsCount": 128,
-    "followersCount": 862,
+    "followersCount": 863,
     "followingCount": 2655,
     "createdAt": "2026-03-23T01:16:13.646Z",
     "rate": 0.0566,
@@ -299,16 +299,16 @@
     "fail_count": 0
   },
   "WinMacX_NT": {
-    "postsCount": 4339,
+    "postsCount": 4357,
     "followersCount": 734,
-    "followingCount": 1425,
+    "followingCount": 1426,
     "createdAt": "2026-03-23T02:51:19.251Z",
-    "rate": 1.9207,
+    "rate": 1.9271,
     "isBot": false,
     "isPrivate": false,
     "displayName": "マイマック",
     "avatarUrl": "/uploads/avatars/avatar_19039_1774234511935.webp",
-    "updatedAt": "2026-06-25T05:57:37.245135+00:00",
+    "updatedAt": "2026-06-25T07:43:49.875878+00:00",
     "fail_count": 0
   },
   "Hima_dayo": {
@@ -699,7 +699,7 @@
   },
   "hibari_wings": {
     "postsCount": 465,
-    "followersCount": 372,
+    "followersCount": 373,
     "followingCount": 766,
     "createdAt": "2026-03-26T23:55:02.897Z",
     "rate": 0.2165,
@@ -858,7 +858,7 @@
   },
   "American": {
     "postsCount": 614,
-    "followersCount": 296,
+    "followersCount": 297,
     "followingCount": 360,
     "createdAt": "2026-03-23T21:51:32.711Z",
     "rate": 0.2763,
@@ -1491,14 +1491,15 @@
   "ShiganaiOtaku": {
     "postsCount": 3610,
     "followersCount": 210,
-    "followingCount": 292,
+    "followingCount": 307,
     "createdAt": "2026-04-18T00:28:20.983Z",
-    "rate": 2.2292,
+    "rate": 2.2017,
     "isBot": false,
     "isPrivate": false,
     "displayName": "しがないオタク",
     "avatarUrl": "/uploads/avatars/avatar_34510_1781859343077.webp",
-    "updatedAt": "2026-06-24T11:53:04.550691+00:00"
+    "updatedAt": "2026-06-24T11:53:04.550691+00:00",
+    "fail_count": 0
   },
   "yudetamago": {
     "postsCount": 983,
@@ -1869,7 +1870,7 @@
   },
   "RateCat191516": {
     "postsCount": 562,
-    "followersCount": 143,
+    "followersCount": 144,
     "followingCount": 208,
     "createdAt": "2026-04-18T11:22:26.666Z",
     "rate": 0.3491,
@@ -2782,7 +2783,7 @@
   },
   "Konamikan_dayo": {
     "postsCount": 1796,
-    "followersCount": 118,
+    "followersCount": 119,
     "followingCount": 119,
     "createdAt": "2026-03-23T08:08:56.456Z",
     "rate": 0.8027,
@@ -2941,7 +2942,7 @@
   },
   "a_ya": {
     "postsCount": 780,
-    "followersCount": 94,
+    "followersCount": 95,
     "followingCount": 60,
     "createdAt": "2026-03-23T09:58:48.727Z",
     "rate": 0.3489,
@@ -3100,7 +3101,7 @@
   },
   "henoke": {
     "postsCount": 1029,
-    "followersCount": 294,
+    "followersCount": 295,
     "followingCount": 462,
     "createdAt": "2026-03-30T00:13:50.768Z",
     "rate": 0.4953,
@@ -5902,7 +5903,7 @@
   },
   "chuch29m": {
     "postsCount": 152,
-    "followersCount": 84,
+    "followersCount": 86,
     "followingCount": 13,
     "createdAt": "2026-03-26T15:25:28.982Z",
     "rate": 0.0704,
@@ -9492,7 +9493,7 @@
   "amaskigahonntai": {
     "postsCount": 205,
     "followersCount": 29,
-    "followingCount": 19,
+    "followingCount": 20,
     "createdAt": "2026-06-05T09:47:24.883Z",
     "rate": 0.4462,
     "isBot": true,
@@ -11553,8 +11554,8 @@
   },
   "nanashi_noa": {
     "postsCount": 441,
-    "followersCount": 61,
-    "followingCount": 34,
+    "followersCount": 59,
+    "followingCount": 33,
     "createdAt": "2026-03-23T03:21:17.498Z",
     "rate": 0.1967,
     "isBot": false,
@@ -14581,7 +14582,7 @@
   "enpitu": {
     "postsCount": 120,
     "followersCount": 68,
-    "followingCount": 73,
+    "followingCount": 74,
     "createdAt": "2026-03-23T13:22:07.700Z",
     "rate": 0.0537,
     "isBot": false,
@@ -19850,7 +19851,7 @@
   "uzuka": {
     "postsCount": 58,
     "followersCount": 47,
-    "followingCount": 48,
+    "followingCount": 49,
     "createdAt": "2026-03-26T09:23:19.348Z",
     "rate": 0.0268,
     "isBot": false,
@@ -27959,7 +27960,7 @@
   },
   "kbot": {
     "postsCount": 521,
-    "followersCount": 27,
+    "followersCount": 28,
     "followingCount": 0,
     "createdAt": "2026-06-14T10:03:35.867Z",
     "rate": 2.1508,
