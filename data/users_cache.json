@@ -1,7 +1,7 @@
 {
   "karon": {
     "postsCount": 641,
-    "followersCount": 2244,
+    "followersCount": 2242,
     "followingCount": 0,
     "createdAt": "2026-03-18T14:08:17.245Z",
     "rate": 0.2707,
@@ -41,7 +41,7 @@
   "0e": {
     "postsCount": 105,
     "followersCount": 1824,
-    "followingCount": 0,
+    "followingCount": 8,
     "createdAt": "2026-03-24T06:10:53.877Z",
     "rate": 0.047,
     "isBot": false,
@@ -248,7 +248,7 @@
   },
   "nanoka": {
     "postsCount": 114,
-    "followersCount": 853,
+    "followersCount": 854,
     "followingCount": 1120,
     "createdAt": "2026-03-23T09:18:28.589Z",
     "rate": 0.0506,
@@ -274,10 +274,10 @@
   },
   "zc": {
     "postsCount": 17359,
-    "followersCount": 826,
-    "followingCount": 2976,
+    "followersCount": 827,
+    "followingCount": 2977,
     "createdAt": "2026-03-22T15:18:36.134Z",
-    "rate": 7.645,
+    "rate": 7.636,
     "isBot": false,
     "isPrivate": false,
     "displayName": "會(かい)",
@@ -809,7 +809,7 @@
   },
   "RyoLab": {
     "postsCount": 14,
-    "followersCount": 313,
+    "followersCount": 314,
     "followingCount": 487,
     "createdAt": "2026-03-28T15:01:41.135Z",
     "rate": 0.0066,
@@ -870,7 +870,7 @@
   },
   "TAKO_": {
     "postsCount": 447,
-    "followersCount": 301,
+    "followersCount": 302,
     "followingCount": 440,
     "createdAt": "2026-03-22T14:56:13.926Z",
     "rate": 0.1984,
@@ -982,8 +982,8 @@
   },
   "sham": {
     "postsCount": 4362,
-    "followersCount": 381,
-    "followingCount": 1116,
+    "followersCount": 382,
+    "followingCount": 1117,
     "createdAt": "2026-03-23T05:30:17.529Z",
     "rate": 1.9472,
     "isBot": false,
@@ -1318,7 +1318,7 @@
   },
   "KITAKAN": {
     "postsCount": 2128,
-    "followersCount": 182,
+    "followersCount": 183,
     "followingCount": 200,
     "createdAt": "2026-03-27T14:25:08.002Z",
     "rate": 0.9964,
@@ -1491,9 +1491,9 @@
   "ShiganaiOtaku": {
     "postsCount": 3610,
     "followersCount": 210,
-    "followingCount": 307,
+    "followingCount": 308,
     "createdAt": "2026-04-18T00:28:20.983Z",
-    "rate": 2.2017,
+    "rate": 2.2016,
     "isBot": false,
     "isPrivate": false,
     "displayName": "しがないオタク",
@@ -1943,8 +1943,8 @@
   },
   "komone_neko222": {
     "postsCount": 2589,
-    "followersCount": 161,
-    "followingCount": 188,
+    "followersCount": 160,
+    "followingCount": 187,
     "createdAt": "2026-03-23T04:39:44.757Z",
     "rate": 1.1553,
     "isBot": false,
@@ -2137,7 +2137,7 @@
   },
   "ameamefurefuref": {
     "postsCount": 1619,
-    "followersCount": 134,
+    "followersCount": 133,
     "followingCount": 56,
     "createdAt": "2026-03-23T07:41:20.839Z",
     "rate": 0.7239,
@@ -2417,7 +2417,7 @@
   "yukidama_yoshi": {
     "postsCount": 256,
     "followersCount": 115,
-    "followingCount": 129,
+    "followingCount": 130,
     "createdAt": "2026-03-22T12:19:14.807Z",
     "rate": 0.1135,
     "isBot": false,
@@ -2932,7 +2932,7 @@
     "followersCount": 96,
     "followingCount": 96,
     "createdAt": "2026-03-22T13:38:31.591Z",
-    "rate": 2.7985,
+    "rate": 2.7946,
     "isBot": false,
     "isPrivate": false,
     "displayName": "ドミニカの犬砲",
@@ -11503,7 +11503,7 @@
   "Huku": {
     "postsCount": 107,
     "followersCount": 67,
-    "followingCount": 75,
+    "followingCount": 77,
     "createdAt": "2026-03-26T00:04:25.715Z",
     "rate": 0.0492,
     "isBot": false,
@@ -22061,7 +22061,7 @@
   },
   "10": {
     "postsCount": 53,
-    "followersCount": 572,
+    "followersCount": 573,
     "followingCount": 726,
     "createdAt": "2026-03-22T11:05:23.019Z",
     "rate": 0.0235,
@@ -22226,7 +22226,7 @@
   },
   "_1": {
     "postsCount": 9,
-    "followersCount": 945,
+    "followersCount": 946,
     "followingCount": 13734,
     "createdAt": "2026-03-22T13:14:20.627Z",
     "rate": 0.004,
