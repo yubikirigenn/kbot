@@ -91,15 +91,21 @@ class UserCollector:
         total = len(usernames)
         
         def fetch_user(username):
-            api = api_queue.get()
+            import queue
+            api = None
             try:
+                api = api_queue.get(block=True, timeout=10)
                 user_data = api.get_user_detail(username)
                 return username, user_data
+            except queue.Empty:
+                print(f"[{tag}] API取得タイムアウト ({username}): キューが空です")
+                return username, None
             except Exception as e:
                 print(f"[{tag}] API取得失敗 ({username}): {e}")
                 return username, None
             finally:
-                api_queue.put(api)
+                if api is not None:
+                    api_queue.put(api)
 
         with concurrent.futures.ThreadPoolExecutor(max_workers=pool_size) as executor:
             future_to_user = {executor.submit(fetch_user, uname): uname for uname in usernames}
@@ -254,9 +260,14 @@ class UserCollector:
 
     def update_priority_users(self):
         """上位層のユーザーを優先的に更新する（メインアカウント専用。最大15件制限）"""
-        if not self._priority_run_lock.acquire(blocking=False):
-            print("[PRIORITY] 既に優先更新が実行中のためスキップします。")
-            return
+        lock_acquired = self._priority_run_lock.acquire(blocking=True, timeout=30)
+        if not lock_acquired:
+            print("[PRIORITY] 前回の処理がタイムアウトしたため強制的にロックを取得します")
+            try:
+                self._priority_run_lock.release()
+            except RuntimeError:
+                pass
+            self._priority_run_lock.acquire()
             
         try:
             print("[PRIORITY] 優先ユーザー（上位層）の更新を開始します...")
