@@ -273,7 +273,7 @@ class UserCollector:
                     try:
                         for period in ["day", "week"]:
                             deltas = self.history_manager.get_deltas(self.cache, period)
-                            sorted_d = sorted(deltas.items(), key=lambda x: x[1].get("postsCount", 0), reverse=True)
+                            sorted_d = sorted(deltas.items(), key=lambda x: x[1].get("postsCount") or 0, reverse=True)
                             for uname, _ in sorted_d[:30]:
                                 top_users.add(uname)
                             sorted_r = sorted(deltas.items(), key=lambda x: x[1].get("rate", 0), reverse=True)
@@ -285,7 +285,7 @@ class UserCollector:
                 # 優先度（更新日時 updatedAt が古い順）にソートして、上位15件のみを今回の更新対象とする
                 # fail_count が 3 以上のユーザーを除外する
                 target_users = [
-                    (username, self.cache.users[username].get("updatedAt", ""))
+                    (username, self.cache.users[username].get("updatedAt") or "")
                     for username in top_users
                     if username in self.cache.users and self.cache.users[username].get("fail_count", 0) < 3
                 ]

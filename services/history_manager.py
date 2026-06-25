@@ -49,9 +49,9 @@ class HistoryManager:
         snapshot = {}
         for username, data in cache.users.items():
             snapshot[username] = {
-                "postsCount": data.get("postsCount", 0),
-                "followersCount": data.get("followersCount", 0),
-                "rate": data.get("rate", 0.0)
+                "postsCount": data.get("postsCount") or 0,
+                "followersCount": data.get("followersCount") or 0,
+                "rate": data.get("rate") or 0.0
             }
         
         now_str = datetime.now(timezone.utc).isoformat()
@@ -111,13 +111,17 @@ class HistoryManager:
             past_posts = past_data.get("postsCount")
             past_followers = past_data.get("followersCount")
 
-            cur_posts = current_data.get("postsCount", 0)
-            cur_followers = current_data.get("followersCount", 0)
+            cur_posts = current_data.get("postsCount")
+            if cur_posts is None:
+                cur_posts = 0
+            cur_followers = current_data.get("followersCount")
+            if cur_followers is None:
+                cur_followers = 0
             created_at = current_data.get("createdAt")
 
             if past_posts is None:
                 # スナップショットに存在しない場合、
-                # アカウント作成日が「スナップショット作成日時」より後であれば新規登録者とみなし過去値を0とする
+                # アカウント作成日が「スナップショット作成日時」より後であれば新規登録者とみなし过去値を0とする
                 # 昔からいるユーザーがBotに初めて認知されただけの場合は、現在の値を過去値として増分を0にする
                 is_new_account = False
                 if snapshot_timestamp and created_at:
@@ -144,6 +148,12 @@ class HistoryManager:
                     "rate": current_data.get("rate", 0.0)
                 }
                 snapshot_dirty = True
+
+            # 個別に None 安全性を保証
+            if past_posts is None:
+                past_posts = 0
+            if past_followers is None:
+                past_followers = 0
 
             delta_posts = max(0, cur_posts - past_posts)
             delta_followers = cur_followers - past_followers

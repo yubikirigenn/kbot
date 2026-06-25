@@ -141,7 +141,7 @@ class RankingCache:
 
     def _get_dynamic_rate(self, data, now):
         """現在時刻での動的レート計算"""
-        posts_count = data.get("postsCount", 0)
+        posts_count = data.get("postsCount") or 0
         created_at = data.get("createdAt")
         if not created_at or posts_count <= 0:
             return 0.0
@@ -159,7 +159,7 @@ class RankingCache:
         with self._lock:
             result = {}
             for username, data in self.users.items():
-                if not data.get("isBot", False) and not data.get("isPrivate", False) and data.get("postsCount", 0) > 0:
+                if not data.get("isBot", False) and not data.get("isPrivate", False) and (data.get("postsCount") or 0) > 0:
                     user_copy = data.copy()
                     user_copy["rate"] = self._get_dynamic_rate(data, now)
                     result[username] = user_copy
@@ -188,7 +188,7 @@ class RankingCache:
             if sort_key == "rate":
                 sorted_users = sorted(pool.items(), key=lambda x: x[1].get("rate", 0), reverse=True)
             elif sort_key == "posts":
-                sorted_users = sorted(pool.items(), key=lambda x: x[1].get("postsCount", 0), reverse=True)
+                sorted_users = sorted(pool.items(), key=lambda x: x[1].get("postsCount") or 0, reverse=True)
             elif sort_key == "followers":
                 sorted_users = sorted(pool.items(), key=lambda x: x[1].get("followersCount", 0), reverse=True)
             else:
@@ -213,7 +213,7 @@ class RankingCache:
             if sort_key == "rate":
                 sorted_users = sorted(pool.items(), key=lambda x: x[1].get("rate", 0), reverse=True)
             elif sort_key == "posts":
-                sorted_users = sorted(pool.items(), key=lambda x: x[1].get("postsCount", 0), reverse=True)
+                sorted_users = sorted(pool.items(), key=lambda x: x[1].get("postsCount") or 0, reverse=True)
             elif sort_key == "followers":
                 sorted_users = sorted(pool.items(), key=lambda x: x[1].get("followersCount", 0), reverse=True)
             else:
