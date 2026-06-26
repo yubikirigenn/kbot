@@ -294,11 +294,14 @@ class UserCollector:
                         print(f"[PRIORITY] 日間/週間上位の抽出に失敗しました: {e}")
 
                 # 優先度（更新日時 updatedAt が古い順）にソートして、上位15件のみを今回の更新対象とする
+                # updatedAt が空文字（""）または存在しないユーザーは除外する
                 # fail_count が 3 以上のユーザーを除外する
                 target_users = [
-                    (username, self.cache.users[username].get("updatedAt") or "")
+                    (username, self.cache.users[username].get("updatedAt"))
                     for username in top_users
-                    if username in self.cache.users and self.cache.users[username].get("fail_count", 0) < 3
+                    if username in self.cache.users 
+                    and self.cache.users[username].get("updatedAt")
+                    and self.cache.users[username].get("fail_count", 0) < 3
                 ]
                 target_users.sort(key=lambda x: x[1])  # updatedAt が古い順
                 

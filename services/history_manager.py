@@ -195,6 +195,14 @@ class HistoryManager:
         """現在のキャッシュ状態を日間スナップショットとして強制的に保存"""
         print("[FORCE_RESET] 日間スナップショットの強制リセットを開始します...")
         self.save_snapshot(cache, "day")
-        yis_posts = self.daily_snapshot.get("yis", {}).get("postsCount") if isinstance(self.daily_snapshot, dict) else None
-        print(f"[FORCE_RESET] リセット後の history_daily.json 内の @yis postsCount: {yis_posts}")
+        
+        # Oi_oistar(実際はOi_oistar)とmiyaaa_96の値を確認
+        oister_cache = cache.users.get("Oi_oistar", {}).get("postsCount") or cache.users.get("Oi_oister", {}).get("postsCount")
+        miyaaa_cache = cache.users.get("miyaaa_96", {}).get("postsCount")
+        
+        oister_snap = self.daily_snapshot.get("Oi_oistar", {}).get("postsCount") or self.daily_snapshot.get("Oi_oister", {}).get("postsCount")
+        miyaaa_snap = self.daily_snapshot.get("miyaaa_96", {}).get("postsCount")
+        
+        print(f"[FORCE_RESET] @Oi_oistar / @Oi_oister -> Cache: {oister_cache}, Snapshot: {oister_snap} (Match: {oister_cache == oister_snap})")
+        print(f"[FORCE_RESET] @miyaaa_96 -> Cache: {miyaaa_cache}, Snapshot: {miyaaa_snap} (Match: {miyaaa_cache == miyaaa_snap})")
         print("[FORCE_RESET] 日間スナップショットの強制リセットが完了しました。")
