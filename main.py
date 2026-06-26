@@ -356,12 +356,16 @@ def bot_worker():
                 
                 def run_priority():
                     try:
+                        for api in collector.priority_api_pool:
+                            api.auth.ensure_login()
                         collector.update_priority_users()
                     except Exception as e:
                         print(f"[BOT] 優先更新エラー: {e}")
                         
                 def run_normal():
                     try:
+                        for api in collector.normal_api_pool:
+                            api.auth.ensure_login()
                         collector.update_normal_users()
                     except Exception as e:
                         print(f"[BOT] 一般更新エラー: {e}")

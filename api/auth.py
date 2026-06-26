@@ -60,6 +60,19 @@ class AuthManager:
                         print(f"[AUTH] 401 detected ({endpoint}). Re-login...")
                         if self.login():
                             res = self.session.request(method, url, **kwargs)
+                    elif res.status_code == 200:
+                        # 200 OK 時の 0 検知による再ログイン安全策
+                        try:
+                            data = res.json()
+                            user_data = data.get("user", data) if isinstance(data, dict) else {}
+                            if isinstance(user_data, dict) and user_data.get("postsCount") == 0:
+                                # 直近 30 秒以内にログイン成功している場合は、本当に 0 のユーザーとみなしてスキップ
+                                if time.time() - self.last_login_time > 30:
+                                    print(f"[AUTH] postsCount is 0 detected ({endpoint}). Suspecting token expiration. Re-login fallback...")
+                                    if self.login():
+                                        res = self.session.request(method, url, **kwargs)
+                        except Exception:
+                            pass
                     return res
                 except Exception as e:
                     print(f"[AUTH] API error (retry {attempt+1}/{retries} - {endpoint}): {e}")
