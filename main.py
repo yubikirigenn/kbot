@@ -507,8 +507,8 @@ def bot_worker():
                 if result:
                     response_text, media_files = result
                     if response_text:
-                        api.post_reply(response_text, post_id, media_files=media_files)
-                        print(f"[BOT] 返信完了 (画像: {'あり' if media_files else 'なし'})")
+                        api.post_reply(response_text, post_id, media_files=media_files, as_rekarot=parsed.get("rekarot", False))
+                        print(f"[BOT] 返信完了 (画像: {'あり' if media_files else 'なし'}, リカロート: {parsed.get('rekarot', False)})")
 
                 seen_ids.add(post_id)
                 save_seen_id(post_id)

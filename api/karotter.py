@@ -117,13 +117,14 @@ class KarotterAPI:
 
     # === 投稿 ===
 
-    def post_reply(self, text, parent_id, media_files=None):
+    def post_reply(self, text, parent_id, media_files=None, as_rekarot=False):
         """返信を投稿（media_filesがあればFormDataで画像を添付）
         
         Args:
             text: 返信テキスト
             parent_id: 返信先の投稿ID
             media_files: list of bytes (画像バイナリデータ) or None
+            as_rekarot: Trueの場合、通常のリプライではなく引用リカロートで投稿する
         """
         self._throttle()
         
@@ -134,13 +135,25 @@ class KarotterAPI:
             
             fields = {
                 "content": text,
-                "parentId": str(parent_id),
-                "replyId": str(parent_id),
                 "isAiGenerated": "false",
                 "isPromotional": "false",
                 "visibility": "PUBLIC",
                 "replyRestriction": "EVERYONE",
             }
+            
+            if as_rekarot:
+                fields.update({
+                    "quotedPostId": str(parent_id),
+                    "quoteId": str(parent_id),
+                    "renoteId": str(parent_id),
+                    "isQuote": "true",
+                    "type": "QUOTE",
+                })
+            else:
+                fields.update({
+                    "parentId": str(parent_id),
+                    "replyId": str(parent_id),
+                })
             
             # 画像ファイルを追加
             parts = []
@@ -163,13 +176,26 @@ class KarotterAPI:
             # JSON方式（テキストのみ）
             payload = {
                 "content": text,
-                "parentId": parent_id,
-                "replyId": parent_id,
                 "isAiGenerated": False,
                 "isPromotional": False,
                 "visibility": "PUBLIC",
                 "replyRestriction": "EVERYONE"
             }
+            
+            if as_rekarot:
+                payload.update({
+                    "quotedPostId": parent_id,
+                    "quoteId": parent_id,
+                    "renoteId": parent_id,
+                    "isQuote": True,
+                    "type": "QUOTE",
+                })
+            else:
+                payload.update({
+                    "parentId": parent_id,
+                    "replyId": parent_id,
+                })
+                
             res = self.auth.request("POST", "/posts", json=payload)
         
         if res and res.status_code in [200, 201]:

@@ -11,8 +11,17 @@ def parse_command(content):
     """
     clean = re.sub(rf"(?i)@{USERNAME}\s*", "", content).strip()
 
+    # 末尾の "rk" (大文字小文字無視) を判定・除去
+    rekarot = False
+    if clean.lower() == "rk":
+        clean = ""
+        rekarot = True
+    elif clean.lower().endswith(" rk"):
+        clean = clean[:-3].strip()
+        rekarot = True
+
     if not clean:
-        return {"cmd": None, "target": None}
+        return {"cmd": None, "target": None, "rekarot": rekarot}
 
     # VSコマンドのチェック
     vs_match = re.search(r"@?(\w+)\s+vs\s+@?(\w+)", clean, re.IGNORECASE)
@@ -20,7 +29,8 @@ def parse_command(content):
         return {
             "cmd": "compare",
             "target": vs_match.group(1),
-            "target2": vs_match.group(2)
+            "target2": vs_match.group(2),
+            "rekarot": rekarot
         }
 
     parts = clean.split()
@@ -72,10 +82,11 @@ def parse_command(content):
             "period": period,
             "start": start,
             "end": end,
-            "target": target
+            "target": target,
+            "rekarot": rekarot
         }
 
-    return {"cmd": "unknown", "raw": clean}
+    return {"cmd": "unknown", "raw": clean, "rekarot": rekarot}
 
 
 def _extract_target_user(text):
