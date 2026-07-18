@@ -8,7 +8,7 @@ from datetime import datetime, timezone, timedelta
 class AnomalyDetector:
     def __init__(self):
         self._lock = threading.Lock()
-        self.targets = ['zc', 'gotoh', 'miyaaa_96']
+        self.targets = ['zc', 'yis', 'miyaaa_96']
         # ターゲットごとの状態管理: {username: {"last_val": int, "last_changed": datetime}}
         self.states = {}
         # 詳細ログモードの終了期限（UTC）
@@ -87,7 +87,7 @@ class AnomalyDetector:
             users = cache_obj.users if hasattr(cache_obj, "users") else cache_obj
             if isinstance(users, dict):
                 zc_val = users.get("zc", {}).get("postsCount")
-                gotoh_val = users.get("gotoh", {}).get("postsCount")
+                yis_val = users.get("yis", {}).get("postsCount")
                 miyaaa_val = users.get("miyaaa_96", {}).get("postsCount")
         
         log_entry = {
@@ -97,7 +97,7 @@ class AnomalyDetector:
             "thread": threading.current_thread().name,
             "caller": caller,
             "zc": zc_val,
-            "gotoh": gotoh_val,
+            "yis": yis_val,
             "miyaaa_96": miyaaa_val,
         }
         if extra:

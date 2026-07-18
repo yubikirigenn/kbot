@@ -163,7 +163,7 @@ class UserCollector:
                     
                     cache_after_posts = self.cache.users.get(username, {}).get("postsCount") if username in self.cache.users else None
 
-                    is_trace_target = username in ['zc', 'gotoh', 'miyaaa_96', 'DA', 'komone_neko222']
+                    is_trace_target = username in ['zc', 'yis', 'miyaaa_96', 'DA', 'komone_neko222']
                     is_anomaly = False
                     event_type = ""
 
@@ -309,7 +309,7 @@ class UserCollector:
                 
             if needs_enrichment:
                 # ターゲットユーザーが含まれている場合、API比較を実行
-                for target in ['zc', 'gotoh', 'miyaaa_96']:
+                for target in ['zc', 'yis', 'miyaaa_96']:
                     if target in needs_enrichment:
                         try:
                             self._compare_and_log_apis(target)
