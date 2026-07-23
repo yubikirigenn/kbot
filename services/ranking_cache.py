@@ -5,7 +5,7 @@ import json
 import time
 import threading
 from datetime import datetime, timezone
-from config import USER_CACHE_FILE
+from config import USER_CACHE_FILE, EXCLUDED_USERS_FILE
 
 
 class RankingCache:
@@ -13,8 +13,10 @@ class RankingCache:
         self._lock = threading.RLock()
         with self._lock:
             self.users = {}  # {username: {postsCount, followersCount, followingCount, createdAt, rate, updatedAt}}
+            self.excluded_users = set()
             self._ensure_data_dir()
             self.load()
+            self.load_excluded_users()
 
     def _ensure_data_dir(self):
         os.makedirs(os.path.dirname(USER_CACHE_FILE), exist_ok=True)
@@ -153,25 +155,57 @@ class RankingCache:
         except Exception:
             return 0.0
 
+    def load_excluded_users(self):
+        """除外ユーザーリストを読み込み"""
+        with self._lock:
+            if os.path.exists(EXCLUDED_USERS_FILE):
+                try:
+                    with open(EXCLUDED_USERS_FILE, "r", encoding="utf-8") as f:
+                        data = json.load(f)
+                        if isinstance(data, list):
+                            self.excluded_users = {str(u).lower() for u in data}
+                        else:
+                            self.excluded_users = set()
+                except Exception as e:
+                    print(f"⚠️ 除外ユーザーリスト読み込みエラー: {e}")
+                    self.excluded_users = set()
+            else:
+                self.excluded_users = set()
+                try:
+                    self._ensure_data_dir()
+                    with open(EXCLUDED_USERS_FILE, "w", encoding="utf-8") as f:
+                        json.dump([], f, ensure_ascii=False, indent=2)
+                except Exception as e:
+                    print(f"⚠️ 除外ユーザーリスト作成エラー: {e}")
+
+    def is_excluded(self, username):
+        """指定ユーザーが除外対象かどうかを判定"""
+        if not username:
+            return False
+        with self._lock:
+            return username.lower() in self.excluded_users
+
     def get_active_users(self):
-        """アクティブユーザー（Bot・非公開を除く、投稿数1以上）をフィルタリング"""
+        """アクティブユーザー（Bot・非公開・除外ユーザーを除く、投稿数1以上）をフィルタリング"""
         now = datetime.now(timezone.utc)
         with self._lock:
+            self.load_excluded_users()
             result = {}
             for username, data in self.users.items():
-                if not data.get("isBot", False) and not data.get("isPrivate", False) and (data.get("postsCount") or 0) > 0:
+                if not self.is_excluded(username) and not data.get("isBot", False) and not data.get("isPrivate", False) and (data.get("postsCount") or 0) > 0:
                     user_copy = data.copy()
                     user_copy["rate"] = self._get_dynamic_rate(data, now)
                     result[username] = user_copy
             return result
 
     def get_all_users_for_followers(self):
-        """フォロワーランキング用ユーザー（Bot除外、投稿なくてもOK）"""
+        """フォロワーランキング用ユーザー（Bot・除外ユーザー除外、投稿なくてもOK）"""
         now = datetime.now(timezone.utc)
         with self._lock:
+            self.load_excluded_users()
             result = {}
             for username, data in self.users.items():
-                if not data.get("isBot", False) and not data.get("isPrivate", False):
+                if not self.is_excluded(username) and not data.get("isBot", False) and not data.get("isPrivate", False):
                     user_copy = data.copy()
                     user_copy["rate"] = self._get_dynamic_rate(data, now)
                     result[username] = user_copy

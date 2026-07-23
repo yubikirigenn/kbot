@@ -51,7 +51,8 @@ class HistoryManager:
             snapshot[username] = {
                 "postsCount": data.get("postsCount") or 0,
                 "followersCount": data.get("followersCount") or 0,
-                "rate": data.get("rate") or 0.0
+                "rate": data.get("rate") or 0.0,
+                "updatedAt": data.get("updatedAt", "")
             }
         
         now_str = datetime.now(timezone.utc).isoformat()
@@ -145,7 +146,8 @@ class HistoryManager:
                 snapshot[username] = {
                     "postsCount": past_posts,
                     "followersCount": past_followers,
-                    "rate": current_data.get("rate", 0.0)
+                    "rate": current_data.get("rate", 0.0),
+                    "updatedAt": current_data.get("updatedAt", "")
                 }
                 snapshot_dirty = True
 
@@ -157,6 +159,27 @@ class HistoryManager:
 
             delta_posts = max(0, cur_posts - past_posts)
             delta_followers = cur_followers - past_followers
+            
+            # APIデータ取得遅延による一括加算の平準化ロジック
+            past_updated_at = past_data.get("updatedAt", "")
+            cur_updated_at = current_data.get("updatedAt", "")
+            
+            if past_updated_at and cur_updated_at:
+                try:
+                    past_dt = datetime.fromisoformat(past_updated_at.replace("Z", "+00:00"))
+                    cur_dt = datetime.fromisoformat(cur_updated_at.replace("Z", "+00:00"))
+                    
+                    update_interval_hours = (cur_dt - past_dt).total_seconds() / 3600.0
+                    
+                    target_hours = 24.0 if period == "day" else 168.0
+                    threshold_hours = 36.0 if period == "day" else 252.0
+                    
+                    if update_interval_hours >= threshold_hours:
+                        ratio = target_hours / update_interval_hours
+                        delta_posts = int(delta_posts * ratio)
+                        delta_followers = int(delta_followers * ratio)
+                except Exception:
+                    pass
             
             # レートは単純な差分ではなく、「期間内の純粋なレート（増分投稿数 ÷ 経過時間）」とする
             calc_rate = round(delta_posts / hours_passed, 4)

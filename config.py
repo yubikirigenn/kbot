@@ -36,6 +36,7 @@ COMMAND_ALIASES = {
 POLL_INTERVAL = 5           # 通知ポーリング間隔（秒）
 API_SLEEP = 2.5             # APIリクエスト間隔（秒）
 USER_CACHE_FILE = "data/users_cache.json"
+EXCLUDED_USERS_FILE = "data/excluded_users.json"
 SEEN_FILE = "data/seen_notifications.txt"
 CACHE_UPDATE_INTERVAL = 60  # ユーザーキャッシュ更新間隔（秒）= 1分
 
