@@ -4,13 +4,13 @@
     "followersCount": 2264,
     "followingCount": 203,
     "createdAt": "2026-03-18T14:08:17.245Z",
-    "rate": 0.2662,
+    "rate": 0.2661,
     "isBot": false,
     "isPrivate": false,
     "displayName": "かろん / Karon",
     "avatarUrl": "/uploads/avatars/avatar_1_1774523195871.webp",
-    "updatedAt": "2026-07-24T07:19:51.730572+00:00",
-    "fail_count": 0
+    "updatedAt": "2026-07-24T08:16:10.831576+00:00",
+    "fail_count": 1
   },
   "karotter": {
     "postsCount": 140,
@@ -22,7 +22,7 @@
     "isPrivate": false,
     "displayName": "Karotter",
     "avatarUrl": "/uploads/avatars/avatar_85_1779591535814.webp",
-    "updatedAt": "2026-07-24T07:21:39.254524+00:00",
+    "updatedAt": "2026-07-24T08:17:04.077758+00:00",
     "fail_count": 0
   },
   "Dr_mario": {
@@ -30,13 +30,13 @@
     "followersCount": 1911,
     "followingCount": 18122,
     "createdAt": "2026-03-23T06:11:09.212Z",
-    "rate": 1.2438,
+    "rate": 1.2434,
     "isBot": false,
     "isPrivate": false,
     "displayName": "D.M",
     "avatarUrl": "/uploads/avatars/avatar_21206_1779600547961.webp",
-    "updatedAt": "2026-07-24T07:19:41.954684+00:00",
-    "fail_count": 0
+    "updatedAt": "2026-07-24T08:16:00.836143+00:00",
+    "fail_count": 4
   },
   "0e": {
     "postsCount": 112,
@@ -48,8 +48,8 @@
     "isPrivate": false,
     "displayName": "Mof:Re.0eヾ(•ω•`)o",
     "avatarUrl": "/uploads/avatars/avatar_26513_1774708379050.webp",
-    "updatedAt": "2026-07-24T07:19:44.227148+00:00",
-    "fail_count": 0
+    "updatedAt": "2026-07-24T08:16:03.425825+00:00",
+    "fail_count": 4
   },
   "Mutou": {
     "postsCount": 39579,
@@ -69,12 +69,12 @@
     "followersCount": 1556,
     "followingCount": 18060,
     "createdAt": "2026-03-22T15:12:50.155Z",
-    "rate": 1.5649,
+    "rate": 1.5645,
     "isBot": false,
     "isPrivate": false,
     "displayName": "v0",
     "avatarUrl": "https://cdn.discordapp.com/avatars/1205604297518350340/a_a83615b5e98e8b03ed7ea8d98f4b33b6.gif",
-    "updatedAt": "2026-07-24T07:21:36.766719+00:00",
+    "updatedAt": "2026-07-24T08:17:00.890873+00:00",
     "fail_count": 0
   },
   "status": {
@@ -91,43 +91,43 @@
     "fail_count": 3
   },
   "syakuradrop": {
-    "postsCount": 2220,
+    "postsCount": 2221,
     "followersCount": 1334,
     "followingCount": 1384,
     "createdAt": "2026-03-23T03:26:51.889Z",
-    "rate": 0.751,
+    "rate": 0.7511,
     "isBot": false,
     "isPrivate": false,
     "displayName": "しゃくらどろっぷ",
     "avatarUrl": "/uploads/avatars/avatar_19483_1778153316665.webp",
-    "updatedAt": "2026-07-24T07:19:25.734322+00:00",
-    "fail_count": 0
+    "updatedAt": "2026-07-24T08:15:44.877970+00:00",
+    "fail_count": 3
   },
   "dysmorphia": {
     "postsCount": 432,
     "followersCount": 1186,
     "followingCount": 14843,
     "createdAt": "2026-03-23T02:05:52.201Z",
-    "rate": 0.1461,
+    "rate": 0.146,
     "isBot": false,
     "isPrivate": false,
     "displayName": "ᅠ",
     "avatarUrl": "/uploads/avatars/avatar_18595_1778498374248.webp",
-    "updatedAt": "2026-07-24T07:20:29.262278+00:00",
-    "fail_count": 0
+    "updatedAt": "2026-07-24T08:17:31.604396+00:00",
+    "fail_count": 2
   },
   "1l": {
     "postsCount": 2270,
     "followersCount": 1126,
     "followingCount": 1109,
     "createdAt": "2026-03-23T01:15:26.032Z",
-    "rate": 0.7674,
+    "rate": 0.7671,
     "isBot": false,
     "isPrivate": false,
     "displayName": "ろこもこ(引退)",
     "avatarUrl": "/uploads/avatars/avatar_18187_1784558055405.webp",
-    "updatedAt": "2026-07-24T07:19:39.229030+00:00",
-    "fail_count": 0
+    "updatedAt": "2026-07-24T08:15:58.356437+00:00",
+    "fail_count": 4
   },
   "G": {
     "postsCount": 61,
@@ -139,8 +139,8 @@
     "isPrivate": false,
     "displayName": "朝姫و𒈙و",
     "avatarUrl": "/uploads/avatars/avatar_425_1776502617139.webp",
-    "updatedAt": "2026-07-24T07:20:46.734858+00:00",
-    "fail_count": 1
+    "updatedAt": "2026-07-24T08:17:48.365587+00:00",
+    "fail_count": 0
   },
   "1111": {
     "postsCount": 173,
@@ -152,8 +152,8 @@
     "isPrivate": false,
     "displayName": "mor!ya?",
     "avatarUrl": "/uploads/avatars/avatar_18660_1774232075929.webp",
-    "updatedAt": "2026-07-24T07:20:14.264019+00:00",
-    "fail_count": 0
+    "updatedAt": "2026-07-24T08:17:20.868138+00:00",
+    "fail_count": 2
   },
   "lze_0080": {
     "postsCount": 710,
@@ -165,20 +165,20 @@
     "isPrivate": false,
     "displayName": "lze_0080",
     "avatarUrl": "/uploads/avatars/avatar_22931_1774848838332.webp",
-    "updatedAt": "2026-07-24T07:20:59.240355+00:00",
-    "fail_count": 2
+    "updatedAt": "2026-07-24T08:17:58.360563+00:00",
+    "fail_count": 0
   },
   "miyaaa_96": {
     "postsCount": 28620,
     "followersCount": 1052,
     "followingCount": 1710,
     "createdAt": "2026-03-22T14:17:59.258Z",
-    "rate": 9.6395,
+    "rate": 9.6364,
     "isBot": false,
     "isPrivate": false,
     "displayName": "ちろる",
     "avatarUrl": "/uploads/avatars/avatar_1278_1782309971129.webp",
-    "updatedAt": "2026-07-24T07:20:41.765788+00:00",
+    "updatedAt": "2026-07-24T08:17:43.404289+00:00",
     "fail_count": 0
   },
   "ebitama": {
@@ -191,7 +191,7 @@
     "isPrivate": false,
     "displayName": "えびたま✎Ebi-tama",
     "avatarUrl": "/uploads/avatars/avatar_30198_1774601734505.webp",
-    "updatedAt": "2026-07-24T07:20:31.773308+00:00",
+    "updatedAt": "2026-07-24T08:16:20.846452+00:00",
     "fail_count": 0
   },
   "M1": {
@@ -204,8 +204,8 @@
     "isPrivate": false,
     "displayName": "まーくん🍵",
     "avatarUrl": "/uploads/avatars/avatar_18721_1784766040549.webp",
-    "updatedAt": "2026-07-24T07:20:56.732183+00:00",
-    "fail_count": 2
+    "updatedAt": "2026-07-24T08:17:55.835621+00:00",
+    "fail_count": 0
   },
   "siratori_hakuga": {
     "postsCount": 128,
@@ -217,12 +217,12 @@
     "isPrivate": false,
     "displayName": "高羽史彦に憧れたフォローマン🛜",
     "avatarUrl": "/uploads/avatars/avatar_18197_1774228685553.webp",
-    "updatedAt": "2026-07-24T07:20:54.247870+00:00",
-    "fail_count": 2
+    "updatedAt": "2026-07-24T08:17:53.416570+00:00",
+    "fail_count": 0
   },
   "clean": {
     "postsCount": 53,
-    "followersCount": 933,
+    "followersCount": 935,
     "followingCount": 2064,
     "createdAt": "2026-03-23T05:42:33.491Z",
     "rate": 0.0179,
@@ -230,8 +230,8 @@
     "isPrivate": false,
     "displayName": "神奈川クリーンアップ団体",
     "avatarUrl": "/uploads/avatars/avatar_20771_1774246082808.webp",
-    "updatedAt": "2026-07-24T07:21:01.765441+00:00",
-    "fail_count": 1
+    "updatedAt": "2026-07-24T08:16:28.343422+00:00",
+    "fail_count": 0
   },
   "Naze": {
     "postsCount": 399,
@@ -243,7 +243,7 @@
     "isPrivate": false,
     "displayName": "なぜ",
     "avatarUrl": "/uploads/avatars/avatar_23190_1774263714590.webp",
-    "updatedAt": "2026-07-24T07:21:26.746729+00:00",
+    "updatedAt": "2026-07-24T08:16:50.849843+00:00",
     "fail_count": 0
   },
   "nanoka": {
@@ -256,8 +256,8 @@
     "isPrivate": false,
     "displayName": "計画性のないナノカちゃん",
     "avatarUrl": "/uploads/avatars/avatar_22704_1774257629877.webp",
-    "updatedAt": "2026-07-24T07:21:29.273496+00:00",
-    "fail_count": 0
+    "updatedAt": "2026-07-24T08:17:13.359050+00:00",
+    "fail_count": 1
   },
   "kesuikemayaku": {
     "postsCount": 78,
@@ -269,7 +269,7 @@
     "isPrivate": false,
     "displayName": "けいすけ＠限界突破",
     "avatarUrl": "/uploads/avatars/avatar_18179_1774269305097.webp",
-    "updatedAt": "2026-07-24T07:21:31.755575+00:00",
+    "updatedAt": "2026-07-24T08:16:55.867547+00:00",
     "fail_count": 0
   },
   "zc": {
@@ -303,13 +303,13 @@
     "followersCount": 803,
     "followingCount": 1642,
     "createdAt": "2026-03-23T02:51:19.251Z",
-    "rate": 2.2466,
+    "rate": 2.2459,
     "isBot": false,
     "isPrivate": false,
     "displayName": "マイマック",
     "avatarUrl": "/uploads/avatars/avatar_19039_1774234511935.webp",
-    "updatedAt": "2026-07-24T07:19:21.756297+00:00",
-    "fail_count": 0
+    "updatedAt": "2026-07-24T08:15:40.944507+00:00",
+    "fail_count": 3
   },
   "Hima_dayo": {
     "postsCount": 291,
@@ -342,7 +342,7 @@
     "followersCount": 643,
     "followingCount": 1434,
     "createdAt": "2026-03-30T15:41:47.685Z",
-    "rate": 4.4293,
+    "rate": 4.4278,
     "isBot": false,
     "isPrivate": false,
     "displayName": "昨日の夜…部屋で…何してたの？",
@@ -366,7 +366,7 @@
   "Doey": {
     "postsCount": 4033,
     "followersCount": 638,
-    "followingCount": 1109,
+    "followingCount": 1112,
     "createdAt": "2026-03-23T09:03:48.963Z",
     "rate": 1.8948,
     "isBot": false,
@@ -516,12 +516,12 @@
     "followersCount": 482,
     "followingCount": 699,
     "createdAt": "2026-03-26T16:44:25.414Z",
-    "rate": 5.9392,
+    "rate": 5.9372,
     "isBot": false,
     "isPrivate": false,
     "displayName": "まめくろ",
     "avatarUrl": "/uploads/avatars/avatar_30023_1778140266142.webp",
-    "updatedAt": "2026-07-24T07:20:34.250993+00:00",
+    "updatedAt": "2026-07-24T08:17:38.501204+00:00",
     "fail_count": 0
   },
   "Rami": {
@@ -652,26 +652,26 @@
     "followersCount": 392,
     "followingCount": 485,
     "createdAt": "2026-03-24T05:45:31.025Z",
-    "rate": 2.514,
+    "rate": 2.5132,
     "isBot": false,
     "isPrivate": false,
     "displayName": "なすび。",
     "avatarUrl": "https://cdn.discordapp.com/avatars/1485802921550417932/a2b5defd1c04021656070d1ed080ea62.png",
-    "updatedAt": "2026-07-24T07:19:36.759411+00:00",
-    "fail_count": 0
+    "updatedAt": "2026-07-24T08:15:55.849176+00:00",
+    "fail_count": 4
   },
   "DA": {
-    "postsCount": 15494,
+    "postsCount": 15496,
     "followersCount": 408,
     "followingCount": 956,
     "createdAt": "2026-03-22T15:13:18.631Z",
-    "rate": 5.2202,
+    "rate": 5.2192,
     "isBot": false,
     "isPrivate": false,
     "displayName": "だゆ",
     "avatarUrl": "/uploads/avatars/avatar_8117_1775405944261.webp",
-    "updatedAt": "2026-07-24T07:19:18.005014+00:00",
-    "fail_count": 0
+    "updatedAt": "2026-07-24T08:15:37.441078+00:00",
+    "fail_count": 3
   },
   "yozakura": {
     "postsCount": 19,
@@ -686,16 +686,16 @@
     "updatedAt": "2026-06-20T01:08:33.774886+00:00"
   },
   "hototogisukira_": {
-    "postsCount": 17593,
-    "followersCount": 461,
-    "followingCount": 1157,
+    "postsCount": 17649,
+    "followersCount": 463,
+    "followingCount": 1158,
     "createdAt": "2026-04-19T09:51:56.760Z",
-    "rate": 7.6442,
+    "rate": 7.6652,
     "isBot": false,
     "isPrivate": false,
     "displayName": "天オ(かしこいんちゅ)🐴",
     "avatarUrl": "https://cdn.discordapp.com/avatars/1437369129496481863/0b7374abad774cf60e809994b7c0e396.png",
-    "updatedAt": "2026-07-24T07:20:37.072539+00:00",
+    "updatedAt": "2026-07-24T08:20:28.465940+00:00",
     "fail_count": 0
   },
   "hibari_wings": {
@@ -882,17 +882,17 @@
     "updatedAt": "2026-06-20T01:09:01.284743+00:00"
   },
   "sugarichigomilk": {
-    "postsCount": 27012,
+    "postsCount": 27013,
     "followersCount": 321,
     "followingCount": 45,
     "createdAt": "2026-03-23T02:47:45.332Z",
-    "rate": 9.1363,
+    "rate": 9.1337,
     "isBot": false,
     "isPrivate": false,
     "displayName": "砂糖いちごみるく",
     "avatarUrl": "/uploads/avatars/avatar_18996_1784773741474.webp",
-    "updatedAt": "2026-07-24T07:20:19.264814+00:00",
-    "fail_count": 0
+    "updatedAt": "2026-07-24T08:17:25.969738+00:00",
+    "fail_count": 2
   },
   "IKST": {
     "postsCount": 893,
@@ -969,17 +969,17 @@
     "fail_count": 1
   },
   "Oi_oistar": {
-    "postsCount": 8630,
+    "postsCount": 8660,
     "followersCount": 260,
     "followingCount": 291,
     "createdAt": "2026-03-23T01:45:24.642Z",
-    "rate": 2.9179,
+    "rate": 2.9271,
     "isBot": false,
     "isPrivate": false,
     "displayName": "🐚ｵｲｵｲｽﾀｰ🐚",
     "avatarUrl": "/uploads/avatars/avatar_18425_1784728508396.webp",
-    "updatedAt": "2026-07-24T07:20:10.664619+00:00",
-    "fail_count": 0
+    "updatedAt": "2026-07-24T08:17:17.416789+00:00",
+    "fail_count": 1
   },
   "sham": {
     "postsCount": 5343,
@@ -999,13 +999,13 @@
     "followersCount": 254,
     "followingCount": 270,
     "createdAt": "2026-03-25T13:20:12.524Z",
-    "rate": 3.5487,
+    "rate": 3.5475,
     "isBot": false,
     "isPrivate": false,
     "displayName": "Rayella_sub",
     "avatarUrl": "/uploads/avatars/avatar_29231_1778486296964.webp",
-    "updatedAt": "2026-07-24T07:19:35.802577+00:00",
-    "fail_count": 0
+    "updatedAt": "2026-07-24T08:15:54.633955+00:00",
+    "fail_count": 4
   },
   "Simogirikitani": {
     "postsCount": 388,
@@ -1036,12 +1036,12 @@
     "followersCount": 20,
     "followingCount": 4,
     "createdAt": "2026-05-21T12:42:32.711Z",
-    "rate": 9.8788,
+    "rate": 9.8729,
     "isBot": false,
     "isPrivate": false,
     "displayName": "ガーリックシュガーライス",
     "avatarUrl": "/uploads/avatars/avatar_36826_1784751254444.webp",
-    "updatedAt": "2026-07-24T07:21:16.759631+00:00",
+    "updatedAt": "2026-07-24T08:16:53.351630+00:00",
     "fail_count": 0
   },
   "karonsub": {
@@ -1070,30 +1070,30 @@
     "fail_count": 0
   },
   "koi_shirahama": {
-    "postsCount": 10288,
+    "postsCount": 10290,
     "followersCount": 252,
     "followingCount": 265,
     "createdAt": "2026-03-22T17:10:24.289Z",
-    "rate": 3.4684,
+    "rate": 3.468,
     "isBot": false,
     "isPrivate": false,
     "displayName": "koi ‎ ᯠ_   ̫  _ᯄ",
     "avatarUrl": "/uploads/avatars/avatar_17539_1783133344589.webp",
-    "updatedAt": "2026-07-24T07:20:25.800271+00:00",
-    "fail_count": 0
+    "updatedAt": "2026-07-24T08:17:35.644429+00:00",
+    "fail_count": 1
   },
   "Mumei_HK": {
     "postsCount": 9556,
     "followersCount": 203,
     "followingCount": 219,
     "createdAt": "2026-04-18T00:29:53.686Z",
-    "rate": 4.0928,
+    "rate": 4.0912,
     "isBot": false,
     "isPrivate": false,
     "displayName": "Mumei_HK",
     "avatarUrl": "/uploads/avatars/avatar_34511_1777129258280.webp",
-    "updatedAt": "2026-07-24T07:19:31.749163+00:00",
-    "fail_count": 0
+    "updatedAt": "2026-07-24T08:15:50.861549+00:00",
+    "fail_count": 4
   },
   "namazakana": {
     "postsCount": 412,
@@ -1112,12 +1112,12 @@
     "followersCount": 216,
     "followingCount": 166,
     "createdAt": "2026-03-27T05:10:04.126Z",
-    "rate": 2.8567,
+    "rate": 2.8558,
     "isBot": false,
     "isPrivate": false,
     "displayName": "tuka",
     "avatarUrl": "/uploads/avatars/avatar_30402_1774872430061.webp",
-    "updatedAt": "2026-07-24T07:19:56.751315+00:00",
+    "updatedAt": "2026-07-24T08:16:15.833208+00:00",
     "fail_count": 0
   },
   "User_name": {
@@ -1206,7 +1206,7 @@
   },
   "osknqynai": {
     "postsCount": 157,
-    "followersCount": 190,
+    "followersCount": 191,
     "followingCount": 181,
     "createdAt": "2026-03-23T01:33:55.652Z",
     "rate": 0.0735,
@@ -1221,13 +1221,13 @@
     "followersCount": 197,
     "followingCount": 216,
     "createdAt": "2026-03-23T05:35:51.272Z",
-    "rate": 2.397,
+    "rate": 2.3962,
     "isBot": false,
     "isPrivate": false,
     "displayName": "自認5歳児素人魑魅魍魎的義務敗微酩酊狂人女子高生公序良俗最高位人権道徳者元死刑囚",
     "avatarUrl": "/uploads/avatars/avatar_20671_1782402408705.webp",
-    "updatedAt": "2026-07-24T07:19:29.276171+00:00",
-    "fail_count": 0
+    "updatedAt": "2026-07-24T08:15:48.337757+00:00",
+    "fail_count": 3
   },
   "tamag0daaa1222": {
     "postsCount": 2829,
@@ -1439,7 +1439,7 @@
   },
   "Ippei_Mizhara": {
     "postsCount": 183,
-    "followersCount": 170,
+    "followersCount": 171,
     "followingCount": 168,
     "createdAt": "2026-03-23T03:18:08.513Z",
     "rate": 0.0858,
@@ -1490,12 +1490,12 @@
     "followersCount": 340,
     "followingCount": 584,
     "createdAt": "2026-04-18T00:28:20.983Z",
-    "rate": 4.8303,
+    "rate": 4.8283,
     "isBot": false,
     "isPrivate": false,
     "displayName": "しがないオタク",
     "avatarUrl": "/uploads/avatars/avatar_34510_1781859343077.webp",
-    "updatedAt": "2026-07-24T07:20:00.973832+00:00",
+    "updatedAt": "2026-07-24T08:16:19.658804+00:00",
     "fail_count": 0
   },
   "yudetamago": {
@@ -1535,16 +1535,16 @@
     "updatedAt": "2026-06-20T01:10:11.252838+00:00"
   },
   "OTA_ame": {
-    "postsCount": 9137,
+    "postsCount": 9165,
     "followersCount": 184,
     "followingCount": 77,
     "createdAt": "2026-03-27T03:20:24.320Z",
-    "rate": 3.1947,
+    "rate": 3.2035,
     "isBot": false,
     "isPrivate": false,
     "displayName": "わたあめ",
     "avatarUrl": "/uploads/avatars/avatar_30314_1774581712704.webp",
-    "updatedAt": "2026-07-24T07:21:21.747924+00:00",
+    "updatedAt": "2026-07-24T08:16:45.839982+00:00",
     "fail_count": 0
   },
   "tyotyoyu_1022": {
@@ -1682,17 +1682,17 @@
     "updatedAt": "2026-06-20T01:10:33.773303+00:00"
   },
   "aosabacan": {
-    "postsCount": 14823,
+    "postsCount": 14868,
     "followersCount": 188,
     "followingCount": 188,
     "createdAt": "2026-03-23T08:01:37.611Z",
-    "rate": 5.0225,
+    "rate": 5.0361,
     "isBot": false,
     "isPrivate": false,
     "displayName": "鯖缶𓆟",
     "avatarUrl": "/uploads/avatars/avatar_22232_1781206434079.webp",
-    "updatedAt": "2026-07-24T07:20:01.842686+00:00",
-    "fail_count": 0
+    "updatedAt": "2026-07-24T08:17:05.975996+00:00",
+    "fail_count": 1
   },
   "kamata_kuririn": {
     "postsCount": 11,
@@ -1780,15 +1780,15 @@
   },
   "Kp": {
     "postsCount": 6971,
-    "followersCount": 27,
+    "followersCount": 28,
     "followingCount": 11,
     "createdAt": "2026-07-22T21:30:55.220Z",
-    "rate": 206.0199,
+    "rate": 200.5432,
     "isBot": false,
     "isPrivate": false,
     "displayName": "カッパ2",
     "avatarUrl": "/uploads/avatars/avatar_37616_1784757242725.webp",
-    "updatedAt": "2026-07-24T07:21:06.759062+00:00",
+    "updatedAt": "2026-07-24T08:16:33.336615+00:00",
     "fail_count": 0
   },
   "Aneber": {
@@ -1879,7 +1879,7 @@
   },
   "ACT0219": {
     "postsCount": 31,
-    "followersCount": 135,
+    "followersCount": 136,
     "followingCount": 185,
     "createdAt": "2026-03-23T07:40:30.783Z",
     "rate": 0.0146,
@@ -1903,7 +1903,7 @@
   },
   "Karocalo09": {
     "postsCount": 147,
-    "followersCount": 133,
+    "followersCount": 134,
     "followingCount": 141,
     "createdAt": "2026-03-23T07:22:58.912Z",
     "rate": 0.069,
@@ -1973,7 +1973,7 @@
     "displayName": "月夜桜",
     "avatarUrl": "/uploads/avatars/avatar_33346_1777887219394.webp",
     "updatedAt": "2026-06-20T00:42:17.300187+00:00",
-    "fail_count": 170
+    "fail_count": 177
   },
   "nakatayukkuri": {
     "postsCount": 119,
@@ -2388,7 +2388,7 @@
   },
   "810senpai": {
     "postsCount": 14,
-    "followersCount": 114,
+    "followersCount": 115,
     "followingCount": 108,
     "createdAt": "2026-03-24T03:36:14.025Z",
     "rate": 0.0066,
@@ -2665,17 +2665,17 @@
     "updatedAt": "2026-06-20T01:13:38.776864+00:00"
   },
   "tela": {
-    "postsCount": 15524,
+    "postsCount": 15567,
     "followersCount": 120,
     "followingCount": 9,
     "createdAt": "2026-03-23T01:40:18.065Z",
-    "rate": 5.2487,
+    "rate": 5.2616,
     "isBot": false,
     "isPrivate": false,
     "displayName": "手楽",
     "avatarUrl": "/uploads/avatars/avatar_18374_1775545831243.webp",
-    "updatedAt": "2026-07-24T07:20:44.254951+00:00",
-    "fail_count": 1
+    "updatedAt": "2026-07-24T08:17:46.068969+00:00",
+    "fail_count": 0
   },
   "yupadayo": {
     "postsCount": 25,
@@ -2919,16 +2919,16 @@
     "updatedAt": "2026-06-20T01:14:31.261498+00:00"
   },
   "io": {
-    "postsCount": 10764,
+    "postsCount": 10765,
     "followersCount": 119,
     "followingCount": 94,
     "createdAt": "2026-03-22T13:38:31.591Z",
-    "rate": 3.6246,
+    "rate": 3.6238,
     "isBot": false,
     "isPrivate": false,
     "displayName": "ドミニカの犬砲",
     "avatarUrl": "/uploads/avatars/avatar_1115_1782838068340.webp",
-    "updatedAt": "2026-07-24T07:21:24.279687+00:00",
+    "updatedAt": "2026-07-24T08:16:48.348382+00:00",
     "fail_count": 0
   },
   "a_ya": {
@@ -3086,8 +3086,8 @@
     "isPrivate": false,
     "displayName": "赤髪のとも",
     "avatarUrl": "/uploads/avatars/avatar_30465_1774591824054.webp",
-    "updatedAt": "2026-07-24T07:20:11.741856+00:00",
-    "fail_count": 0
+    "updatedAt": "2026-07-24T08:17:18.569809+00:00",
+    "fail_count": 1
   },
   "henoke": {
     "postsCount": 1029,
@@ -3139,7 +3139,7 @@
   },
   "itibosi": {
     "postsCount": 773,
-    "followersCount": 140,
+    "followersCount": 141,
     "followingCount": 142,
     "createdAt": "2026-03-22T11:15:31.228Z",
     "rate": 0.3595,
@@ -3489,7 +3489,7 @@
   },
   "009": {
     "postsCount": 125,
-    "followersCount": 74,
+    "followersCount": 75,
     "followingCount": 78,
     "createdAt": "2026-03-26T21:31:57.665Z",
     "rate": 0.0612,
@@ -3513,7 +3513,7 @@
   },
   "oo": {
     "postsCount": 10,
-    "followersCount": 70,
+    "followersCount": 71,
     "followingCount": 75,
     "createdAt": "2026-03-22T10:49:13.739Z",
     "rate": 0.0047,
@@ -3837,7 +3837,7 @@
     "displayName": "BA",
     "avatarUrl": "/uploads/avatars/avatar_33290_1775044256536.webp",
     "updatedAt": "2026-06-20T00:43:02.180420+00:00",
-    "fail_count": 170
+    "fail_count": 177
   },
   "kalpas": {
     "postsCount": 111,
@@ -4010,7 +4010,7 @@
   },
   "918url_com": {
     "postsCount": 243,
-    "followersCount": 60,
+    "followersCount": 61,
     "followingCount": 59,
     "createdAt": "2026-03-29T15:24:45.232Z",
     "rate": 0.1229,
@@ -4046,7 +4046,7 @@
   },
   "vv": {
     "postsCount": 3,
-    "followersCount": 55,
+    "followersCount": 56,
     "followingCount": 52,
     "createdAt": "2026-03-22T12:40:02.219Z",
     "rate": 0.0014,
@@ -4107,7 +4107,7 @@
   },
   "Sabo": {
     "postsCount": 0,
-    "followersCount": 54,
+    "followersCount": 55,
     "followingCount": 48,
     "createdAt": "2026-03-23T12:37:45.462Z",
     "rate": 0.0,
@@ -4208,7 +4208,7 @@
     "followersCount": 51,
     "followingCount": 30,
     "createdAt": "2026-03-25T08:57:35.142Z",
-    "rate": 0.1096,
+    "rate": 0.1095,
     "isBot": false,
     "isPrivate": false,
     "displayName": "IkasUI6721",
@@ -4314,7 +4314,7 @@
   },
   "PP_Pixel_4289": {
     "postsCount": 71,
-    "followersCount": 52,
+    "followersCount": 53,
     "followingCount": 55,
     "createdAt": "2026-03-22T12:36:05.592Z",
     "rate": 0.033,
@@ -4605,7 +4605,7 @@
   },
   "seria_0927": {
     "postsCount": 245,
-    "followersCount": 48,
+    "followersCount": 49,
     "followingCount": 52,
     "createdAt": "2026-03-29T15:48:34.485Z",
     "rate": 0.1239,
@@ -4811,7 +4811,7 @@
   },
   "Mizp_2796": {
     "postsCount": 8,
-    "followersCount": 43,
+    "followersCount": 44,
     "followingCount": 40,
     "createdAt": "2026-03-23T08:30:37.408Z",
     "rate": 0.0038,
@@ -5078,8 +5078,8 @@
   },
   "katsuobushiyome": {
     "postsCount": 2576,
-    "followersCount": 186,
-    "followingCount": 254,
+    "followersCount": 187,
+    "followingCount": 255,
     "createdAt": "2026-06-07T23:59:30.331Z",
     "rate": 2.3753,
     "isBot": false,
@@ -5289,13 +5289,13 @@
     "followersCount": 1033,
     "followingCount": 1731,
     "createdAt": "2026-03-23T04:23:38.204Z",
-    "rate": 0.6917,
+    "rate": 0.6915,
     "isBot": false,
     "isPrivate": false,
     "displayName": "Hochik1su",
     "avatarUrl": "/uploads/avatars/avatar_19951_1774240652013.webp",
-    "updatedAt": "2026-07-24T07:20:49.678662+00:00",
-    "fail_count": 1
+    "updatedAt": "2026-07-24T08:16:25.841724+00:00",
+    "fail_count": 0
   },
   "milkchoco_2012": {
     "postsCount": 56,
@@ -5314,13 +5314,13 @@
     "followersCount": 410,
     "followingCount": 678,
     "createdAt": "2026-03-23T07:45:25.386Z",
-    "rate": 3.2467,
+    "rate": 3.2457,
     "isBot": false,
     "isPrivate": false,
     "displayName": "¡Sovereign",
     "avatarUrl": "/uploads/avatars/avatar_22109_1784309384112.webp",
-    "updatedAt": "2026-07-24T07:20:51.843580+00:00",
-    "fail_count": 2
+    "updatedAt": "2026-07-24T08:17:50.865860+00:00",
+    "fail_count": 0
   },
   "ee": {
     "postsCount": 7,
@@ -5387,13 +5387,13 @@
     "followersCount": 188,
     "followingCount": 215,
     "createdAt": "2026-03-23T15:04:08.920Z",
-    "rate": 4.7441,
+    "rate": 4.7426,
     "isBot": false,
     "isPrivate": false,
     "displayName": "チーズ2525🧀",
     "avatarUrl": "/uploads/avatars/avatar_24931_1774278270611.webp",
-    "updatedAt": "2026-07-24T07:19:46.737722+00:00",
-    "fail_count": 0
+    "updatedAt": "2026-07-24T08:16:05.832357+00:00",
+    "fail_count": 4
   },
   "CHIZIN_M": {
     "postsCount": 33,
@@ -5471,7 +5471,7 @@
   },
   "AcceeD": {
     "postsCount": 50,
-    "followersCount": 85,
+    "followersCount": 86,
     "followingCount": 81,
     "createdAt": "2026-03-23T01:37:33.319Z",
     "rate": 0.0234,
@@ -6889,7 +6889,7 @@
   },
   "Nshirataki_0945": {
     "postsCount": 26,
-    "followersCount": 75,
+    "followersCount": 76,
     "followingCount": 76,
     "createdAt": "2026-03-23T06:00:07.079Z",
     "rate": 0.0122,
@@ -6950,7 +6950,7 @@
   },
   "shimousa_eki": {
     "postsCount": 455,
-    "followersCount": 72,
+    "followersCount": 73,
     "followingCount": 74,
     "createdAt": "2026-03-24T07:04:52.375Z",
     "rate": 0.1568,
@@ -7573,7 +7573,7 @@
     "isPrivate": false,
     "displayName": "InterLinkJPN",
     "avatarUrl": "/uploads/avatars/avatar_18260_1774229579858.webp",
-    "updatedAt": "2026-07-24T07:21:11.780772+00:00",
+    "updatedAt": "2026-07-24T08:16:38.341625+00:00",
     "fail_count": 0
   },
   "Genshin": {
@@ -7728,12 +7728,12 @@
     "followersCount": 132,
     "followingCount": 136,
     "createdAt": "2026-03-28T08:30:42.596Z",
-    "rate": 3.6149,
+    "rate": 3.6137,
     "isBot": false,
     "isPrivate": false,
     "displayName": "ソフィー・トワイライト",
     "avatarUrl": "/uploads/avatars/avatar_32380_1782305323883.webp",
-    "updatedAt": "2026-07-24T07:19:55.738509+00:00",
+    "updatedAt": "2026-07-24T08:16:14.508442+00:00",
     "fail_count": 0
   },
   "koperunikusu": {
@@ -8068,7 +8068,7 @@
     "followersCount": 92,
     "followingCount": 95,
     "createdAt": "2026-03-22T23:50:39.111Z",
-    "rate": 0.0872,
+    "rate": 0.0871,
     "isBot": false,
     "isPrivate": false,
     "displayName": "あいうえお☑️",
@@ -8232,7 +8232,7 @@
     "displayName": "ぷあ！",
     "avatarUrl": "/uploads/avatars/avatar_33137_1778744307311.webp",
     "updatedAt": "2026-06-19T23:50:13.152261+00:00",
-    "fail_count": 176
+    "fail_count": 183
   },
   "futahii": {
     "postsCount": 59,
@@ -8475,7 +8475,7 @@
     "displayName": "七虎なるくん",
     "avatarUrl": "/uploads/avatars/avatar_34252_1779446062032.webp",
     "updatedAt": "2026-06-19T23:50:15.649291+00:00",
-    "fail_count": 176
+    "fail_count": 183
   },
   "kanetawerewolf": {
     "postsCount": 23,
@@ -8563,7 +8563,7 @@
   },
   "fef": {
     "postsCount": 0,
-    "followersCount": 40,
+    "followersCount": 41,
     "followingCount": 38,
     "createdAt": "2026-03-23T01:54:11.983Z",
     "rate": 0.0,
@@ -8761,7 +8761,7 @@
     "followersCount": 35,
     "followingCount": 1,
     "createdAt": "2026-04-02T13:03:23.295Z",
-    "rate": 0.037,
+    "rate": 0.0369,
     "isBot": false,
     "isPrivate": false,
     "displayName": "帰ってきた藤沢くん",
@@ -9812,18 +9812,18 @@
     "followersCount": 14,
     "followingCount": 10,
     "createdAt": "2026-07-15T13:40:21.944Z",
-    "rate": 86.3865,
+    "rate": 85.9963,
     "isBot": false,
     "isPrivate": false,
     "displayName": "後藤ひとり マジで本物",
     "avatarUrl": "/uploads/avatars/avatar_37515_1784123327865.webp",
-    "updatedAt": "2026-07-24T07:20:06.799292+00:00",
-    "fail_count": 0
+    "updatedAt": "2026-07-24T08:17:10.890211+00:00",
+    "fail_count": 1
   },
   "RG": {
     "postsCount": 218,
     "followersCount": 225,
-    "followingCount": 233,
+    "followingCount": 234,
     "createdAt": "2026-03-22T23:02:57.138Z",
     "rate": 0.1019,
     "isBot": false,
@@ -10741,7 +10741,7 @@
     "displayName": "銀蝶りあ",
     "avatarUrl": "/uploads/avatars/avatar_17977_1774222276481.webp",
     "updatedAt": "2026-06-19T23:34:45.314890+00:00",
-    "fail_count": 179
+    "fail_count": 185
   },
   "sabigumo_st_001": {
     "postsCount": 8,
@@ -10856,7 +10856,7 @@
     "displayName": "いちごみるく - 底辺YouTuber代表🍓🥛☄️",
     "avatarUrl": "/uploads/avatars/avatar_717_1774181042883.webp",
     "updatedAt": "2026-06-19T23:50:35.646155+00:00",
-    "fail_count": 176
+    "fail_count": 183
   },
   "purinsaba": {
     "postsCount": 14,
@@ -11027,7 +11027,7 @@
     "fail_count": 0
   },
   "1w": {
-    "postsCount": 9269,
+    "postsCount": 9272,
     "followersCount": 74,
     "followingCount": 1,
     "createdAt": "2026-03-24T16:33:35.312Z",
@@ -11036,8 +11036,8 @@
     "isPrivate": false,
     "displayName": "Yahoo!ニュース",
     "avatarUrl": "/uploads/avatars/avatar_27302_1774370069978.webp",
-    "updatedAt": "2026-07-24T07:19:26.748863+00:00",
-    "fail_count": 0
+    "updatedAt": "2026-07-24T08:15:45.825658+00:00",
+    "fail_count": 3
   },
   "ayh": {
     "postsCount": 68,
@@ -11280,7 +11280,7 @@
     "isPrivate": false,
     "displayName": "tom",
     "avatarUrl": "/uploads/avatars/avatar_29398_1774466101316.webp",
-    "updatedAt": "2026-07-24T07:20:39.239579+00:00",
+    "updatedAt": "2026-07-24T08:17:41.339854+00:00",
     "fail_count": 0
   },
   "_Rion_": {
@@ -11288,13 +11288,13 @@
     "followersCount": 329,
     "followingCount": 235,
     "createdAt": "2026-03-23T04:44:40.992Z",
-    "rate": 3.3494,
+    "rate": 3.3483,
     "isBot": false,
     "isPrivate": false,
     "displayName": "_Rion_",
     "avatarUrl": "/uploads/avatars/avatar_20167_1774241102781.webp",
     "updatedAt": "2026-06-20T01:38:08.842487+00:00",
-    "fail_count": 2
+    "fail_count": 3
   },
   "onjmin": {
     "postsCount": 143,
@@ -11736,7 +11736,7 @@
     "displayName": "ST&2 SH",
     "avatarUrl": "/uploads/avatars/avatar_33116_1775051749252.webp",
     "updatedAt": "2026-06-19T23:37:22.813246+00:00",
-    "fail_count": 179
+    "fail_count": 185
   },
   "NTJSK": {
     "postsCount": 4,
@@ -11826,7 +11826,7 @@
     "displayName": "田所浩二",
     "avatarUrl": "/uploads/avatars/avatar_33511_1775431924701.webp",
     "updatedAt": "2026-06-19T23:37:35.298704+00:00",
-    "fail_count": 179
+    "fail_count": 185
   },
   "_od": {
     "postsCount": 24,
@@ -12298,7 +12298,7 @@
   },
   "kai_gh_j": {
     "postsCount": 10,
-    "followersCount": 27,
+    "followersCount": 28,
     "followingCount": 32,
     "createdAt": "2026-04-03T05:51:42.394Z",
     "rate": 0.0038,
@@ -12675,7 +12675,7 @@
   },
   "07": {
     "postsCount": 0,
-    "followersCount": 21,
+    "followersCount": 22,
     "followingCount": 4,
     "createdAt": "2026-03-22T12:43:13.509Z",
     "rate": 0.0,
@@ -13061,7 +13061,7 @@
     "displayName": "ゆるふわクロニクル 月夜桜",
     "avatarUrl": "/uploads/avatars/avatar_36246_1779014083724.webp",
     "updatedAt": "2026-06-19T23:41:50.234015+00:00",
-    "fail_count": 178
+    "fail_count": 184
   },
   "hakkadaikon": {
     "postsCount": 9,
@@ -13294,7 +13294,7 @@
     "displayName": "田中大田中のファン",
     "avatarUrl": "/uploads/avatars/avatar_24220_1774270860081.webp",
     "updatedAt": "2026-06-19T23:42:32.752042+00:00",
-    "fail_count": 178
+    "fail_count": 184
   },
   "I": {
     "postsCount": 12,
@@ -13799,8 +13799,8 @@
     "isPrivate": false,
     "displayName": "𓂍𓂌 / えむぇぬ - ボカロP",
     "avatarUrl": "/uploads/avatars/avatar_20072_1775297568518.webp",
-    "updatedAt": "2026-07-24T07:19:19.483592+00:00",
-    "fail_count": 0
+    "updatedAt": "2026-07-24T08:15:38.362995+00:00",
+    "fail_count": 3
   },
   "um": {
     "postsCount": 15,
@@ -14033,8 +14033,8 @@
     "isPrivate": false,
     "displayName": "Uny@イラスト",
     "avatarUrl": "/uploads/avatars/avatar_28128_1774860587333.webp",
-    "updatedAt": "2026-07-24T07:20:21.768525+00:00",
-    "fail_count": 0
+    "updatedAt": "2026-07-24T08:17:28.455722+00:00",
+    "fail_count": 2
   },
   "n01": {
     "postsCount": 1772,
@@ -14140,22 +14140,22 @@
     "fail_count": 3
   },
   "uzu": {
-    "postsCount": 18390,
+    "postsCount": 18399,
     "followersCount": 156,
     "followingCount": 85,
     "createdAt": "2026-03-23T01:55:41.186Z",
-    "rate": 6.2183,
+    "rate": 6.2194,
     "isBot": false,
     "isPrivate": false,
     "displayName": "佐藤渦",
     "avatarUrl": "/uploads/avatars/avatar_18503_1774231207444.webp",
-    "updatedAt": "2026-07-24T07:19:49.242618+00:00",
-    "fail_count": 0
+    "updatedAt": "2026-07-24T08:16:08.350861+00:00",
+    "fail_count": 4
   },
   "00p": {
     "postsCount": 2476,
-    "followersCount": 273,
-    "followingCount": 1130,
+    "followersCount": 276,
+    "followingCount": 1338,
     "createdAt": "2026-03-22T15:31:51.524Z",
     "rate": 0.8421,
     "isBot": false,
@@ -14167,7 +14167,7 @@
   },
   "Pito3939": {
     "postsCount": 26,
-    "followersCount": 77,
+    "followersCount": 78,
     "followingCount": 64,
     "createdAt": "2026-03-24T09:42:17.369Z",
     "rate": 0.009,
@@ -14215,7 +14215,7 @@
     "displayName": "onion_soup",
     "avatarUrl": "/uploads/avatars/avatar_27586_1774599157550.webp",
     "updatedAt": "2026-06-19T23:44:57.759092+00:00",
-    "fail_count": 177
+    "fail_count": 183
   },
   "Poteto": {
     "postsCount": 60,
@@ -15006,7 +15006,7 @@
     "displayName": "Nero",
     "avatarUrl": "/uploads/avatars/avatar_36963_1780932194116.webp",
     "updatedAt": "2026-06-19T23:55:03.161920+00:00",
-    "fail_count": 175
+    "fail_count": 182
   },
   "bqnz5432": {
     "postsCount": 40,
@@ -16171,7 +16171,7 @@
     "displayName": "q_w0lf_p",
     "avatarUrl": "/uploads/avatars/avatar_29929_1774527174224.webp",
     "updatedAt": "2026-06-20T00:09:42.782925+00:00",
-    "fail_count": 172
+    "fail_count": 179
   },
   "Re": {
     "postsCount": 1,
@@ -17195,7 +17195,7 @@
     "followersCount": 42,
     "followingCount": 21,
     "createdAt": "2026-04-15T10:25:19.726Z",
-    "rate": 0.1331,
+    "rate": 0.133,
     "isBot": false,
     "isPrivate": false,
     "displayName": "nikuro",
@@ -19137,7 +19137,7 @@
     "displayName": "yyy",
     "avatarUrl": "",
     "updatedAt": "2026-06-20T00:43:39.666238+00:00",
-    "fail_count": 170
+    "fail_count": 177
   },
   "NOX_wild": {
     "postsCount": 54,
@@ -19504,7 +19504,7 @@
   },
   "x_x_69_x": {
     "postsCount": 2,
-    "followersCount": 42,
+    "followersCount": 43,
     "followingCount": 37,
     "createdAt": "2026-03-23T05:28:31.938Z",
     "rate": 0.0007,
@@ -20240,7 +20240,7 @@
     "displayName": "あ",
     "avatarUrl": "/uploads/avatars/avatar_33691_1777475197116.webp",
     "updatedAt": "2026-06-19T23:51:43.146016+00:00",
-    "fail_count": 175
+    "fail_count": 182
   },
   "yokuyakiNIKU": {
     "postsCount": 44,
@@ -20351,16 +20351,16 @@
     "updatedAt": "2026-06-20T00:53:49.929554+00:00"
   },
   "take_roketto": {
-    "postsCount": 2200,
+    "postsCount": 2278,
     "followersCount": 80,
     "followingCount": 87,
     "createdAt": "2026-06-07T06:59:43.102Z",
-    "rate": 1.9541,
+    "rate": 2.0186,
     "isBot": false,
     "isPrivate": false,
     "displayName": "たけのこロケット",
     "avatarUrl": "/uploads/avatars/avatar_37095_1784635244867.webp",
-    "updatedAt": "2026-07-24T04:50:09.464495+00:00",
+    "updatedAt": "2026-07-24T07:31:14.950753+00:00",
     "fail_count": 4
   },
   "mii_yamiaka": {
@@ -21899,7 +21899,7 @@
     "isPrivate": false,
     "displayName": "_1",
     "avatarUrl": "/uploads/avatars/avatar_1013_1774494854044.webp",
-    "updatedAt": "2026-07-24T07:21:34.275393+00:00",
+    "updatedAt": "2026-07-24T08:16:58.332956+00:00",
     "fail_count": 0
   },
   "876": {
@@ -22007,8 +22007,8 @@
   },
   "Hoshino1228": {
     "postsCount": 35,
-    "followersCount": 56,
-    "followingCount": 69,
+    "followersCount": 57,
+    "followingCount": 70,
     "createdAt": "2026-04-18T00:47:45.370Z",
     "rate": 0.0152,
     "isBot": false,
@@ -22910,7 +22910,7 @@
   },
   "To45861": {
     "postsCount": 60,
-    "followersCount": 57,
+    "followersCount": 58,
     "followingCount": 59,
     "createdAt": "2026-03-22T12:48:16.428Z",
     "rate": 0.0204,
@@ -22962,7 +22962,7 @@
   },
   "ycs47": {
     "postsCount": 11,
-    "followersCount": 41,
+    "followersCount": 42,
     "followingCount": 41,
     "createdAt": "2026-03-25T09:03:02.081Z",
     "rate": 0.0038,
@@ -23384,7 +23384,7 @@
   "64": {
     "postsCount": 705,
     "followersCount": 143,
-    "followingCount": 218,
+    "followingCount": 219,
     "createdAt": "2026-03-22T13:43:31.528Z",
     "rate": 0.2396,
     "isBot": false,
@@ -24842,7 +24842,7 @@
     "followersCount": 22,
     "followingCount": 1,
     "createdAt": "2026-05-09T09:01:34.878Z",
-    "rate": 0.2371,
+    "rate": 0.2369,
     "isBot": false,
     "isPrivate": false,
     "displayName": "たかし",
@@ -26498,11 +26498,11 @@
     "displayName": "クモハ8000/奈良民",
     "avatarUrl": "/uploads/avatars/avatar_32393_1774691449570.webp",
     "updatedAt": "2026-06-20T00:05:25.643035+00:00",
-    "fail_count": 172
+    "fail_count": 179
   },
   "_mityaki_3838": {
     "postsCount": 4,
-    "followersCount": 20,
+    "followersCount": 21,
     "followingCount": 5,
     "createdAt": "2026-03-23T10:55:47.561Z",
     "rate": 0.0014,
@@ -26705,7 +26705,7 @@
   },
   "maro_wattz_485": {
     "postsCount": 2,
-    "followersCount": 17,
+    "followersCount": 18,
     "followingCount": 2,
     "createdAt": "2026-03-22T12:54:21.418Z",
     "rate": 0.0007,
@@ -27094,7 +27094,7 @@
     "displayName": "Nine.09",
     "avatarUrl": "/uploads/avatars/avatar_35653_1778933566534.webp",
     "updatedAt": "2026-06-20T00:07:40.283860+00:00",
-    "fail_count": 172
+    "fail_count": 179
   },
   "pakipakitoire": {
     "postsCount": 8,
@@ -27972,16 +27972,16 @@
     "updatedAt": "2026-06-20T01:38:36.378968+00:00"
   },
   "Simokitanigiri": {
-    "postsCount": 8671,
+    "postsCount": 8693,
     "followersCount": 241,
     "followingCount": 564,
     "createdAt": "2026-07-08T11:44:03.019Z",
-    "rate": 22.8414,
+    "rate": 22.8437,
     "isBot": false,
     "isPrivate": false,
     "displayName": "ゆうやす",
     "avatarUrl": "/uploads/avatars/avatar_37419_1784646567188.webp",
-    "updatedAt": "2026-07-24T07:21:09.290254+00:00",
+    "updatedAt": "2026-07-24T08:16:35.837701+00:00",
     "fail_count": 0
   },
   "yukasub": {
@@ -28070,7 +28070,7 @@
     "displayName": "よっしーげーむなどなど",
     "avatarUrl": "/uploads/avatars/avatar_34466_1781690899476.webp",
     "updatedAt": "2026-06-19T23:51:20.646222+00:00",
-    "fail_count": 175
+    "fail_count": 182
   },
   "shunraikike": {
     "postsCount": 2,
@@ -28306,7 +28306,7 @@
     "displayName": "Nero",
     "avatarUrl": "/uploads/avatars/avatar_36963_1780932194116.webp",
     "updatedAt": "2026-06-19T23:37:50.292202+00:00",
-    "fail_count": 179
+    "fail_count": 185
   },
   "kaidesu": {
     "postsCount": 7,
@@ -28373,29 +28373,29 @@
     "fail_count": 0
   },
   "2": {
-    "postsCount": 28312,
+    "postsCount": 28337,
     "followersCount": 936,
     "followingCount": 3368,
     "createdAt": "2026-03-22T15:18:36.134Z",
-    "rate": 9.5389,
+    "rate": 9.5444,
     "isBot": false,
     "isPrivate": false,
     "displayName": "會(かい)🐱",
     "avatarUrl": "/uploads/avatars/avatar_10043_1780906541109.webp",
-    "updatedAt": "2026-07-24T07:21:20.504504+00:00",
+    "updatedAt": "2026-07-24T08:16:44.557075+00:00",
     "fail_count": 0
   },
   "yis": {
-    "postsCount": 31432,
+    "postsCount": 31460,
     "followersCount": 726,
     "followingCount": 777,
     "createdAt": "2026-03-23T10:13:58.788Z",
-    "rate": 10.6581,
+    "rate": 10.6642,
     "isBot": false,
     "isPrivate": false,
     "displayName": "よいしょ",
     "avatarUrl": "/uploads/avatars/avatar_22996_1780798702581.webp",
-    "updatedAt": "2026-07-24T07:21:14.315972+00:00",
+    "updatedAt": "2026-07-24T08:16:40.861426+00:00",
     "fail_count": 0
   },
   "Sh1rasagiSe2Na": {
@@ -28427,7 +28427,7 @@
   "zn5": {
     "postsCount": 506,
     "followersCount": 136,
-    "followingCount": 203,
+    "followingCount": 204,
     "createdAt": "2026-04-03T07:03:14.785Z",
     "rate": 0.1902,
     "isBot": false,
@@ -28637,25 +28637,25 @@
     "followersCount": 47,
     "followingCount": 45,
     "createdAt": "2026-07-15T04:36:00.336Z",
-    "rate": 4.142,
+    "rate": 4.1241,
     "isBot": false,
     "isPrivate": false,
     "displayName": "しろはなだ",
     "avatarUrl": "https://cdn.discordapp.com/avatars/1516642630560252039/7f66ae2273f66d2b73dac00ee9014de8.png",
-    "updatedAt": "2026-07-24T07:20:05.750961+00:00",
-    "fail_count": 0
+    "updatedAt": "2026-07-24T08:17:10.321744+00:00",
+    "fail_count": 1
   },
   "Fria": {
-    "postsCount": 2104,
+    "postsCount": 2114,
     "followersCount": 42,
     "followingCount": 9,
     "createdAt": "2026-07-06T21:47:24.863Z",
-    "rate": 5.0389,
+    "rate": 5.0513,
     "isBot": false,
     "isPrivate": false,
     "displayName": "フリア",
     "avatarUrl": "/uploads/avatars/avatar_37399_1783580166639.webp",
-    "updatedAt": "2026-07-24T07:20:26.769332+00:00",
+    "updatedAt": "2026-07-24T08:17:36.354320+00:00",
     "fail_count": 0
   },
   "WCD_official": {
@@ -28988,18 +28988,18 @@
     "followersCount": 74,
     "followingCount": 30,
     "createdAt": "2026-06-29T01:56:07.451Z",
-    "rate": 4.3013,
+    "rate": 4.2945,
     "isBot": false,
     "isPrivate": false,
     "displayName": "(夏)眠",
     "avatarUrl": "/uploads/avatars/avatar_37309_1782698447763.webp",
-    "updatedAt": "2026-07-24T07:20:16.800884+00:00",
-    "fail_count": 0
+    "updatedAt": "2026-07-24T08:17:23.374493+00:00",
+    "fail_count": 2
   },
   "ruto": {
     "postsCount": 2088,
     "followersCount": 134,
-    "followingCount": 163,
+    "followingCount": 164,
     "createdAt": "2026-03-22T08:35:20.300Z",
     "rate": 0.7071,
     "isBot": false,
@@ -29085,7 +29085,7 @@
     "displayName": "Rd0PFOVQazcs",
     "avatarUrl": "",
     "updatedAt": "",
-    "fail_count": 3
+    "fail_count": 9
   },
   "castella0503": {
     "postsCount": 18,
@@ -29124,7 +29124,7 @@
     "displayName": "QmWcAYypkdkv",
     "avatarUrl": "",
     "updatedAt": "",
-    "fail_count": 3
+    "fail_count": 9
   },
   "THREECh_YouTube": {
     "postsCount": 10,
@@ -29283,16 +29283,16 @@
     "fail_count": 0
   },
   "irony": {
-    "postsCount": 1424,
-    "followersCount": 58,
-    "followingCount": 73,
+    "postsCount": 1448,
+    "followersCount": 59,
+    "followingCount": 74,
     "createdAt": "2026-07-09T12:59:55.160Z",
-    "rate": 4.0186,
+    "rate": 4.0757,
     "isBot": false,
     "isPrivate": false,
     "displayName": "ﾏｶﾛﾆｨ!!",
     "avatarUrl": "/uploads/avatars/avatar_37436_1784782844772.webp",
-    "updatedAt": "2026-07-24T07:21:04.282631+00:00",
+    "updatedAt": "2026-07-24T08:16:30.856088+00:00",
     "fail_count": 0
   },
   "uzuP": {
@@ -29345,7 +29345,7 @@
     "displayName": "10000",
     "avatarUrl": "/uploads/avatars/avatar_26847_1774857017575.webp",
     "updatedAt": "",
-    "fail_count": 3
+    "fail_count": 9
   },
   "yuine_shirahama": {
     "postsCount": null,
@@ -29505,8 +29505,8 @@
   },
   "inmukai": {
     "postsCount": 51,
-    "followersCount": 28,
-    "followingCount": 26,
+    "followersCount": 29,
+    "followingCount": 27,
     "createdAt": "2026-06-24T04:38:28.162Z",
     "rate": 0.0729,
     "isBot": false,
@@ -29518,8 +29518,8 @@
   },
   "mattssuu": {
     "postsCount": 406,
-    "followersCount": 27,
-    "followingCount": 26,
+    "followersCount": 28,
+    "followingCount": 27,
     "createdAt": "2026-07-02T10:50:19.978Z",
     "rate": 0.8095,
     "isBot": false,
@@ -29531,7 +29531,7 @@
   },
   "milo_201007": {
     "postsCount": 38,
-    "followersCount": 28,
+    "followersCount": 29,
     "followingCount": 28,
     "createdAt": "2026-07-09T07:22:22.936Z",
     "rate": 0.1127,
@@ -29687,7 +29687,7 @@
   },
   "Hamusuke": {
     "postsCount": 7,
-    "followersCount": 17,
+    "followersCount": 18,
     "followingCount": 13,
     "createdAt": "2026-07-17T22:54:09.830Z",
     "rate": 0.0539,
@@ -29813,6 +29813,19 @@
     "displayName": "ハル。",
     "avatarUrl": "/uploads/avatars/avatar_19572_1774237100532.webp",
     "updatedAt": "2026-07-24T06:03:55.246963+00:00",
+    "fail_count": 0
+  },
+  "bb2449": {
+    "postsCount": 44,
+    "followersCount": 16,
+    "followingCount": 16,
+    "createdAt": "2026-06-06T02:42:14.122Z",
+    "rate": 0.038,
+    "isBot": false,
+    "isPrivate": false,
+    "displayName": "bb2449",
+    "avatarUrl": "/uploads/avatars/avatar_37064_1784479257004.webp",
+    "updatedAt": "2026-07-24T08:06:01.876658+00:00",
     "fail_count": 0
   }
 }
