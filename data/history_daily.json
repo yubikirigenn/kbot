@@ -14274,6 +14274,12 @@
       "followersCount": 10,
       "rate": 0.0004,
       "updatedAt": "2026-07-24T10:54:26.851196+00:00"
+    },
+    "now": {
+      "postsCount": 0,
+      "followersCount": 27,
+      "rate": 0.0,
+      "updatedAt": ""
     }
   }
 }
