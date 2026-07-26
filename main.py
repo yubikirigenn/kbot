@@ -257,6 +257,9 @@ def bot_worker():
     if collector_auth.login():
         priority_apis.append(KarotterAPI(collector_auth))
         print("[BOT] 優先収集用メインアカウント ログイン成功")
+    else:
+        print("[BOT] 優先収集用メインアカウント ログイン失敗。監視用APIインスタンスをフォールバックとして使用します。")
+        priority_apis.append(api)
     
     # さらにKAROTTER_ACCOUNTSが設定されていれば、サブアカウントを一般更新専用ワーカーとして追加
     from config import KAROTTER_ACCOUNTS

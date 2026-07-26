@@ -83,6 +83,10 @@ class UserCollector:
         if not usernames:
             return 0
             
+        if pool_size <= 0:
+            print(f"[{tag}] 警告: pool_size が 0 以下です。並列取得をスキップします。")
+            return 0
+            
         print(f"[{tag}] ユーザー詳細データを取得中... ({len(usernames)}ユーザー)")
         
         import concurrent.futures
@@ -248,7 +252,11 @@ class UserCollector:
 
     def enrich_single_user(self, username):
         """特定のユーザーの詳細を即座に取得・更新し、正規化されたユーザー名を返す"""
-        api = self.priority_api_pool[0]
+        api = self.priority_api_pool[0] if self.priority_api_pool else (self.normal_api_pool[0] if self.normal_api_pool else None)
+        if not api:
+            print("[COLLECT] 警告: 利用可能なAPIインスタンスがありません")
+            return username
+            
         user_data = api.get_user_detail(username)
         if user_data:
             canonical_username = user_data.get("username", username)
