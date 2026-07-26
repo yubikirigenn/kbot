@@ -49,7 +49,7 @@ class AuthManager:
         # FormData送信時はセッションのContent-Typeを一時的に除去
         custom_headers = kwargs.get("headers")
         original_ct = self.session.headers.get("Content-Type")
-        if custom_headers and "Content-Type" in custom_headers:
+        if (custom_headers and "Content-Type" in custom_headers) or "files" in kwargs:
             self.session.headers.pop("Content-Type", None)
 
         try:

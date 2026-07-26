@@ -131,9 +131,8 @@ class KarotterAPI:
         if media_files:
             # FormData方式（画像添付あり）
             import io
-            from requests_toolbelt import MultipartEncoder
             
-            fields = {
+            data = {
                 "content": text,
                 "isAiGenerated": "false",
                 "isPromotional": "false",
@@ -142,7 +141,7 @@ class KarotterAPI:
             }
             
             if as_rekarot:
-                fields.update({
+                data.update({
                     "quotedPostId": str(parent_id),
                     "quoteId": str(parent_id),
                     "renoteId": str(parent_id),
@@ -150,27 +149,21 @@ class KarotterAPI:
                     "type": "QUOTE",
                 })
             else:
-                fields.update({
+                data.update({
                     "parentId": str(parent_id),
                     "replyId": str(parent_id),
                 })
             
             # 画像ファイルを追加
-            parts = []
-            for key, val in fields.items():
-                parts.append((key, val))
-            
+            files = []
             for i, img_bytes in enumerate(media_files):
                 filename = f"ranking_{i}.png"
-                parts.append(("media", (filename, io.BytesIO(img_bytes), "image/png")))
-            
-            encoder = MultipartEncoder(fields=parts)
-            headers = {"Content-Type": encoder.content_type}
+                files.append(("media", (filename, io.BytesIO(img_bytes), "image/png")))
             
             res = self.auth.request(
                 "POST", "/posts", 
-                data=encoder, 
-                headers=headers
+                data=data, 
+                files=files
             )
         else:
             # JSON方式（テキストのみ）
