@@ -52,13 +52,39 @@ class AuthManager:
         if (custom_headers and "Content-Type" in custom_headers) or "files" in kwargs:
             self.session.headers.pop("Content-Type", None)
 
+        last_error = None
         try:
             for attempt in range(retries):
                 try:
+                    # リトライ時にファイルオブジェクトのシーク位置を最初に戻す (seek(0))
+                    if "files" in kwargs:
+                        for file_item in kwargs["files"]:
+                            if isinstance(file_item, tuple) and len(file_item) >= 2:
+                                val = file_item[1]
+                                if isinstance(val, tuple) and len(val) >= 2:
+                                    fileobj = val[1]
+                                    if hasattr(fileobj, "seek"):
+                                        try:
+                                            fileobj.seek(0)
+                                        except Exception:
+                                            pass
+
                     res = self.session.request(method, url, **kwargs)
                     if res.status_code == 401:
                         print(f"[AUTH] 401 detected ({endpoint}). Re-login...")
                         if self.login():
+                            # 再ログイン後も、リトライのため念のため seek(0) を行う
+                            if "files" in kwargs:
+                                for file_item in kwargs["files"]:
+                                    if isinstance(file_item, tuple) and len(file_item) >= 2:
+                                        val = file_item[1]
+                                        if isinstance(val, tuple) and len(val) >= 2:
+                                            fileobj = val[1]
+                                            if hasattr(fileobj, "seek"):
+                                                try:
+                                                    fileobj.seek(0)
+                                                except Exception:
+                                                    pass
                             res = self.session.request(method, url, **kwargs)
 
                     elif res.status_code == 200:
@@ -91,16 +117,29 @@ class AuthManager:
                                         if time.time() - self.last_login_time > 30:
                                             print(f"[AUTH] postsCount is 0 detected for active user @{target_username} ({endpoint}). Suspecting token expiration. Re-login fallback...")
                                             if self.login():
+                                                # 再ログイン後も、念のため seek(0) を行う
+                                                if "files" in kwargs:
+                                                    for file_item in kwargs["files"]:
+                                                        if isinstance(file_item, tuple) and len(file_item) >= 2:
+                                                            val = file_item[1]
+                                                            if isinstance(val, tuple) and len(val) >= 2:
+                                                                fileobj = val[1]
+                                                                if hasattr(fileobj, "seek"):
+                                                                    try:
+                                                                        fileobj.seek(0)
+                                                                    except Exception:
+                                                                        pass
                                                 res = self.session.request(method, url, **kwargs)
                         except Exception:
                             pass
 
                     return res
                 except Exception as e:
+                    last_error = e
                     print(f"[AUTH] API error (retry {attempt+1}/{retries} - {endpoint}): {e}")
                     time.sleep(5 * (attempt + 1))
 
-            print(f"[AUTH] API error ({endpoint}): max retries reached")
+            print(f"[AUTH] API error ({endpoint}): max retries reached. Last error: {last_error}")
             return None
         finally:
             # Content-Typeを元に戻す
