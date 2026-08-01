@@ -13,7 +13,6 @@ import time
 import threading
 import http.server
 import socketserver
-from datetime import datetime
 
 # Render等でのログ遅延を防ぐため、標準出力を強制的にアンバッファリング（ラインバッファ）する
 if hasattr(sys.stdout, 'reconfigure'):
@@ -37,7 +36,6 @@ from utils.formatter import format_general_info, format_ranking_help, format_err
 
 # === グローバル状態 ===
 bot_status = "starting"
-STARTUP_NOTIFICATION_LOOKBACK_SECONDS = 3600
 
 
 # === 処理済み通知の管理 ===
@@ -74,39 +72,6 @@ def mark_notification_seen(seen_ids, post_id):
     if post_id and post_id not in seen_ids:
         seen_ids.add(post_id)
         save_seen_id(post_id)
-
-
-def is_recent_notification(notification, now=None):
-    """Keep a bounded backlog after a restart without replaying old commands."""
-    if not isinstance(notification, dict):
-        return False
-
-    post = notification.get("post") or {}
-    raw_timestamp = (
-        notification.get("createdAt")
-        or notification.get("created_at")
-        or notification.get("timestamp")
-        or post.get("createdAt")
-        or post.get("created_at")
-        or post.get("timestamp")
-    )
-    if raw_timestamp is None:
-        return False
-
-    try:
-        if isinstance(raw_timestamp, (int, float)):
-            timestamp = float(raw_timestamp)
-            if timestamp > 10_000_000_000:
-                timestamp /= 1000
-        else:
-            timestamp = datetime.fromisoformat(
-                str(raw_timestamp).replace("Z", "+00:00")
-            ).timestamp()
-    except (TypeError, ValueError):
-        return False
-
-    age = (time.time() if now is None else now) - timestamp
-    return 0 <= age <= STARTUP_NOTIFICATION_LOOKBACK_SECONDS
 
 
 # === GitHub キャッシュ永続化 ===
@@ -369,24 +334,15 @@ def bot_worker():
     collection_thread = threading.Thread(target=initial_collection, daemon=True)
     collection_thread.start()
 
-    # === 起動中に届いた通知を安全に引き継ぐ ===
-    print("[BOT] 起動時の通知履歴を確認しています...")
-    initial_notifications = api.get_notifications(limit=20)
-    skipped_notifications = 0
-    pending_recent_notifications = 0
+    # === 起動時に通知を既読化して、デプロイ時の二重返信を防ぐ ===
+    print("[BOT] 起動時の通知履歴をスキップしています...")
+    initial_notifications = api.get_notifications(limit=30)
     for n in initial_notifications:
         if isinstance(n, dict):
             post_id = notification_post_id(n)
-            if post_id and post_id not in seen_ids and is_recent_notification(n):
-                pending_recent_notifications += 1
-                continue
             if post_id:
                 mark_notification_seen(seen_ids, post_id)
-                skipped_notifications += 1
-    print(
-        f"[BOT] 起動時通知: 既存・古い通知 {skipped_notifications}件をスキップ、"
-        f"直近 {pending_recent_notifications}件を処理対象として残しました。"
-    )
+    print(f"[BOT] 起動時の通知 {len(initial_notifications)}件をスキップしました。")
 
     print(f"[BOT] 稼働開始！通知ポーリング間隔: {POLL_INTERVAL}秒")
 
