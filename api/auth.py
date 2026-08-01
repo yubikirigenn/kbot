@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 """ログイン・トークン管理・401自動再認証"""
 import time
+import threading
 import requests
 from config import KAROTTER_INTERNAL_URL, USERNAME, PASSWORD
 
@@ -9,12 +10,17 @@ class AuthManager:
     def __init__(self, username=None, password=None):
         self.session = requests.Session()
         self.session.headers.update({"Content-Type": "application/json"})
+        self._lock = threading.RLock()
         self.token = None
         self.last_login_time = 0
         self.username = username or USERNAME
         self.password = password or PASSWORD
 
     def login(self):
+        with self._lock:
+            return self._login_locked()
+
+    def _login_locked(self):
         """ログインしてBearerトークンを取得"""
         payload = {"identifier": self.username, "password": self.password, "gender": "other"}
         for attempt in range(3):
@@ -25,6 +31,9 @@ class AuthManager:
                 )
                 if r.status_code == 200:
                     self.token = r.json().get("accessToken")
+                    if not self.token:
+                        print("[AUTH] Login failed: access token was not returned")
+                        continue
                     self.session.headers.update({"Authorization": f"Bearer {self.token}"})
                     self.last_login_time = time.time()
                     print(f"[AUTH] Login success (@{self.username})")
@@ -38,10 +47,16 @@ class AuthManager:
 
     def ensure_login(self):
         """トークンの有効性を確認し、必要に応じて再ログイン"""
-        if time.time() - self.last_login_time > 300:
-            self.login()
+        with self._lock:
+            if not self.token or time.time() - self.last_login_time > 300:
+                return self._login_locked()
+            return True
 
     def request(self, method, endpoint, retries=3, **kwargs):
+        with self._lock:
+            return self._request_locked(method, endpoint, retries=retries, **kwargs)
+
+    def _request_locked(self, method, endpoint, retries=3, **kwargs):
         """認証付きリクエスト。エラー時はリトライし、401時は自動再ログインしてリトライ"""
         url = f"{KAROTTER_INTERNAL_URL}{endpoint}"
         kwargs.setdefault("timeout", 20)
@@ -70,9 +85,9 @@ class AuthManager:
                                             pass
 
                     res = self.session.request(method, url, **kwargs)
-                    if res.status_code == 401:
-                        print(f"[AUTH] 401 detected ({endpoint}). Re-login...")
-                        if self.login():
+                    if res.status_code in (401, 403):
+                        print(f"[AUTH] {res.status_code} detected ({endpoint}). Re-login...")
+                        if self._login_locked():
                             # 再ログイン後も、リトライのため念のため seek(0) を行う
                             if "files" in kwargs:
                                 for file_item in kwargs["files"]:
@@ -87,7 +102,7 @@ class AuthManager:
                                                     pass
                             res = self.session.request(method, url, **kwargs)
 
-                    elif res.status_code == 200:
+                    if res.status_code == 200:
                         # 200 OK 時の 0 検知による再ログイン安全策
                         try:
                             data = res.json()
@@ -133,6 +148,15 @@ class AuthManager:
                         except Exception:
                             pass
 
+                    if res.status_code in (429, 500, 502, 503, 504) and attempt < retries - 1:
+                        retry_after = res.headers.get("Retry-After", "")
+                        try:
+                            delay = max(float(retry_after), 1.0)
+                        except (TypeError, ValueError):
+                            delay = 5 * (attempt + 1)
+                        print(f"[AUTH] HTTP {res.status_code} ({endpoint}). Retrying in {delay:.0f}s ({attempt + 1}/{retries})...")
+                        time.sleep(delay)
+                        continue
                     return res
                 except Exception as e:
                     last_error = e

@@ -4,6 +4,7 @@ import os
 import io
 import time
 import uuid
+import threading
 import requests
 from config import (
     KAROTTER_INTERNAL_URL, KAROTTER_DEV_API_URL,
@@ -19,13 +20,15 @@ class KarotterAPI:
             "Content-Type": "application/json"
         }
         self._last_request_time = 0
+        self._throttle_lock = threading.Lock()
 
     def _throttle(self):
         """レート制限回避のためリクエスト間隔を確保"""
-        elapsed = time.time() - self._last_request_time
-        if elapsed < API_SLEEP:
-            time.sleep(API_SLEEP - elapsed)
-        self._last_request_time = time.time()
+        with self._throttle_lock:
+            elapsed = time.time() - self._last_request_time
+            if elapsed < API_SLEEP:
+                time.sleep(API_SLEEP - elapsed)
+            self._last_request_time = time.time()
 
     # === ユーザー情報 ===
 
@@ -108,11 +111,23 @@ class KarotterAPI:
         self._throttle()
         res = self.auth.request("GET", f"/notifications?limit={limit}")
         if res and res.status_code == 200:
-            data = res.json()
-            if isinstance(data, dict):
-                return data.get("notifications", [])
-            if isinstance(data, list):
-                return data
+            try:
+                data = res.json()
+                if isinstance(data, dict):
+                    notifications = data.get("notifications", [])
+                elif isinstance(data, list):
+                    notifications = data
+                else:
+                    notifications = None
+
+                if isinstance(notifications, list):
+                    return notifications
+                print("[API] Notifications response has an unexpected format")
+            except ValueError as e:
+                print(f"[API] Notifications response is not valid JSON: {e}")
+        else:
+            status = res.status_code if res is not None else "no response"
+            print(f"[API] Notifications request failed: {status}")
         return []
 
     # === 投稿 ===
@@ -191,14 +206,14 @@ class KarotterAPI:
                 
             res = self.auth.request("POST", "/posts", json=payload)
         
-        if res and res.status_code in [200, 201]:
+        if res is not None and res.status_code in [200, 201]:
             print(f"[API] Reply sent successfully to post {parent_id}")
             return True
         else:
-            status = res.status_code if res else "Unknown"
+            status = res.status_code if res is not None else "no response"
             body = ""
             try:
-                body = res.text[:200] if res else ""
+                body = res.text[:200] if res is not None else ""
             except:
                 pass
             print(f"[API] Reply failed: HTTP {status} {body}")

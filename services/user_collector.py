@@ -37,6 +37,10 @@ class UserCollector:
         """検索APIでユーザーを収集（分割して1回1クエリのみ実行）"""
         if not self._search_queries:
             return set()
+
+        if not self.normal_api_pool and not self.priority_api_pool:
+            print("[COLLECT] 利用可能な収集APIがないため検索をスキップします")
+            return set()
             
         q = self._search_queries[self._search_index]
         self._search_index = (self._search_index + 1) % len(self._search_queries)
@@ -66,6 +70,10 @@ class UserCollector:
 
     def collect_from_recommended(self):
         """推奨ユーザーからも収集"""
+        if not self.normal_api_pool and not self.priority_api_pool:
+            print("[COLLECT] 利用可能な収集APIがないため推奨ユーザー収集をスキップします")
+            return
+
         print("[COLLECT] 推奨ユーザーを収集中...")
         api = self.normal_api_pool[0] if self.normal_api_pool else self.priority_api_pool[0]
         users = api.get_recommended_users()
@@ -255,7 +263,7 @@ class UserCollector:
         api = self.priority_api_pool[0] if self.priority_api_pool else (self.normal_api_pool[0] if self.normal_api_pool else None)
         if not api:
             print("[COLLECT] 警告: 利用可能なAPIインスタンスがありません")
-            return username
+            return None
             
         user_data = api.get_user_detail(username)
         if user_data:
@@ -264,18 +272,13 @@ class UserCollector:
                 self.cache.update_user(canonical_username, user_data)
                 self.cache.save()
             return canonical_username
-        return username
+        return None
 
     def update_priority_users(self):
         """上位層のユーザーを優先的に更新する（メインアカウント専用。最大15件制限）"""
-        lock_acquired = self._priority_run_lock.acquire(blocking=True, timeout=30)
-        if not lock_acquired:
-            print("[PRIORITY] 前回の処理がタイムアウトしたため強制的にロックを取得します")
-            try:
-                self._priority_run_lock.release()
-            except RuntimeError:
-                pass
-            self._priority_run_lock.acquire()
+        if not self._priority_run_lock.acquire(blocking=False):
+            print("[PRIORITY] 前回の優先更新が実行中のため今回の更新をスキップします")
+            return
             
         try:
             print("[PRIORITY] 優先ユーザー（上位層）の更新を開始します...")
@@ -335,6 +338,10 @@ class UserCollector:
             
     def update_normal_users(self):
         """一般ユーザーを地道に更新する（サブアカウント専用。データ欠損を最優先）"""
+        if not self.normal_api_pool:
+            print("[NORMAL] サブアカウントが未設定のため一般更新をスキップします")
+            return
+
         if not self._normal_run_lock.acquire(blocking=False):
             print("[NORMAL] 既に一般更新が実行中のためスキップします。")
             return
@@ -384,9 +391,8 @@ class UserCollector:
                     needs_enrichment.extend([username for username, _ in existing_users[:fill_count]])
 
             if needs_enrichment:
-                # normal_api_pool が空の場合は fallback として priority を使う
-                q = self._normal_api_queue if self.normal_api_pool else self._priority_api_queue
-                size = len(self.normal_api_pool) if self.normal_api_pool else len(self.priority_api_pool)
+                q = self._normal_api_queue
+                size = len(self.normal_api_pool)
                 
                 self._enrich_user_details_with_pool(
                     needs_enrichment, 

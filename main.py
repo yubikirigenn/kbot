@@ -13,6 +13,7 @@ import time
 import threading
 import http.server
 import socketserver
+from datetime import datetime
 
 # Render等でのログ遅延を防ぐため、標準出力を強制的にアンバッファリング（ラインバッファ）する
 if hasattr(sys.stdout, 'reconfigure'):
@@ -36,6 +37,7 @@ from utils.formatter import format_general_info, format_ranking_help, format_err
 
 # === グローバル状態 ===
 bot_status = "starting"
+STARTUP_NOTIFICATION_LOOKBACK_SECONDS = 3600
 
 
 # === 処理済み通知の管理 ===
@@ -57,6 +59,54 @@ def save_seen_id(item_id):
             os.makedirs(seen_dir, exist_ok=True)
         with open(SEEN_FILE, "a", encoding="utf-8") as f:
             f.write(f"{item_id}\n")
+
+
+def notification_post_id(notification):
+    """Return the post ID while accepting both notification API shapes."""
+    if not isinstance(notification, dict):
+        return ""
+    post = notification.get("post") or {}
+    return str(notification.get("postId") or post.get("id") or "")
+
+
+def mark_notification_seen(seen_ids, post_id):
+    """Persist a notification only after it has been handled intentionally."""
+    if post_id and post_id not in seen_ids:
+        seen_ids.add(post_id)
+        save_seen_id(post_id)
+
+
+def is_recent_notification(notification, now=None):
+    """Keep a bounded backlog after a restart without replaying old commands."""
+    if not isinstance(notification, dict):
+        return False
+
+    post = notification.get("post") or {}
+    raw_timestamp = (
+        notification.get("createdAt")
+        or notification.get("created_at")
+        or notification.get("timestamp")
+        or post.get("createdAt")
+        or post.get("created_at")
+        or post.get("timestamp")
+    )
+    if raw_timestamp is None:
+        return False
+
+    try:
+        if isinstance(raw_timestamp, (int, float)):
+            timestamp = float(raw_timestamp)
+            if timestamp > 10_000_000_000:
+                timestamp /= 1000
+        else:
+            timestamp = datetime.fromisoformat(
+                str(raw_timestamp).replace("Z", "+00:00")
+            ).timestamp()
+    except (TypeError, ValueError):
+        return False
+
+    age = (time.time() if now is None else now) - timestamp
+    return 0 <= age <= STARTUP_NOTIFICATION_LOOKBACK_SECONDS
 
 
 # === GitHub キャッシュ永続化 ===
@@ -258,8 +308,7 @@ def bot_worker():
         priority_apis.append(KarotterAPI(collector_auth))
         print("[BOT] 優先収集用メインアカウント ログイン成功")
     else:
-        print("[BOT] 優先収集用メインアカウント ログイン失敗。監視用APIインスタンスをフォールバックとして使用します。")
-        priority_apis.append(api)
+        print("[BOT] 優先収集用メインアカウント ログイン失敗。通知監視用APIは収集に流用しません。")
     
     # さらにKAROTTER_ACCOUNTSが設定されていれば、サブアカウントを一般更新専用ワーカーとして追加
     from config import KAROTTER_ACCOUNTS
@@ -320,16 +369,24 @@ def bot_worker():
     collection_thread = threading.Thread(target=initial_collection, daemon=True)
     collection_thread.start()
 
-    # === 過去の通知を無視するための初期化 ===
-    print("[BOT] 過去の通知履歴をスキップしています...")
-    initial_notifications = api.get_notifications(limit=30)
+    # === 起動中に届いた通知を安全に引き継ぐ ===
+    print("[BOT] 起動時の通知履歴を確認しています...")
+    initial_notifications = api.get_notifications(limit=20)
+    skipped_notifications = 0
+    pending_recent_notifications = 0
     for n in initial_notifications:
         if isinstance(n, dict):
-            post_id = str(n.get("postId") or (n.get("post") or {}).get("id") or "")
+            post_id = notification_post_id(n)
+            if post_id and post_id not in seen_ids and is_recent_notification(n):
+                pending_recent_notifications += 1
+                continue
             if post_id:
-                seen_ids.add(post_id)
-                save_seen_id(post_id)
-    print(f"[BOT] 過去の通知 {len(initial_notifications)}件 をスキップしました。")
+                mark_notification_seen(seen_ids, post_id)
+                skipped_notifications += 1
+    print(
+        f"[BOT] 起動時通知: 既存・古い通知 {skipped_notifications}件をスキップ、"
+        f"直近 {pending_recent_notifications}件を処理対象として残しました。"
+    )
 
     print(f"[BOT] 稼働開始！通知ポーリング間隔: {POLL_INTERVAL}秒")
 
@@ -374,7 +431,8 @@ def bot_worker():
                         print(f"[BOT] 一般更新エラー: {e}")
                         
                 threading.Thread(target=run_priority, daemon=True).start()
-                threading.Thread(target=run_normal, daemon=True).start()
+                if collector.normal_api_pool:
+                    threading.Thread(target=run_normal, daemon=True).start()
 
             # 定期的にGitHubにバックアップ（別スレッド）
             if time.time() - last_backup_time > BACKUP_INTERVAL:
@@ -459,7 +517,6 @@ def bot_worker():
 
             # 通知を取得
             notifications = api.get_notifications()
-
             for n in notifications:
                 if not isinstance(n, dict):
                     continue
@@ -470,15 +527,14 @@ def bot_worker():
 
                 post_data = n.get("post") or {}
                 content = post_data.get("content", "")
-                post_id = str(n.get("postId") or post_data.get("id") or "")
+                post_id = notification_post_id(n)
 
                 if post_id in seen_ids or not post_id:
                     continue
 
                 # メンション確認
                 if f"@{USERNAME.lower()}" not in content.lower():
-                    seen_ids.add(post_id)
-                    save_seen_id(post_id)
+                    mark_notification_seen(seen_ids, post_id)
                     continue
 
                 # 投稿者
@@ -486,8 +542,7 @@ def bot_worker():
                 author_username = str(author_data.get("username") or "unknown")
 
                 if author_username.lower() == USERNAME.lower():
-                    seen_ids.add(post_id)
-                    save_seen_id(post_id)
+                    mark_notification_seen(seen_ids, post_id)
                     continue
 
                 print(f"[BOT] メンション受信: @{author_username} -> {content[:80]}")
@@ -495,9 +550,10 @@ def bot_worker():
                 # キャッシュが完全に空の場合のみ収集中メッセージを返す
                 if cache.user_count() == 0:
                     print(f"[BOT] データ未収集のためメッセージ返信: @{author_username}")
-                    api.post_reply("現在ランキングデータを収集中です。もうしばらくお待ちください！🙇‍♂️ #kbot", post_id)
-                    seen_ids.add(post_id)
-                    save_seen_id(post_id)
+                    if api.post_reply("現在ランキングデータを収集中です。もうしばらくお待ちください！🙇‍♂️ #kbot", post_id):
+                        mark_notification_seen(seen_ids, post_id)
+                    else:
+                        print(f"[BOT] Initial reply failed; notification will be retried: {post_id}")
                     continue
 
                 parsed = parse_command(content)
@@ -507,14 +563,18 @@ def bot_worker():
                 print(f"[BOT] コマンド: {command or '(総合情報)'}, パラメータ: {parsed}")
 
                 result = execute_command(parsed, author_username, api, cache, collector, history_manager)
+                reply_sent = True
                 if result:
                     response_text, media_files = result
                     if response_text:
-                        api.post_reply(response_text, post_id, media_files=media_files, as_rekarot=parsed.get("rekarot", False))
-                        print(f"[BOT] 返信完了 (画像: {'あり' if media_files else 'なし'}, リカロート: {parsed.get('rekarot', False)})")
+                        reply_sent = api.post_reply(response_text, post_id, media_files=media_files, as_rekarot=parsed.get("rekarot", False))
+                        if reply_sent:
+                            print(f"[BOT] 返信完了 (画像: {'あり' if media_files else 'なし'}, リカロート: {parsed.get('rekarot', False)})")
 
-                seen_ids.add(post_id)
-                save_seen_id(post_id)
+                if reply_sent:
+                    mark_notification_seen(seen_ids, post_id)
+                else:
+                    print(f"[BOT] Reply failed; notification will be retried: {post_id}")
 
             time.sleep(POLL_INTERVAL)
 
@@ -584,18 +644,36 @@ class HealthCheckHandler(http.server.BaseHTTPRequestHandler):
             pass
 
 
+def bot_supervisor():
+    """Restart the worker if initialization throws before its main loop."""
+    global bot_status
+    while True:
+        try:
+            bot_worker()
+            print("[BOT] Worker exited unexpectedly. Restarting in 10 seconds.")
+        except Exception as e:
+            bot_status = "degraded"
+            print(f"[BOT] Worker crashed: {e}. Restarting in 10 seconds.")
+        time.sleep(10)
+
+
+class ThreadingHTTPServer(socketserver.ThreadingMixIn, socketserver.TCPServer):
+    allow_reuse_address = True
+    daemon_threads = True
+
+
 def main():
     print("=" * 50)
     print(f"kbot starting... (@{USERNAME})")
     print("=" * 50)
 
     # Bot処理をバックグラウンドスレッドで起動
-    bot_thread = threading.Thread(target=bot_worker, daemon=True)
+    bot_thread = threading.Thread(target=bot_supervisor, name="bot-supervisor", daemon=True)
     bot_thread.start()
 
     # HTTPサーバーをメインスレッドで起動（Renderヘルスチェック対応）
     port = int(os.environ.get("PORT", 8080))
-    with socketserver.TCPServer(("", port), HealthCheckHandler) as httpd:
+    with ThreadingHTTPServer(("", port), HealthCheckHandler) as httpd:
         print(f"HTTP server listening on port {port}")
         httpd.serve_forever()
 
