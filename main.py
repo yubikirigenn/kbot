@@ -509,7 +509,10 @@ def bot_worker():
                     if api.post_reply("現在ランキングデータを収集中です。もうしばらくお待ちください！🙇‍♂️ #kbot", post_id):
                         mark_notification_seen(seen_ids, post_id)
                     else:
-                        print(f"[BOT] Initial reply failed; notification will be retried: {post_id}")
+                        # 通信エラー後でもサーバー側では投稿済みの可能性がある。
+                        # 次回ポーリングでの二重返信を防ぐため、この通知は完了扱いにする。
+                        mark_notification_seen(seen_ids, post_id)
+                        print(f"[BOT] Initial reply failed; skipping retry to prevent duplicates: {post_id}")
                     continue
 
                 parsed = parse_command(content)
@@ -530,7 +533,10 @@ def bot_worker():
                 if reply_sent:
                     mark_notification_seen(seen_ids, post_id)
                 else:
-                    print(f"[BOT] Reply failed; notification will be retried: {post_id}")
+                    # 応答が届かなくても、Karotter側で投稿だけ完了している場合がある。
+                    # 同一メンションへの再送は二重返信になるため、自動再試行しない。
+                    mark_notification_seen(seen_ids, post_id)
+                    print(f"[BOT] Reply failed; skipping retry to prevent duplicates: {post_id}")
 
             time.sleep(POLL_INTERVAL)
 

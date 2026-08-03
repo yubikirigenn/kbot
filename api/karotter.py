@@ -178,7 +178,8 @@ class KarotterAPI:
             res = self.auth.request(
                 "POST", "/posts", 
                 data=data, 
-                files=files
+                files=files,
+                retries=1,
             )
         else:
             # JSON方式（テキストのみ）
@@ -204,7 +205,9 @@ class KarotterAPI:
                     "replyId": parent_id,
                 })
                 
-            res = self.auth.request("POST", "/posts", json=payload)
+            # 返信は、応答が失われてもサーバー側で作成済みの可能性があるため
+            # 自動再送しない。再送すると同じメンションへ二重返信してしまう。
+            res = self.auth.request("POST", "/posts", json=payload, retries=1)
         
         if res is not None and res.status_code in [200, 201]:
             print(f"[API] Reply sent successfully to post {parent_id}")

@@ -60,6 +60,12 @@ class AuthManager:
         """認証付きリクエスト。エラー時はリトライし、401時は自動再ログインしてリトライ"""
         url = f"{KAROTTER_INTERNAL_URL}{endpoint}"
         kwargs.setdefault("timeout", 20)
+
+        # POST はサーバー側で処理済みでも応答だけが失われることがある。
+        # 自動再送すると同じ返信を二重投稿するため、ここで再試行するのは
+        # 安全な読み取りリクエストだけにする。401/403後の再認証送信は維持する。
+        can_retry = method.upper() in {"GET", "HEAD", "OPTIONS"}
+        attempts = retries if can_retry else 1
         
         # FormData送信時はセッションのContent-Typeを一時的に除去
         custom_headers = kwargs.get("headers")
@@ -69,7 +75,7 @@ class AuthManager:
 
         last_error = None
         try:
-            for attempt in range(retries):
+            for attempt in range(attempts):
                 try:
                     # リトライ時にファイルオブジェクトのシーク位置を最初に戻す (seek(0))
                     if "files" in kwargs:
@@ -148,7 +154,11 @@ class AuthManager:
                         except Exception:
                             pass
 
-                    if res.status_code in (429, 500, 502, 503, 504) and attempt < retries - 1:
+                    if (
+                        can_retry
+                        and res.status_code in (429, 500, 502, 503, 504)
+                        and attempt < attempts - 1
+                    ):
                         retry_after = res.headers.get("Retry-After", "")
                         try:
                             delay = max(float(retry_after), 1.0)
@@ -160,7 +170,10 @@ class AuthManager:
                     return res
                 except Exception as e:
                     last_error = e
-                    print(f"[AUTH] API error (retry {attempt+1}/{retries} - {endpoint}): {e}")
+                    if not can_retry:
+                        print(f"[AUTH] API error (POST will not be retried - {endpoint}): {e}")
+                        return None
+                    print(f"[AUTH] API error (retry {attempt+1}/{attempts} - {endpoint}): {e}")
                     time.sleep(5 * (attempt + 1))
 
             print(f"[AUTH] API error ({endpoint}): max retries reached. Last error: {last_error}")
