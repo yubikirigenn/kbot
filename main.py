@@ -74,6 +74,101 @@ def mark_notification_seen(seen_ids, post_id):
         save_seen_id(post_id)
 
 
+def claim_notification_for_reply(post_id):
+    """Atomically reserve a reply notification across Render instances.
+
+    The local seen file protects one process only.  Render deployments can
+    briefly overlap, and an accidentally duplicated service has a separate
+    filesystem altogether.  The cache branch is shared by those instances, so
+    use GitHub's file SHA as a compare-and-swap lock before sending a reply.
+    """
+    import base64
+    import json
+    import urllib.error
+    import urllib.request
+
+    github_token = os.environ.get("GITHUB_TOKEN", "").strip()
+    github_repo = os.environ.get("GITHUB_REPO", "").strip()
+    if not github_token or not github_repo:
+        print("[BOT] Shared reply lock unavailable: GITHUB_TOKEN/GITHUB_REPO is not set")
+        return True
+
+    post_id = str(post_id)
+    lock_path = "data/reply_claims.json"
+    api_url = f"https://api.github.com/repos/{github_repo}/contents/{lock_path}"
+    headers = {
+        "Authorization": f"token {github_token}",
+        "Accept": "application/vnd.github.v3+json",
+    }
+    saw_conflict = False
+
+    for attempt in range(3):
+        claims = []
+        sha = None
+        try:
+            req = urllib.request.Request(f"{api_url}?ref=cache", headers=headers)
+            with urllib.request.urlopen(req, timeout=15) as response:
+                file_info = json.loads(response.read().decode("utf-8"))
+            sha = file_info.get("sha")
+            raw = base64.b64decode(file_info.get("content", "")).decode("utf-8")
+            saved = json.loads(raw)
+            claims = [str(item) for item in saved.get("post_ids", [])]
+        except urllib.error.HTTPError as error:
+            if error.code != 404:
+                print(f"[BOT] Shared reply lock read failed: HTTP {error.code}")
+                return True
+        except Exception as error:
+            print(f"[BOT] Shared reply lock read failed: {error}")
+            return True
+
+        if post_id in claims:
+            print(f"[BOT] Reply already claimed by another instance: {post_id}")
+            return False
+
+        # Keep the remote lock small while retaining enough history for a
+        # restart or a temporary deployment overlap.
+        new_claims = (claims + [post_id])[-2000:]
+        payload = {
+            "message": f"[kbot] claim reply notification {post_id}",
+            "content": base64.b64encode(
+                json.dumps({"post_ids": new_claims}, ensure_ascii=False).encode("utf-8")
+            ).decode("ascii"),
+            "branch": "cache",
+        }
+        if sha:
+            payload["sha"] = sha
+
+        try:
+            req = urllib.request.Request(
+                api_url,
+                data=json.dumps(payload).encode("utf-8"),
+                headers={**headers, "Content-Type": "application/json"},
+                method="PUT",
+            )
+            with urllib.request.urlopen(req, timeout=15):
+                pass
+            print(f"[BOT] Reply claimed: {post_id}")
+            return True
+        except urllib.error.HTTPError as error:
+            if error.code in (409, 422):
+                saw_conflict = True
+                time.sleep(0.3 * (attempt + 1))
+                continue
+            print(f"[BOT] Shared reply lock write failed: HTTP {error.code}")
+            return True
+        except Exception as error:
+            print(f"[BOT] Shared reply lock write failed: {error}")
+            return True
+
+    if saw_conflict:
+        # A concurrent instance changed the file repeatedly.  Skipping is
+        # safer than risking a duplicate reply; the user can mention again if
+        # that instance later fails before posting.
+        print(f"[BOT] Reply claim conflict; skipping to prevent duplicates: {post_id}")
+        return False
+    return True
+
+
 # === GitHub キャッシュ永続化 ===
 
 def _download_file_from_github(repo, token, filepath, dest_path):
@@ -498,6 +593,10 @@ def bot_worker():
                 author_username = str(author_data.get("username") or "unknown")
 
                 if author_username.lower() == USERNAME.lower():
+                    mark_notification_seen(seen_ids, post_id)
+                    continue
+
+                if not claim_notification_for_reply(post_id):
                     mark_notification_seen(seen_ids, post_id)
                     continue
 
