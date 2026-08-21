@@ -14934,6 +14934,12 @@
       "followersCount": 8,
       "rate": 0.0008,
       "updatedAt": "2026-08-20T20:01:31.896428+00:00"
+    },
+    "testaccount": {
+      "postsCount": 485,
+      "followersCount": 3,
+      "rate": 1.7895,
+      "updatedAt": "2026-08-21T07:52:05.861135+00:00"
     }
   }
 }
