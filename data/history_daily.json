@@ -1,213 +1,213 @@
 {
-  "timestamp": "2026-08-26T15:01:45.855592+00:00",
+  "timestamp": "2026-08-27T15:01:38.150559+00:00",
   "users": {
     "karon": {
-      "postsCount": 828,
-      "followersCount": 2260,
-      "rate": 0.2142,
-      "updatedAt": "2026-08-26T15:01:17.997528+00:00"
+      "postsCount": 830,
+      "followersCount": 2265,
+      "rate": 0.2134,
+      "updatedAt": "2026-08-27T15:01:10.488393+00:00"
     },
     "karotter": {
       "postsCount": 144,
       "followersCount": 1934,
-      "rate": 0.0375,
-      "updatedAt": "2026-08-26T15:00:55.124746+00:00"
+      "rate": 0.0373,
+      "updatedAt": "2026-08-27T15:00:47.965556+00:00"
     },
     "Dr_mario": {
       "postsCount": 3673,
       "followersCount": 1893,
-      "rate": 0.9787,
-      "updatedAt": "2026-08-26T15:01:37.986549+00:00"
+      "rate": 0.9725,
+      "updatedAt": "2026-08-27T15:01:30.455156+00:00"
     },
     "0e": {
       "postsCount": 112,
       "followersCount": 1829,
-      "rate": 0.03,
-      "updatedAt": "2026-08-26T15:00:42.511345+00:00"
+      "rate": 0.0298,
+      "updatedAt": "2026-08-27T15:00:35.478456+00:00"
     },
     "Mutou": {
       "postsCount": 40720,
       "followersCount": 1787,
-      "rate": 10.8397,
-      "updatedAt": "2026-08-26T15:01:33.028490+00:00"
+      "rate": 10.7709,
+      "updatedAt": "2026-08-27T15:01:25.496145+00:00"
     },
     "v0": {
       "postsCount": 5005,
-      "followersCount": 1541,
-      "rate": 1.3284,
-      "updatedAt": "2026-08-26T15:01:15.506916+00:00"
+      "followersCount": 1540,
+      "rate": 1.32,
+      "updatedAt": "2026-08-27T15:01:07.980536+00:00"
     },
     "status": {
       "postsCount": 11138,
-      "followersCount": 1344,
+      "followersCount": 1343,
       "rate": 5.2848,
       "updatedAt": "2026-06-20T01:13:16.250242+00:00"
     },
     "syakuradrop": {
       "postsCount": 2418,
-      "followersCount": 1311,
-      "rate": 0.6438,
-      "updatedAt": "2026-08-26T15:01:27.987161+00:00"
+      "followersCount": 1310,
+      "rate": 0.6398,
+      "updatedAt": "2026-08-27T15:01:20.496436+00:00"
     },
     "dysmorphia": {
       "postsCount": 432,
-      "followersCount": 1177,
-      "rate": 0.115,
-      "updatedAt": "2026-08-26T15:01:12.981326+00:00"
+      "followersCount": 1176,
+      "rate": 0.1143,
+      "updatedAt": "2026-08-27T15:01:05.549356+00:00"
     },
     "1l": {
       "postsCount": 2270,
-      "followersCount": 1109,
-      "rate": 0.6041,
-      "updatedAt": "2026-08-26T15:01:05.480241+00:00"
+      "followersCount": 1108,
+      "rate": 0.6002,
+      "updatedAt": "2026-08-27T15:00:57.982334+00:00"
     },
     "G": {
       "postsCount": 61,
-      "followersCount": 1071,
-      "rate": 0.0162,
-      "updatedAt": "2026-08-26T15:00:50.062993+00:00"
+      "followersCount": 1067,
+      "rate": 0.0161,
+      "updatedAt": "2026-08-27T15:00:42.982321+00:00"
     },
     "1111": {
-      "postsCount": 208,
-      "followersCount": 1115,
-      "rate": 0.0554,
-      "updatedAt": "2026-08-26T15:01:40.472928+00:00"
+      "postsCount": 209,
+      "followersCount": 1114,
+      "rate": 0.0553,
+      "updatedAt": "2026-08-27T15:01:33.009183+00:00"
     },
     "lze_0080": {
       "postsCount": 710,
-      "followersCount": 973,
-      "rate": 0.1894,
-      "updatedAt": "2026-08-26T14:56:42.148985+00:00"
+      "followersCount": 972,
+      "rate": 0.1882,
+      "updatedAt": "2026-08-27T14:57:17.242251+00:00"
     },
     "miyaaa_96": {
-      "postsCount": 34163,
-      "followersCount": 1067,
-      "rate": 9.0649,
-      "updatedAt": "2026-08-26T15:00:57.546410+00:00"
+      "postsCount": 34180,
+      "followersCount": 1066,
+      "rate": 9.012,
+      "updatedAt": "2026-08-27T15:00:51.129127+00:00"
     },
     "ebitama": {
       "postsCount": 83,
-      "followersCount": 916,
-      "rate": 0.0227,
-      "updatedAt": "2026-08-26T14:57:17.455826+00:00"
+      "followersCount": 915,
+      "rate": 0.0225,
+      "updatedAt": "2026-08-27T14:58:09.877024+00:00"
     },
     "M1": {
       "postsCount": 327,
-      "followersCount": 894,
-      "rate": 0.087,
-      "updatedAt": "2026-08-26T15:00:22.483037+00:00"
+      "followersCount": 893,
+      "rate": 0.0865,
+      "updatedAt": "2026-08-27T14:57:12.244338+00:00"
     },
     "siratori_hakuga": {
       "postsCount": 128,
-      "followersCount": 860,
-      "rate": 0.0341,
-      "updatedAt": "2026-08-26T14:57:34.666766+00:00"
+      "followersCount": 859,
+      "rate": 0.0338,
+      "updatedAt": "2026-08-27T14:56:04.733274+00:00"
     },
     "clean": {
       "postsCount": 53,
-      "followersCount": 932,
-      "rate": 0.0141,
-      "updatedAt": "2026-08-26T14:58:17.451841+00:00"
+      "followersCount": 931,
+      "rate": 0.014,
+      "updatedAt": "2026-08-27T15:00:17.985420+00:00"
     },
     "Naze": {
       "postsCount": 440,
-      "followersCount": 837,
-      "rate": 0.1174,
-      "updatedAt": "2026-08-26T14:57:37.213627+00:00"
+      "followersCount": 836,
+      "rate": 0.1166,
+      "updatedAt": "2026-08-27T14:55:52.323127+00:00"
     },
     "nanoka": {
       "postsCount": 114,
-      "followersCount": 844,
-      "rate": 0.0304,
-      "updatedAt": "2026-08-26T14:59:27.435986+00:00"
+      "followersCount": 843,
+      "rate": 0.0302,
+      "updatedAt": "2026-08-27T14:57:57.320161+00:00"
     },
     "kesuikemayaku": {
       "postsCount": 80,
-      "followersCount": 817,
-      "rate": 0.0213,
-      "updatedAt": "2026-08-26T14:58:27.444505+00:00"
+      "followersCount": 816,
+      "rate": 0.0212,
+      "updatedAt": "2026-08-27T15:00:10.153206+00:00"
     },
     "zc": {
       "postsCount": 15136,
       "followersCount": 1,
-      "rate": 34.1582,
+      "rate": 32.4028,
       "updatedAt": "2026-08-08T03:51:52.942377+00:00"
     },
     "Wp": {
       "postsCount": 2010,
-      "followersCount": 690,
-      "rate": 0.5395,
-      "updatedAt": "2026-08-25T15:02:13.436300+00:00"
+      "followersCount": 689,
+      "rate": 0.536,
+      "updatedAt": "2026-08-26T15:12:49.870868+00:00"
     },
     "WinMacX_NT": {
-      "postsCount": 7966,
-      "followersCount": 808,
-      "rate": 2.1208,
-      "updatedAt": "2026-08-26T15:00:10.088282+00:00"
+      "postsCount": 8056,
+      "followersCount": 807,
+      "rate": 2.1312,
+      "updatedAt": "2026-08-27T14:55:59.827005+00:00"
     },
     "Hima_dayo": {
       "postsCount": 292,
-      "followersCount": 681,
-      "rate": 0.0785,
-      "updatedAt": "2026-08-25T15:02:10.984744+00:00"
+      "followersCount": 680,
+      "rate": 0.078,
+      "updatedAt": "2026-08-26T15:02:12.613798+00:00"
     },
     "dysmorphic": {
       "postsCount": 3,
-      "followersCount": 671,
+      "followersCount": 670,
       "rate": 0.0008,
-      "updatedAt": "2026-08-25T15:02:08.419319+00:00"
+      "updatedAt": "2026-08-26T15:02:10.102611+00:00"
     },
     "mushikera": {
       "postsCount": 12834,
-      "followersCount": 638,
-      "rate": 3.5896,
+      "followersCount": 637,
+      "rate": 3.5657,
       "updatedAt": "2026-08-01T11:16:49.999857+00:00"
     },
     "KAMI": {
       "postsCount": 11,
-      "followersCount": 636,
+      "followersCount": 635,
       "rate": 0.0051,
       "updatedAt": "2026-06-20T01:29:31.146821+00:00"
     },
     "Doey": {
       "postsCount": 5091,
-      "followersCount": 664,
+      "followersCount": 663,
       "rate": 1.4118,
       "updatedAt": "2026-08-20T14:58:47.942910+00:00"
     },
     "sinzinsyain0507": {
       "postsCount": 8,
-      "followersCount": 572,
+      "followersCount": 571,
       "rate": 0.0039,
       "updatedAt": "2026-06-20T01:29:38.907708+00:00"
     },
     "namekorori": {
       "postsCount": 818,
-      "followersCount": 571,
+      "followersCount": 569,
       "rate": 0.2792,
       "updatedAt": "2026-07-23T04:55:45.872432+00:00"
     },
     "emc": {
       "postsCount": 12,
-      "followersCount": 555,
+      "followersCount": 554,
       "rate": 0.0056,
       "updatedAt": "2026-06-20T01:06:58.775333+00:00"
     },
     "ubw": {
       "postsCount": 11,
-      "followersCount": 557,
+      "followersCount": 556,
       "rate": 0.0053,
       "updatedAt": "2026-06-20T01:07:01.283135+00:00"
     },
     "kn": {
       "postsCount": 45,
-      "followersCount": 543,
+      "followersCount": 542,
       "rate": 0.0211,
       "updatedAt": "2026-06-20T01:07:03.796308+00:00"
     },
     "karotter_katsuo": {
       "postsCount": 3808,
-      "followersCount": 540,
+      "followersCount": 539,
       "rate": 1.7742,
       "updatedAt": "2026-06-20T01:27:08.654715+00:00"
     },
@@ -231,21 +231,21 @@
     },
     "c_chan1012": {
       "postsCount": 6132,
-      "followersCount": 494,
+      "followersCount": 493,
       "rate": 1.9761,
       "updatedAt": "2026-07-30T12:47:24.916023+00:00"
     },
     "dragon": {
       "postsCount": 34,
-      "followersCount": 462,
+      "followersCount": 461,
       "rate": 0.0158,
       "updatedAt": "2026-06-20T01:07:11.276522+00:00"
     },
     "Mamekuro_mame": {
-      "postsCount": 20618,
-      "followersCount": 515,
-      "rate": 5.6176,
-      "updatedAt": "2026-08-26T15:01:20.603481+00:00"
+      "postsCount": 20628,
+      "followersCount": 514,
+      "rate": 5.5838,
+      "updatedAt": "2026-08-27T15:01:13.113659+00:00"
     },
     "Rami": {
       "postsCount": 1533,
@@ -261,7 +261,7 @@
     },
     "a": {
       "postsCount": 1068,
-      "followersCount": 422,
+      "followersCount": 421,
       "rate": 0.3201,
       "updatedAt": "2026-08-04T15:20:22.225831+00:00"
     },
@@ -279,7 +279,7 @@
     },
     "zz_": {
       "postsCount": 90,
-      "followersCount": 384,
+      "followersCount": 383,
       "rate": 0.0428,
       "updatedAt": "2026-06-20T01:07:23.811694+00:00"
     },
@@ -297,27 +297,27 @@
     },
     "sfp_3noct_": {
       "postsCount": 3111,
-      "followersCount": 361,
+      "followersCount": 360,
       "rate": 1.5116,
       "updatedAt": "2026-06-20T01:07:28.788819+00:00"
     },
     "K": {
       "postsCount": 1097,
-      "followersCount": 362,
+      "followersCount": 361,
       "rate": 0.5101,
       "updatedAt": "2026-06-20T01:08:28.787357+00:00"
     },
     "EggPlanet": {
       "postsCount": 7736,
-      "followersCount": 392,
+      "followersCount": 391,
       "rate": 2.4534,
       "updatedAt": "2026-08-02T14:58:03.196921+00:00"
     },
     "DA": {
       "postsCount": 18900,
-      "followersCount": 435,
-      "rate": 5.0163,
-      "updatedAt": "2026-08-26T14:57:27.176137+00:00"
+      "followersCount": 434,
+      "rate": 4.9845,
+      "updatedAt": "2026-08-27T14:59:02.338805+00:00"
     },
     "yozakura": {
       "postsCount": 19,
@@ -328,18 +328,18 @@
     "hototogisukira_": {
       "postsCount": 22224,
       "followersCount": 494,
-      "rate": 7.1663,
-      "updatedAt": "2026-08-26T15:01:42.976622+00:00"
+      "rate": 7.1113,
+      "updatedAt": "2026-08-27T15:01:35.470022+00:00"
     },
     "hibari_wings": {
       "postsCount": 464,
-      "followersCount": 376,
+      "followersCount": 375,
       "rate": 0.2273,
       "updatedAt": "2026-06-20T01:08:36.288814+00:00"
     },
     "XXX_paano_XXX": {
       "postsCount": 1224,
-      "followersCount": 369,
+      "followersCount": 368,
       "rate": 0.6323,
       "updatedAt": "2026-06-20T00:55:44.944781+00:00"
     },
@@ -363,7 +363,7 @@
     },
     "sugar_S": {
       "postsCount": 120,
-      "followersCount": 329,
+      "followersCount": 328,
       "rate": 0.0588,
       "updatedAt": "2026-06-20T01:08:43.754101+00:00"
     },
@@ -375,19 +375,19 @@
     },
     "Yukky": {
       "postsCount": 122,
-      "followersCount": 324,
+      "followersCount": 323,
       "rate": 0.0549,
       "updatedAt": "2026-06-20T01:08:48.801160+00:00"
     },
     "DS": {
       "postsCount": 2531,
-      "followersCount": 314,
+      "followersCount": 313,
       "rate": 1.1869,
       "updatedAt": "2026-06-20T01:08:51.285844+00:00"
     },
     "RyoLab": {
       "postsCount": 14,
-      "followersCount": 304,
+      "followersCount": 303,
       "rate": 0.007,
       "updatedAt": "2026-06-20T01:08:53.761542+00:00"
     },
@@ -411,7 +411,7 @@
     },
     "American": {
       "postsCount": 611,
-      "followersCount": 295,
+      "followersCount": 294,
       "rate": 0.2888,
       "updatedAt": "2026-06-20T01:08:58.794003+00:00"
     },
@@ -422,26 +422,26 @@
       "updatedAt": "2026-06-20T01:09:01.284743+00:00"
     },
     "sugarichigomilk": {
-      "postsCount": 28524,
-      "followersCount": 319,
-      "rate": 7.5938,
-      "updatedAt": "2026-08-26T15:00:47.619766+00:00"
+      "postsCount": 28531,
+      "followersCount": 320,
+      "rate": 7.5475,
+      "updatedAt": "2026-08-27T15:00:40.503512+00:00"
     },
     "IKST": {
       "postsCount": 893,
-      "followersCount": 265,
+      "followersCount": 264,
       "rate": 0.4185,
       "updatedAt": "2026-06-20T01:09:03.784635+00:00"
     },
     "oyuchamaa": {
       "postsCount": 170,
-      "followersCount": 264,
+      "followersCount": 263,
       "rate": 0.081,
       "updatedAt": "2026-06-20T01:09:06.283423+00:00"
     },
     "claude": {
       "postsCount": 5647,
-      "followersCount": 246,
+      "followersCount": 245,
       "rate": 1.9206,
       "updatedAt": "2026-07-23T03:37:24.070967+00:00"
     },
@@ -453,7 +453,7 @@
     },
     "Tetra": {
       "postsCount": 168,
-      "followersCount": 245,
+      "followersCount": 244,
       "rate": 0.0781,
       "updatedAt": "2026-06-20T01:09:08.778492+00:00"
     },
@@ -464,10 +464,10 @@
       "updatedAt": "2026-07-30T12:45:18.118423+00:00"
     },
     "Oi_oistar": {
-      "postsCount": 10006,
+      "postsCount": 10036,
       "followersCount": 255,
-      "rate": 2.6631,
-      "updatedAt": "2026-08-26T14:58:34.944621+00:00"
+      "rate": 2.6542,
+      "updatedAt": "2026-08-27T14:55:14.490817+00:00"
     },
     "sham": {
       "postsCount": 5343,
@@ -476,10 +476,10 @@
       "updatedAt": "2026-07-23T09:13:50.200605+00:00"
     },
     "Rayella_sub": {
-      "postsCount": 11926,
+      "postsCount": 11972,
       "followersCount": 251,
-      "rate": 3.2253,
-      "updatedAt": "2026-08-26T14:59:19.942130+00:00"
+      "rate": 3.2169,
+      "updatedAt": "2026-08-27T14:55:47.243442+00:00"
     },
     "Simogirikitani": {
       "postsCount": 388,
@@ -494,10 +494,10 @@
       "updatedAt": "2026-06-20T01:09:11.277185+00:00"
     },
     "xzeaup": {
-      "postsCount": 20301,
+      "postsCount": 20593,
       "followersCount": 29,
-      "rate": 11.3622,
-      "updatedAt": "2026-08-26T15:01:25.533982+00:00"
+      "rate": 11.3729,
+      "updatedAt": "2026-08-27T15:01:17.990829+00:00"
     },
     "karonsub": {
       "postsCount": 2202,
@@ -507,31 +507,31 @@
     },
     "rimes_1": {
       "postsCount": 2696,
-      "followersCount": 223,
+      "followersCount": 222,
       "rate": 1.1673,
       "updatedAt": "2026-07-23T03:58:07.871065+00:00"
     },
     "koi_shirahama": {
-      "postsCount": 15330,
+      "postsCount": 15430,
       "followersCount": 273,
-      "rate": 4.0708,
-      "updatedAt": "2026-08-26T15:01:05.287235+00:00"
+      "rate": 4.0714,
+      "updatedAt": "2026-08-27T15:00:57.747559+00:00"
     },
     "Mumei_HK": {
       "postsCount": 9556,
       "followersCount": 193,
-      "rate": 3.0487,
-      "updatedAt": "2026-08-26T14:59:04.934261+00:00"
+      "rate": 3.0255,
+      "updatedAt": "2026-08-27T14:55:57.306746+00:00"
     },
     "namazakana": {
       "postsCount": 412,
-      "followersCount": 203,
+      "followersCount": 202,
       "rate": 0.1937,
       "updatedAt": "2026-06-20T01:09:13.773830+00:00"
     },
     "tuka": {
       "postsCount": 8908,
-      "followersCount": 212,
+      "followersCount": 211,
       "rate": 2.484,
       "updatedAt": "2026-08-23T15:22:04.733694+00:00"
     },
@@ -567,7 +567,7 @@
     },
     "US_America": {
       "postsCount": 41,
-      "followersCount": 188,
+      "followersCount": 187,
       "rate": 0.0192,
       "updatedAt": "2026-06-20T01:09:28.769558+00:00"
     },
@@ -597,13 +597,13 @@
     },
     "Shinsin": {
       "postsCount": 5131,
-      "followersCount": 209,
+      "followersCount": 210,
       "rate": 1.6066,
       "updatedAt": "2026-08-09T15:01:40.396800+00:00"
     },
     "armed": {
       "postsCount": 117,
-      "followersCount": 190,
+      "followersCount": 189,
       "rate": 0.13,
       "updatedAt": "2026-06-20T01:09:38.750073+00:00"
     },
@@ -615,7 +615,7 @@
     },
     "moyasi": {
       "postsCount": 581,
-      "followersCount": 266,
+      "followersCount": 267,
       "rate": 1.5722,
       "updatedAt": "2026-06-20T01:31:16.168015+00:00"
     },
@@ -633,7 +633,7 @@
     },
     "KITAKAN": {
       "postsCount": 2129,
-      "followersCount": 171,
+      "followersCount": 170,
       "rate": 0.7546,
       "updatedAt": "2026-07-23T03:40:21.734293+00:00"
     },
@@ -693,7 +693,7 @@
     },
     "Ippei_Mizhara": {
       "postsCount": 183,
-      "followersCount": 168,
+      "followersCount": 167,
       "rate": 0.0858,
       "updatedAt": "2026-06-20T01:10:01.265335+00:00"
     },
@@ -717,13 +717,13 @@
     },
     "ShiganaiOtaku": {
       "postsCount": 11886,
-      "followersCount": 346,
-      "rate": 3.7919,
-      "updatedAt": "2026-08-26T15:00:27.559364+00:00"
+      "followersCount": 345,
+      "rate": 3.7632,
+      "updatedAt": "2026-08-27T14:57:07.270050+00:00"
     },
     "yudetamago": {
       "postsCount": 1952,
-      "followersCount": 195,
+      "followersCount": 194,
       "rate": 0.6527,
       "updatedAt": "2026-07-26T15:00:13.302003+00:00"
     },
@@ -742,18 +742,18 @@
     "OTA_ame": {
       "postsCount": 9700,
       "followersCount": 173,
-      "rate": 2.6505,
-      "updatedAt": "2026-08-26T14:59:10.002932+00:00"
+      "rate": 2.6333,
+      "updatedAt": "2026-08-27T14:57:49.932415+00:00"
     },
     "tyotyoyu_1022": {
       "postsCount": 3856,
-      "followersCount": 189,
+      "followersCount": 188,
       "rate": 1.919,
       "updatedAt": "2026-06-20T01:10:13.770041+00:00"
     },
     "SOTA_official": {
       "postsCount": 21,
-      "followersCount": 161,
+      "followersCount": 160,
       "rate": 0.0099,
       "updatedAt": "2026-06-20T01:10:16.263806+00:00"
     },
@@ -795,7 +795,7 @@
     },
     "yata_garas": {
       "postsCount": 2161,
-      "followersCount": 164,
+      "followersCount": 163,
       "rate": 1.0614,
       "updatedAt": "2026-06-20T01:10:31.271917+00:00"
     },
@@ -812,14 +812,14 @@
       "updatedAt": "2026-06-20T01:10:33.773303+00:00"
     },
     "aosabacan": {
-      "postsCount": 19803,
-      "followersCount": 194,
-      "rate": 5.2794,
-      "updatedAt": "2026-08-26T15:00:40.147211+00:00"
+      "postsCount": 19833,
+      "followersCount": 193,
+      "rate": 5.2538,
+      "updatedAt": "2026-08-27T15:00:33.069217+00:00"
     },
     "kamata_kuririn": {
       "postsCount": 11,
-      "followersCount": 151,
+      "followersCount": 150,
       "rate": 0.0053,
       "updatedAt": "2026-06-20T01:10:36.271552+00:00"
     },
@@ -831,7 +831,7 @@
     },
     "NAURU_JAPAN": {
       "postsCount": 1160,
-      "followersCount": 149,
+      "followersCount": 148,
       "rate": 0.5657,
       "updatedAt": "2026-06-20T01:10:41.245710+00:00"
     },
@@ -862,8 +862,8 @@
     "Kp": {
       "postsCount": 6971,
       "followersCount": 43,
-      "rate": 8.3635,
-      "updatedAt": "2026-08-26T15:00:52.536543+00:00"
+      "rate": 8.1295,
+      "updatedAt": "2026-08-27T15:00:45.490424+00:00"
     },
     "Aneber": {
       "postsCount": 3860,
@@ -879,7 +879,7 @@
     },
     "ippan": {
       "postsCount": 140,
-      "followersCount": 143,
+      "followersCount": 142,
       "rate": 0.2123,
       "updatedAt": "2026-06-20T01:10:53.746018+00:00"
     },
@@ -939,7 +939,7 @@
     },
     "komone_neko222": {
       "postsCount": 5742,
-      "followersCount": 223,
+      "followersCount": 225,
       "rate": 1.961,
       "updatedAt": "2026-07-23T04:44:02.747701+00:00"
     },
@@ -950,10 +950,10 @@
       "updatedAt": "2026-06-20T01:11:18.744163+00:00"
     },
     "Tsukuyo_Sakura": {
-      "postsCount": 6429,
+      "postsCount": 6490,
       "followersCount": 63,
-      "rate": 5.2819,
-      "updatedAt": "2026-08-26T14:58:32.473837+00:00"
+      "rate": 5.2288,
+      "updatedAt": "2026-08-27T15:00:15.672509+00:00"
     },
     "nakatayukkuri": {
       "postsCount": 119,
@@ -975,7 +975,7 @@
     },
     "Rin_wizard0218": {
       "postsCount": 1323,
-      "followersCount": 119,
+      "followersCount": 118,
       "rate": 0.6357,
       "updatedAt": "2026-06-20T01:11:28.755513+00:00"
     },
@@ -1017,7 +1017,7 @@
     },
     "ki2neko": {
       "postsCount": 12,
-      "followersCount": 126,
+      "followersCount": 125,
       "rate": 0.0056,
       "updatedAt": "2026-06-20T01:11:43.759358+00:00"
     },
@@ -1101,7 +1101,7 @@
     },
     "koyomi_karotter": {
       "postsCount": 51,
-      "followersCount": 113,
+      "followersCount": 112,
       "rate": 0.0244,
       "updatedAt": "2026-06-20T01:12:13.771088+00:00"
     },
@@ -1197,7 +1197,7 @@
     },
     "Ten_wo_arawasu": {
       "postsCount": 382,
-      "followersCount": 117,
+      "followersCount": 116,
       "rate": 0.1906,
       "updatedAt": "2026-06-20T01:13:01.276257+00:00"
     },
@@ -1281,7 +1281,7 @@
     },
     "roku6ta1": {
       "postsCount": 546,
-      "followersCount": 116,
+      "followersCount": 117,
       "rate": 0.1915,
       "updatedAt": "2026-07-23T04:44:20.225306+00:00"
     },
@@ -1298,10 +1298,10 @@
       "updatedAt": "2026-06-20T01:13:38.776864+00:00"
     },
     "tela": {
-      "postsCount": 22016,
+      "postsCount": 22099,
       "followersCount": 123,
-      "rate": 5.8594,
-      "updatedAt": "2026-08-26T15:01:22.979088+00:00"
+      "rate": 5.8442,
+      "updatedAt": "2026-08-27T15:01:15.610716+00:00"
     },
     "yupadayo": {
       "postsCount": 379,
@@ -1365,7 +1365,7 @@
     },
     "america": {
       "postsCount": 1,
-      "followersCount": 96,
+      "followersCount": 95,
       "rate": 0.0005,
       "updatedAt": "2026-06-20T01:14:06.267569+00:00"
     },
@@ -1377,7 +1377,7 @@
     },
     "zetachan": {
       "postsCount": 5249,
-      "followersCount": 92,
+      "followersCount": 91,
       "rate": 2.7001,
       "updatedAt": "2026-06-20T01:14:11.256099+00:00"
     },
@@ -1424,10 +1424,10 @@
       "updatedAt": "2026-06-20T01:14:31.261498+00:00"
     },
     "io": {
-      "postsCount": 13691,
+      "postsCount": 13737,
       "followersCount": 118,
-      "rate": 3.6322,
-      "updatedAt": "2026-08-26T15:00:25.072336+00:00"
+      "rate": 3.6214,
+      "updatedAt": "2026-08-27T14:58:02.346520+00:00"
     },
     "a_ya": {
       "postsCount": 755,
@@ -1443,7 +1443,7 @@
     },
     "Wsan": {
       "postsCount": 16,
-      "followersCount": 91,
+      "followersCount": 90,
       "rate": 0.0075,
       "updatedAt": "2026-06-20T01:14:38.765300+00:00"
     },
@@ -1505,23 +1505,23 @@
       "postsCount": 10,
       "followersCount": 912,
       "rate": 0.0027,
-      "updatedAt": "2026-08-26T14:58:24.918930+00:00"
+      "updatedAt": "2026-08-27T14:55:16.975359+00:00"
     },
     "henoke": {
       "postsCount": 1029,
-      "followersCount": 284,
+      "followersCount": 283,
       "rate": 0.5226,
       "updatedAt": "2026-06-20T01:15:01.281149+00:00"
     },
     "chrome_book": {
       "postsCount": 226,
-      "followersCount": 268,
+      "followersCount": 267,
       "rate": 0.1438,
       "updatedAt": "2026-06-20T01:15:06.256134+00:00"
     },
     "0R": {
       "postsCount": 2974,
-      "followersCount": 228,
+      "followersCount": 227,
       "rate": 1.4267,
       "updatedAt": "2026-06-20T01:19:43.969393+00:00"
     },
@@ -1539,13 +1539,13 @@
     },
     "c9": {
       "postsCount": 44,
-      "followersCount": 135,
+      "followersCount": 134,
       "rate": 0.0207,
       "updatedAt": "2026-06-20T01:15:13.767776+00:00"
     },
     "luq": {
       "postsCount": 17,
-      "followersCount": 134,
+      "followersCount": 133,
       "rate": 0.008,
       "updatedAt": "2026-06-20T01:15:16.278676+00:00"
     },
@@ -1557,7 +1557,7 @@
     },
     "pornhub": {
       "postsCount": 2,
-      "followersCount": 107,
+      "followersCount": 106,
       "rate": 0.0009,
       "updatedAt": "2026-06-20T01:15:18.788408+00:00"
     },
@@ -1575,7 +1575,7 @@
     },
     "FindSenryu": {
       "postsCount": 544,
-      "followersCount": 100,
+      "followersCount": 99,
       "rate": 0.2607,
       "updatedAt": "2026-06-20T01:15:26.270220+00:00"
     },
@@ -1809,13 +1809,13 @@
     },
     "miojoup": {
       "postsCount": 89,
-      "followersCount": 64,
+      "followersCount": 63,
       "rate": 0.0417,
       "updatedAt": "2026-06-20T01:17:56.434747+00:00"
     },
     "still_observer": {
       "postsCount": 3189,
-      "followersCount": 91,
+      "followersCount": 93,
       "rate": 0.8405,
       "updatedAt": "2026-08-24T09:47:15.916540+00:00"
     },
@@ -1839,13 +1839,13 @@
     },
     "Kashiwagi": {
       "postsCount": 749,
-      "followersCount": 109,
+      "followersCount": 112,
       "rate": 0.4911,
       "updatedAt": "2026-06-20T00:55:51.782189+00:00"
     },
     "Qwerty_Rei_fan": {
       "postsCount": 375,
-      "followersCount": 62,
+      "followersCount": 63,
       "rate": 0.1745,
       "updatedAt": "2026-06-20T01:14:23.779618+00:00"
     },
@@ -2062,7 +2062,7 @@
     "1c": {
       "postsCount": 318,
       "followersCount": 48,
-      "rate": 0.0859,
+      "rate": 0.0853,
       "updatedAt": "2026-06-19T23:49:08.174230+00:00"
     },
     "ksxpui_": {
@@ -2266,7 +2266,7 @@
     "biribiristar": {
       "postsCount": 111,
       "followersCount": 43,
-      "rate": 0.0294,
+      "rate": 0.0292,
       "updatedAt": "2026-06-19T23:49:15.643432+00:00"
     },
     "hikakintv": {
@@ -2391,7 +2391,7 @@
     },
     "all": {
       "postsCount": 50,
-      "followersCount": 49,
+      "followersCount": 48,
       "rate": 0.0142,
       "updatedAt": "2026-08-17T17:02:08.718534+00:00"
     },
@@ -2594,22 +2594,22 @@
       "updatedAt": "2026-06-20T01:22:28.942007+00:00"
     },
     "Hochik1su": {
-      "postsCount": 2486,
-      "followersCount": 1031,
-      "rate": 0.6621,
-      "updatedAt": "2026-08-26T15:01:45.647387+00:00"
+      "postsCount": 2487,
+      "followersCount": 1030,
+      "rate": 0.6582,
+      "updatedAt": "2026-08-27T15:01:37.973067+00:00"
     },
     "milkchoco_2012": {
       "postsCount": 56,
-      "followersCount": 449,
+      "followersCount": 448,
       "rate": 0.0263,
       "updatedAt": "2026-06-20T01:22:31.467965+00:00"
     },
     "Sc": {
-      "postsCount": 10709,
+      "postsCount": 10732,
       "followersCount": 401,
-      "rate": 2.8548,
-      "updatedAt": "2026-08-26T14:59:22.471570+00:00"
+      "rate": 2.8427,
+      "updatedAt": "2026-08-27T14:58:57.353521+00:00"
     },
     "ee": {
       "postsCount": 7,
@@ -2625,7 +2625,7 @@
     },
     "police": {
       "postsCount": 136,
-      "followersCount": 235,
+      "followersCount": 234,
       "rate": 0.0637,
       "updatedAt": "2026-06-20T01:22:41.456731+00:00"
     },
@@ -2637,15 +2637,15 @@
     },
     "TommyUncle_1031": {
       "postsCount": 216,
-      "followersCount": 231,
+      "followersCount": 232,
       "rate": 0.1006,
       "updatedAt": "2026-06-20T01:22:46.451618+00:00"
     },
     "cheese2525": {
-      "postsCount": 15897,
+      "postsCount": 15904,
       "followersCount": 188,
-      "rate": 4.2461,
-      "updatedAt": "2026-08-26T15:00:20.112770+00:00"
+      "rate": 4.2209,
+      "updatedAt": "2026-08-27T14:59:57.568600+00:00"
     },
     "CHIZIN_M": {
       "postsCount": 33,
@@ -2655,7 +2655,7 @@
     },
     "Ncho": {
       "postsCount": 17,
-      "followersCount": 144,
+      "followersCount": 143,
       "rate": 0.008,
       "updatedAt": "2026-06-20T01:22:51.442539+00:00"
     },
@@ -2745,7 +2745,7 @@
     },
     "cockroach": {
       "postsCount": 8,
-      "followersCount": 76,
+      "followersCount": 75,
       "rate": 0.0038,
       "updatedAt": "2026-06-20T01:23:21.450058+00:00"
     },
@@ -2787,7 +2787,7 @@
     },
     "ui": {
       "postsCount": 1239,
-      "followersCount": 132,
+      "followersCount": 133,
       "rate": 0.5765,
       "updatedAt": "2026-06-20T01:37:31.339572+00:00"
     },
@@ -2871,7 +2871,7 @@
     },
     "Yu_yurucamps": {
       "postsCount": 5,
-      "followersCount": 62,
+      "followersCount": 61,
       "rate": 0.0023,
       "updatedAt": "2026-06-20T01:24:11.457992+00:00"
     },
@@ -2908,7 +2908,7 @@
     "dxm": {
       "postsCount": 98,
       "followersCount": 58,
-      "rate": 0.0255,
+      "rate": 0.0253,
       "updatedAt": "2026-06-19T23:49:35.642429+00:00"
     },
     "s0": {
@@ -2919,7 +2919,7 @@
     },
     "cheer4_official": {
       "postsCount": 16,
-      "followersCount": 64,
+      "followersCount": 63,
       "rate": 0.008,
       "updatedAt": "2026-06-20T01:24:26.479266+00:00"
     },
@@ -3015,7 +3015,7 @@
     },
     "maccha": {
       "postsCount": 20,
-      "followersCount": 82,
+      "followersCount": 81,
       "rate": 0.0096,
       "updatedAt": "2026-06-20T01:25:03.964403+00:00"
     },
@@ -3105,7 +3105,7 @@
     },
     "Mandokorosituji": {
       "postsCount": 12,
-      "followersCount": 47,
+      "followersCount": 46,
       "rate": 0.0056,
       "updatedAt": "2026-06-20T01:25:38.980712+00:00"
     },
@@ -3123,7 +3123,7 @@
     },
     "Macclesfield_JP": {
       "postsCount": 7,
-      "followersCount": 47,
+      "followersCount": 46,
       "rate": 0.0034,
       "updatedAt": "2026-06-20T01:25:46.455545+00:00"
     },
@@ -3255,7 +3255,7 @@
     },
     "168": {
       "postsCount": 18,
-      "followersCount": 446,
+      "followersCount": 445,
       "rate": 0.0084,
       "updatedAt": "2026-06-20T01:27:51.142601+00:00"
     },
@@ -3279,7 +3279,7 @@
     },
     "DQ_PR": {
       "postsCount": 195,
-      "followersCount": 235,
+      "followersCount": 234,
       "rate": 0.0958,
       "updatedAt": "2026-06-20T01:27:56.146148+00:00"
     },
@@ -3291,7 +3291,7 @@
     },
     "idol": {
       "postsCount": 24,
-      "followersCount": 174,
+      "followersCount": 173,
       "rate": 0.0112,
       "updatedAt": "2026-06-20T01:28:01.171146+00:00"
     },
@@ -3321,7 +3321,7 @@
     },
     "overdose": {
       "postsCount": 1138,
-      "followersCount": 121,
+      "followersCount": 120,
       "rate": 0.5329,
       "updatedAt": "2026-06-20T01:37:43.839670+00:00"
     },
@@ -3381,7 +3381,7 @@
     },
     "UnitedNations": {
       "postsCount": 37,
-      "followersCount": 73,
+      "followersCount": 72,
       "rate": 0.0174,
       "updatedAt": "2026-06-20T01:28:36.143054+00:00"
     },
@@ -3520,7 +3520,7 @@
     "TDN": {
       "postsCount": 31,
       "followersCount": 55,
-      "rate": 0.0083,
+      "rate": 0.0082,
       "updatedAt": "2026-06-19T23:49:58.143654+00:00"
     },
     "Adolf_Hitler": {
@@ -3723,14 +3723,14 @@
     },
     "InterLinkJPN": {
       "postsCount": 224,
-      "followersCount": 1207,
-      "rate": 0.0596,
-      "updatedAt": "2026-08-26T15:01:10.545419+00:00"
+      "followersCount": 1206,
+      "rate": 0.0592,
+      "updatedAt": "2026-08-27T15:01:02.992598+00:00"
     },
     "Genshin": {
       "postsCount": 16,
-      "followersCount": 1106,
-      "rate": 0.0043,
+      "followersCount": 1105,
+      "rate": 0.0042,
       "updatedAt": "2026-06-20T01:37:48.840998+00:00"
     },
     "Yuuen": {
@@ -3747,7 +3747,7 @@
     },
     "FortniteJP": {
       "postsCount": 1476,
-      "followersCount": 321,
+      "followersCount": 320,
       "rate": 0.4629,
       "updatedAt": "2026-08-03T05:42:01.127203+00:00"
     },
@@ -3759,13 +3759,13 @@
     },
     "regi_1212": {
       "postsCount": 191,
-      "followersCount": 269,
+      "followersCount": 268,
       "rate": 0.0939,
       "updatedAt": "2026-06-20T01:31:08.670918+00:00"
     },
     "eru_ru": {
       "postsCount": 2155,
-      "followersCount": 274,
+      "followersCount": 273,
       "rate": 1.0033,
       "updatedAt": "2026-06-20T01:25:51.467387+00:00"
     },
@@ -3800,10 +3800,10 @@
       "updatedAt": "2026-08-24T10:31:03.878341+00:00"
     },
     "Sophie_twilight": {
-      "postsCount": 13815,
+      "postsCount": 13883,
       "followersCount": 130,
-      "rate": 3.8053,
-      "updatedAt": "2026-08-26T14:57:11.883449+00:00"
+      "rate": 3.7989,
+      "updatedAt": "2026-08-27T14:58:09.476898+00:00"
     },
     "koperunikusu": {
       "postsCount": 49,
@@ -3837,7 +3837,7 @@
     },
     "otintinlove": {
       "postsCount": 21,
-      "followersCount": 98,
+      "followersCount": 97,
       "rate": 0.01,
       "updatedAt": "2026-06-20T01:31:33.655185+00:00"
     },
@@ -3939,7 +3939,7 @@
     },
     "Fng1Popn": {
       "postsCount": 332,
-      "followersCount": 254,
+      "followersCount": 253,
       "rate": 0.1543,
       "updatedAt": "2026-06-20T01:32:18.673560+00:00"
     },
@@ -3951,7 +3951,7 @@
     },
     "U_S": {
       "postsCount": 300,
-      "followersCount": 103,
+      "followersCount": 102,
       "rate": 0.1059,
       "updatedAt": "2026-07-23T03:49:02.139453+00:00"
     },
@@ -3970,7 +3970,7 @@
     "fxxkin_sugi": {
       "postsCount": 258,
       "followersCount": 89,
-      "rate": 0.0686,
+      "rate": 0.0682,
       "updatedAt": "2026-06-19T23:50:08.142526+00:00"
     },
     "Fight27": {
@@ -4065,7 +4065,7 @@
     },
     "YUKINO": {
       "postsCount": 52,
-      "followersCount": 44,
+      "followersCount": 43,
       "rate": 0.0242,
       "updatedAt": "2026-06-20T01:32:58.671331+00:00"
     },
@@ -4077,7 +4077,7 @@
     },
     "Lafuyade1112": {
       "postsCount": 2,
-      "followersCount": 45,
+      "followersCount": 44,
       "rate": 0.0009,
       "updatedAt": "2026-06-20T01:33:03.662951+00:00"
     },
@@ -4263,7 +4263,7 @@
     },
     "Prisidente": {
       "postsCount": 4,
-      "followersCount": 36,
+      "followersCount": 37,
       "rate": 0.002,
       "updatedAt": "2026-06-20T01:34:16.164833+00:00"
     },
@@ -4312,7 +4312,7 @@
     "Fujisawa": {
       "postsCount": 100,
       "followersCount": 34,
-      "rate": 0.0285,
+      "rate": 0.0283,
       "updatedAt": "2026-06-19T23:50:18.147641+00:00"
     },
     "4ne": {
@@ -4450,7 +4450,7 @@
     "WohlaufIch": {
       "postsCount": 43,
       "followersCount": 29,
-      "rate": 0.0114,
+      "rate": 0.0113,
       "updatedAt": "2026-06-19T23:50:20.642610+00:00"
     },
     "FANZA": {
@@ -4467,7 +4467,7 @@
     },
     "akutasen": {
       "postsCount": 6,
-      "followersCount": 29,
+      "followersCount": 30,
       "rate": 0.0028,
       "updatedAt": "2026-06-20T01:36:25.592843+00:00"
     },
@@ -4605,7 +4605,7 @@
     },
     "mafu": {
       "postsCount": 0,
-      "followersCount": 25,
+      "followersCount": 24,
       "rate": 0.0,
       "updatedAt": "2026-06-20T00:45:19.667224+00:00"
     },
@@ -4623,7 +4623,7 @@
     },
     "YuriKissIsGood": {
       "postsCount": 396,
-      "followersCount": 24,
+      "followersCount": 25,
       "rate": 0.1706,
       "updatedAt": "2026-07-23T04:26:54.143843+00:00"
     },
@@ -4828,8 +4828,8 @@
     "gotoh": {
       "postsCount": 18112,
       "followersCount": 16,
-      "rate": 17.9443,
-      "updatedAt": "2026-08-26T15:01:00.028518+00:00"
+      "rate": 17.5276,
+      "updatedAt": "2026-08-27T15:00:53.021118+00:00"
     },
     "RG": {
       "postsCount": 218,
@@ -4875,7 +4875,7 @@
     },
     "GOTtukimi": {
       "postsCount": 35,
-      "followersCount": 101,
+      "followersCount": 100,
       "rate": 0.0165,
       "updatedAt": "2026-06-20T01:38:38.101888+00:00"
     },
@@ -5013,7 +5013,7 @@
     },
     "810100081": {
       "postsCount": 2,
-      "followersCount": 52,
+      "followersCount": 51,
       "rate": 0.0005,
       "updatedAt": "2026-06-19T23:33:10.264987+00:00"
     },
@@ -5331,7 +5331,7 @@
     },
     "hirotororo87853": {
       "postsCount": 1,
-      "followersCount": 382,
+      "followersCount": 381,
       "rate": 0.0003,
       "updatedAt": "2026-07-23T03:27:53.560756+00:00"
     },
@@ -5373,13 +5373,13 @@
     },
     "Nazono_Himajin": {
       "postsCount": 63,
-      "followersCount": 77,
+      "followersCount": 76,
       "rate": 0.0215,
       "updatedAt": "2026-07-23T03:28:08.546872+00:00"
     },
     "Kamiyasouhei": {
       "postsCount": 18,
-      "followersCount": 75,
+      "followersCount": 74,
       "rate": 0.0062,
       "updatedAt": "2026-07-23T03:28:11.031528+00:00"
     },
@@ -5391,7 +5391,7 @@
     },
     "Hainer": {
       "postsCount": 98,
-      "followersCount": 77,
+      "followersCount": 76,
       "rate": 0.0335,
       "updatedAt": "2026-07-23T03:28:16.031142+00:00"
     },
@@ -5404,8 +5404,8 @@
     "1w": {
       "postsCount": 9736,
       "followersCount": 72,
-      "rate": 2.6183,
-      "updatedAt": "2026-08-26T14:59:17.433481+00:00"
+      "rate": 2.6015,
+      "updatedAt": "2026-08-27T14:56:57.431592+00:00"
     },
     "ayh": {
       "postsCount": 68,
@@ -5433,7 +5433,7 @@
     },
     "yoshiwara": {
       "postsCount": 620,
-      "followersCount": 106,
+      "followersCount": 105,
       "rate": 0.212,
       "updatedAt": "2026-07-23T03:28:28.630433+00:00"
     },
@@ -5517,14 +5517,14 @@
     },
     "Tom_": {
       "postsCount": 3,
-      "followersCount": 712,
+      "followersCount": 711,
       "rate": 0.0008,
-      "updatedAt": "2026-08-26T14:57:19.914389+00:00"
+      "updatedAt": "2026-08-27T14:59:14.846980+00:00"
     },
     "_Rion_": {
       "postsCount": 9896,
-      "followersCount": 321,
-      "rate": 2.6359,
+      "followersCount": 320,
+      "rate": 2.6192,
       "updatedAt": "2026-06-20T01:38:08.842487+00:00"
     },
     "onjmin": {
@@ -5541,7 +5541,7 @@
     },
     "MotiMoti": {
       "postsCount": 2034,
-      "followersCount": 100,
+      "followersCount": 99,
       "rate": 1.0255,
       "updatedAt": "2026-07-23T03:29:03.651745+00:00"
     },
@@ -5583,7 +5583,7 @@
     },
     "kanimis0": {
       "postsCount": 29,
-      "followersCount": 77,
+      "followersCount": 76,
       "rate": 0.0099,
       "updatedAt": "2026-07-23T03:29:18.628674+00:00"
     },
@@ -5613,7 +5613,7 @@
     },
     "namajirupasuta": {
       "postsCount": 8,
-      "followersCount": 49,
+      "followersCount": 48,
       "rate": 0.0027,
       "updatedAt": "2026-07-23T03:29:31.131257+00:00"
     },
@@ -5662,7 +5662,7 @@
     "Yajusenpai": {
       "postsCount": 18,
       "followersCount": 38,
-      "rate": 0.0048,
+      "rate": 0.0047,
       "updatedAt": "2026-06-19T23:36:57.795397+00:00"
     },
     "sakura93133": {
@@ -5829,7 +5829,7 @@
     },
     "Yaju_senpai": {
       "postsCount": 7,
-      "followersCount": 27,
+      "followersCount": 28,
       "rate": 0.0024,
       "updatedAt": "2026-07-23T03:30:46.155607+00:00"
     },
@@ -5866,7 +5866,7 @@
     "Koji_Tadokoro": {
       "postsCount": 29,
       "followersCount": 26,
-      "rate": 0.0077,
+      "rate": 0.0076,
       "updatedAt": "2026-06-19T23:38:15.286966+00:00"
     },
     "okakajp": {
@@ -5896,7 +5896,7 @@
     "tadokoro_koji": {
       "postsCount": 10,
       "followersCount": 26,
-      "rate": 0.0027,
+      "rate": 0.0026,
       "updatedAt": "2026-06-19T23:38:22.780204+00:00"
     },
     "jibu122333": {
@@ -5997,7 +5997,7 @@
     },
     "momidi_20": {
       "postsCount": 23,
-      "followersCount": 27,
+      "followersCount": 26,
       "rate": 0.01,
       "updatedAt": "2026-07-23T03:35:51.434527+00:00"
     },
@@ -6363,19 +6363,19 @@
     },
     "Lzk": {
       "postsCount": 72,
-      "followersCount": 383,
+      "followersCount": 382,
       "rate": 0.0249,
       "updatedAt": "2026-07-23T03:37:54.153213+00:00"
     },
     "moko": {
       "postsCount": 69,
-      "followersCount": 294,
+      "followersCount": 296,
       "rate": 0.0236,
       "updatedAt": "2026-07-23T03:37:56.626928+00:00"
     },
     "514": {
       "postsCount": 102,
-      "followersCount": 170,
+      "followersCount": 169,
       "rate": 0.0349,
       "updatedAt": "2026-07-23T03:37:59.148521+00:00"
     },
@@ -6399,7 +6399,7 @@
     },
     "Osk_Amor": {
       "postsCount": 9,
-      "followersCount": 74,
+      "followersCount": 73,
       "rate": 0.0031,
       "updatedAt": "2026-07-23T03:38:09.129304+00:00"
     },
@@ -6429,7 +6429,7 @@
     },
     "azk": {
       "postsCount": 358,
-      "followersCount": 114,
+      "followersCount": 115,
       "rate": 0.1494,
       "updatedAt": "2026-07-23T03:38:19.165442+00:00"
     },
@@ -6585,7 +6585,7 @@
     },
     "lee": {
       "postsCount": 2,
-      "followersCount": 47,
+      "followersCount": 46,
       "rate": 0.0007,
       "updatedAt": "2026-07-23T03:39:14.166860+00:00"
     },
@@ -6609,7 +6609,7 @@
     },
     "Leia": {
       "postsCount": 0,
-      "followersCount": 45,
+      "followersCount": 44,
       "rate": 0.0,
       "updatedAt": "2026-06-20T00:46:29.673336+00:00"
     },
@@ -6651,7 +6651,7 @@
     },
     "natural_potato": {
       "postsCount": 217,
-      "followersCount": 66,
+      "followersCount": 67,
       "rate": 0.0742,
       "updatedAt": "2026-07-23T03:39:36.665341+00:00"
     },
@@ -6664,7 +6664,7 @@
     "loli": {
       "postsCount": 62,
       "followersCount": 40,
-      "rate": 0.0165,
+      "rate": 0.0164,
       "updatedAt": "2026-06-19T23:43:47.742989+00:00"
     },
     "Ryuu_Olive": {
@@ -6765,7 +6765,7 @@
     },
     "okomesan53": {
       "postsCount": 38,
-      "followersCount": 67,
+      "followersCount": 66,
       "rate": 0.0129,
       "updatedAt": "2026-07-23T03:40:16.747337+00:00"
     },
@@ -6790,8 +6790,8 @@
     "Uny": {
       "postsCount": 46,
       "followersCount": 837,
-      "rate": 0.0124,
-      "updatedAt": "2026-08-26T15:00:12.613730+00:00"
+      "rate": 0.0123,
+      "updatedAt": "2026-08-27T14:57:54.950843+00:00"
     },
     "n01": {
       "postsCount": 1772,
@@ -6825,7 +6825,7 @@
     },
     "0o0": {
       "postsCount": 30,
-      "followersCount": 290,
+      "followersCount": 289,
       "rate": 0.0103,
       "updatedAt": "2026-07-23T03:40:34.275049+00:00"
     },
@@ -6842,14 +6842,14 @@
       "updatedAt": "2026-07-23T03:40:39.285320+00:00"
     },
     "uzu": {
-      "postsCount": 23754,
+      "postsCount": 23818,
       "followersCount": 163,
-      "rate": 6.3225,
-      "updatedAt": "2026-08-26T15:00:37.704085+00:00"
+      "rate": 6.2993,
+      "updatedAt": "2026-08-27T15:00:30.521426+00:00"
     },
     "00p": {
       "postsCount": 2476,
-      "followersCount": 365,
+      "followersCount": 366,
       "rate": 0.8421,
       "updatedAt": "2026-07-23T03:40:41.965560+00:00"
     },
@@ -6879,7 +6879,7 @@
     },
     "Poteto": {
       "postsCount": 60,
-      "followersCount": 58,
+      "followersCount": 57,
       "rate": 0.0205,
       "updatedAt": "2026-07-23T03:44:54.457210+00:00"
     },
@@ -6897,7 +6897,7 @@
     },
     "po1": {
       "postsCount": 515,
-      "followersCount": 54,
+      "followersCount": 53,
       "rate": 0.1832,
       "updatedAt": "2026-07-23T03:45:02.067818+00:00"
     },
@@ -6951,15 +6951,15 @@
     },
     "pki": {
       "postsCount": 86,
-      "followersCount": 52,
+      "followersCount": 51,
       "rate": 0.0372,
       "updatedAt": "2026-07-23T03:45:21.997198+00:00"
     },
     "QY": {
       "postsCount": 14302,
       "followersCount": 95,
-      "rate": 4.2841,
-      "updatedAt": "2026-08-26T15:00:07.672416+00:00"
+      "rate": 4.2535,
+      "updatedAt": "2026-08-27T15:00:23.036441+00:00"
     },
     "qv": {
       "postsCount": 6,
@@ -7047,7 +7047,7 @@
     },
     "rnicln1qhtparlc": {
       "postsCount": 18,
-      "followersCount": 36,
+      "followersCount": 35,
       "rate": 0.0079,
       "updatedAt": "2026-07-23T03:45:51.936901+00:00"
     },
@@ -8187,13 +8187,13 @@
     },
     "v1": {
       "postsCount": 4665,
-      "followersCount": 234,
+      "followersCount": 233,
       "rate": 2.1889,
       "updatedAt": "2026-06-20T01:03:51.291109+00:00"
     },
     "SXZ7": {
       "postsCount": 173,
-      "followersCount": 200,
+      "followersCount": 199,
       "rate": 0.0592,
       "updatedAt": "2026-07-23T04:34:02.126902+00:00"
     },
@@ -8278,7 +8278,7 @@
     "nikuro_2010": {
       "postsCount": 319,
       "followersCount": 40,
-      "rate": 0.0998,
+      "rate": 0.0991,
       "updatedAt": "2026-06-19T23:51:35.650670+00:00"
     },
     "wataru": {
@@ -8427,7 +8427,7 @@
     },
     "KumanoYuzi": {
       "postsCount": 10,
-      "followersCount": 30,
+      "followersCount": 29,
       "rate": 0.0043,
       "updatedAt": "2026-07-23T04:35:14.722858+00:00"
     },
@@ -8445,7 +8445,7 @@
     },
     "valuable_": {
       "postsCount": 15,
-      "followersCount": 31,
+      "followersCount": 30,
       "rate": 0.0066,
       "updatedAt": "2026-07-23T04:35:22.227977+00:00"
     },
@@ -8541,7 +8541,7 @@
     },
     "IvIll": {
       "postsCount": 19,
-      "followersCount": 22,
+      "followersCount": 21,
       "rate": 0.0083,
       "updatedAt": "2026-07-23T04:35:52.237094+00:00"
     },
@@ -8865,7 +8865,7 @@
     },
     "Tama_zawa": {
       "postsCount": 4,
-      "followersCount": 57,
+      "followersCount": 56,
       "rate": 0.0014,
       "updatedAt": "2026-07-23T04:37:37.323479+00:00"
     },
@@ -8956,7 +8956,7 @@
     "WwWwWwW": {
       "postsCount": 271,
       "followersCount": 37,
-      "rate": 0.0796,
+      "rate": 0.079,
       "updatedAt": "2026-06-19T23:51:38.145022+00:00"
     },
     "648": {
@@ -9885,7 +9885,7 @@
     },
     "Abe_shinzo": {
       "postsCount": 6,
-      "followersCount": 35,
+      "followersCount": 34,
       "rate": 0.0028,
       "updatedAt": "2026-06-20T01:04:23.771196+00:00"
     },
@@ -9999,7 +9999,7 @@
     },
     "s4bTe": {
       "postsCount": 64,
-      "followersCount": 30,
+      "followersCount": 29,
       "rate": 0.042,
       "updatedAt": "2026-06-20T01:05:03.770914+00:00"
     },
@@ -10461,7 +10461,7 @@
     },
     "105": {
       "postsCount": 2439,
-      "followersCount": 417,
+      "followersCount": 416,
       "rate": 1.1724,
       "updatedAt": "2026-06-20T01:34:13.673970+00:00"
     },
@@ -10503,7 +10503,7 @@
     },
     "takenokoo": {
       "postsCount": 37,
-      "followersCount": 60,
+      "followersCount": 59,
       "rate": 0.0133,
       "updatedAt": "2026-07-23T03:56:15.145275+00:00"
     },
@@ -10527,15 +10527,15 @@
     },
     "muri0272": {
       "postsCount": 23,
-      "followersCount": 58,
+      "followersCount": 57,
       "rate": 0.0083,
       "updatedAt": "2026-07-23T03:56:22.672931+00:00"
     },
     "_1": {
       "postsCount": 9,
-      "followersCount": 950,
+      "followersCount": 949,
       "rate": 0.0024,
-      "updatedAt": "2026-08-26T15:00:17.556780+00:00"
+      "updatedAt": "2026-08-27T14:57:04.909323+00:00"
     },
     "876": {
       "postsCount": 2866,
@@ -10581,7 +10581,7 @@
     },
     "NiKotoriin_0": {
       "postsCount": 22,
-      "followersCount": 51,
+      "followersCount": 50,
       "rate": 0.0078,
       "updatedAt": "2026-07-23T03:56:40.242654+00:00"
     },
@@ -10749,7 +10749,7 @@
     },
     "8132": {
       "postsCount": 75,
-      "followersCount": 37,
+      "followersCount": 36,
       "rate": 0.0329,
       "updatedAt": "2026-07-23T03:57:45.336018+00:00"
     },
@@ -11265,7 +11265,7 @@
     },
     "dodo_114": {
       "postsCount": 3,
-      "followersCount": 21,
+      "followersCount": 20,
       "rate": 0.0011,
       "updatedAt": "2026-07-23T04:05:45.662061+00:00"
     },
@@ -11421,7 +11421,7 @@
     },
     "665": {
       "postsCount": 125,
-      "followersCount": 76,
+      "followersCount": 75,
       "rate": 0.0442,
       "updatedAt": "2026-07-23T04:06:35.687604+00:00"
     },
@@ -11914,7 +11914,7 @@
     "takashi_616": {
       "postsCount": 432,
       "followersCount": 21,
-      "rate": 0.1648,
+      "rate": 0.1633,
       "updatedAt": "2026-06-19T23:51:48.152265+00:00"
     },
     "aethnici": {
@@ -13275,13 +13275,13 @@
     },
     "KimJongUn": {
       "postsCount": 2080,
-      "followersCount": 99,
+      "followersCount": 100,
       "rate": 2.8654,
       "updatedAt": "2026-08-25T22:01:26.616174+00:00"
     },
     "drop": {
       "postsCount": 2,
-      "followersCount": 46,
+      "followersCount": 45,
       "rate": 0.0007,
       "updatedAt": "2026-07-23T04:27:04.144534+00:00"
     },
@@ -13402,8 +13402,8 @@
     "Simokitanigiri": {
       "postsCount": 15131,
       "followersCount": 327,
-      "rate": 12.8306,
-      "updatedAt": "2026-08-26T15:01:30.501685+00:00"
+      "rate": 12.5747,
+      "updatedAt": "2026-08-27T15:01:22.990011+00:00"
     },
     "yukasub": {
       "postsCount": 2765,
@@ -13508,10 +13508,10 @@
       "updatedAt": "2026-07-23T04:04:35.636375+00:00"
     },
     "ONmyunGG": {
-      "postsCount": 4288,
+      "postsCount": 4310,
       "followersCount": 138,
-      "rate": 1.3748,
-      "updatedAt": "2026-08-26T14:58:09.973661+00:00"
+      "rate": 1.3714,
+      "updatedAt": "2026-08-27T14:55:42.259127+00:00"
     },
     "kujou": {
       "postsCount": 2,
@@ -13592,16 +13592,16 @@
       "updatedAt": "2026-07-23T03:46:09.568485+00:00"
     },
     "2": {
-      "postsCount": 33961,
-      "followersCount": 965,
-      "rate": 9.0137,
-      "updatedAt": "2026-08-26T15:01:08.012720+00:00"
+      "postsCount": 33981,
+      "followersCount": 970,
+      "rate": 8.9619,
+      "updatedAt": "2026-08-27T15:01:00.579092+00:00"
     },
     "yis": {
-      "postsCount": 37906,
+      "postsCount": 37919,
       "followersCount": 715,
-      "rate": 10.1116,
-      "updatedAt": "2026-08-26T15:00:45.329266+00:00"
+      "rate": 10.0507,
+      "updatedAt": "2026-08-27T15:00:38.061740+00:00"
     },
     "Sh1rasagiSe2Na": {
       "postsCount": 2220,
@@ -13701,7 +13701,7 @@
     },
     "n_msq8_": {
       "postsCount": 2100,
-      "followersCount": 105,
+      "followersCount": 108,
       "rate": 0.9555,
       "updatedAt": "2026-07-23T04:00:27.959426+00:00"
     },
@@ -13876,12 +13876,12 @@
     "4min": {
       "postsCount": 4238,
       "followersCount": 78,
-      "rate": 3.0163,
-      "updatedAt": "2026-08-26T14:59:14.921358+00:00"
+      "rate": 2.9657,
+      "updatedAt": "2026-08-27T14:56:02.277165+00:00"
     },
     "ruto": {
       "postsCount": 3844,
-      "followersCount": 145,
+      "followersCount": 147,
       "rate": 1.0389,
       "updatedAt": "2026-08-23T12:35:30.860209+00:00"
     },
@@ -14043,7 +14043,7 @@
     },
     "yuine_shirahama": {
       "postsCount": 2,
-      "followersCount": 46,
+      "followersCount": 45,
       "rate": 0.0007,
       "updatedAt": "2026-07-26T14:37:26.345743+00:00"
     },
@@ -14216,10 +14216,10 @@
       "updatedAt": "2026-07-23T08:52:45.652964+00:00"
     },
     "Sham": {
-      "postsCount": 5533,
-      "followersCount": 518,
-      "rate": 1.4741,
-      "updatedAt": "2026-08-26T14:58:12.477813+00:00"
+      "postsCount": 5544,
+      "followersCount": 519,
+      "rate": 1.4677,
+      "updatedAt": "2026-08-27T14:55:44.890162+00:00"
     },
     "qwe": {
       "postsCount": 3,
@@ -14301,7 +14301,7 @@
     },
     "0tome_oO": {
       "postsCount": 7349,
-      "followersCount": 195,
+      "followersCount": 194,
       "rate": 2.3666,
       "updatedAt": "2026-07-30T14:56:50.445736+00:00"
     },
@@ -14583,7 +14583,7 @@
     },
     "09mira_ii": {
       "postsCount": 2,
-      "followersCount": 20,
+      "followersCount": 21,
       "rate": 0.2012,
       "updatedAt": "2026-07-30T11:27:38.170155+00:00"
     },
@@ -14607,7 +14607,7 @@
     },
     "persona5": {
       "postsCount": 68,
-      "followersCount": 40,
+      "followersCount": 39,
       "rate": 3.3424,
       "updatedAt": "2026-07-31T03:54:48.238291+00:00"
     },
@@ -14655,15 +14655,15 @@
     },
     "FRA": {
       "postsCount": 22,
-      "followersCount": 34,
+      "followersCount": 36,
       "rate": 1.306,
       "updatedAt": "2026-07-31T23:29:54.026288+00:00"
     },
     "mashu_maro": {
       "postsCount": 9280,
-      "followersCount": 322,
-      "rate": 2.5419,
-      "updatedAt": "2026-08-26T14:59:07.424731+00:00"
+      "followersCount": 324,
+      "rate": 2.5253,
+      "updatedAt": "2026-08-27T14:55:49.760109+00:00"
     },
     "Wak": {
       "postsCount": 167,
@@ -14680,8 +14680,8 @@
     "Fenomeno": {
       "postsCount": 2647,
       "followersCount": 48,
-      "rate": 4.0334,
-      "updatedAt": "2026-08-26T14:59:29.963118+00:00"
+      "rate": 3.8915,
+      "updatedAt": "2026-08-27T14:55:24.859683+00:00"
     },
     "Nino_mae": {
       "postsCount": 1186,
@@ -14691,7 +14691,7 @@
     },
     "53ks": {
       "postsCount": 19,
-      "followersCount": 32,
+      "followersCount": 33,
       "rate": 0.0059,
       "updatedAt": "2026-08-03T15:58:53.688746+00:00"
     },
@@ -14703,7 +14703,7 @@
     },
     "22s": {
       "postsCount": 105,
-      "followersCount": 59,
+      "followersCount": 60,
       "rate": 0.0642,
       "updatedAt": "2026-08-03T16:45:56.854534+00:00"
     },
@@ -14864,10 +14864,10 @@
       "updatedAt": "2026-08-14T16:03:54.133387+00:00"
     },
     "ZMIA": {
-      "postsCount": 1780,
+      "postsCount": 1844,
       "followersCount": 54,
-      "rate": 6.7523,
-      "updatedAt": "2026-08-26T15:01:35.555539+00:00"
+      "rate": 6.4115,
+      "updatedAt": "2026-08-27T15:01:27.967521+00:00"
     },
     "matome_news": {
       "postsCount": 86,
@@ -14991,13 +14991,13 @@
     },
     "Shikimi_004": {
       "postsCount": 25,
-      "followersCount": 18,
+      "followersCount": 19,
       "rate": 0.1358,
       "updatedAt": "2026-08-25T00:45:25.033939+00:00"
     },
     "yunchan": {
       "postsCount": 6644,
-      "followersCount": 136,
+      "followersCount": 137,
       "rate": 2.115,
       "updatedAt": "2026-08-26T10:03:47.114206+00:00"
     },
