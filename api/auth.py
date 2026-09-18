@@ -1,9 +1,10 @@
 # -*- coding: utf-8 -*-
 """ログイン・トークン管理・401自動再認証"""
+import json
 import time
 import threading
 import requests
-from config import KAROTTER_INTERNAL_URL, USERNAME, PASSWORD
+from config import KAROTTER_INTERNAL_URL, USERNAME, PASSWORD, DISABLE_KAROTTER_WRITES
 
 
 class AuthManager:
@@ -58,6 +59,9 @@ class AuthManager:
 
     def _request_locked(self, method, endpoint, retries=3, **kwargs):
         """認証付きリクエスト。エラー時はリトライし、401時は自動再ログインしてリトライ"""
+        if DISABLE_KAROTTER_WRITES and method.upper() in {"POST", "PUT", "PATCH", "DELETE"} and endpoint.startswith("/posts"):
+            print(f"[AUTH] Karotter write blocked by KBOT_DISABLE_WRITES: {method.upper()} {endpoint}")
+            return None
         url = f"{KAROTTER_INTERNAL_URL}{endpoint}"
         kwargs.setdefault("timeout", 20)
 
@@ -91,7 +95,9 @@ class AuthManager:
                                             pass
 
                     res = self.session.request(method, url, **kwargs)
-                    if res.status_code in (401, 403):
+                    # 書き込みリクエストは、応答だけ失われた可能性を排除できない。
+                    # 401/403であっても同じPOSTを自動再送しない。
+                    if res.status_code in (401, 403) and can_retry:
                         print(f"[AUTH] {res.status_code} detected ({endpoint}). Re-login...")
                         if self._login_locked():
                             # 再ログイン後も、リトライのため念のため seek(0) を行う

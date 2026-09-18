@@ -77,9 +77,11 @@ def _handle_generic_ranking(api, cache, parsed, history_manager, sort_key, title
         
         # 差分リストを作成 (username, delta_val, cache_data)
         for uname, udata in pool.items():
-            dval = deltas.get(uname, {}).get(sort_key, 0)
-            # 差分0以下のユーザーは省くか、そのままにするか
-            # 増加ランキングなのでそのままにするが、マイナス対応も
+            delta = deltas.get(uname, {})
+            # 古い観測値から推測した数はランキングへ混ぜない。
+            if not delta.get("valid", False):
+                continue
+            dval = delta.get(sort_key, 0)
             sorted_list.append((uname, dval, udata))
             
         sorted_list.sort(key=lambda x: x[1], reverse=True)
@@ -130,7 +132,8 @@ def _handle_generic_ranking(api, cache, parsed, history_manager, sort_key, title
 
     image_bytes = _generate_image_bytes(title, metric_disp, ranking_data)
     
-    return f"{title} #kbot", [image_bytes]
+    coverage = f"（集計対象 {len(sorted_list)}人）" if period in ("day", "week") else ""
+    return f"{title}{coverage} #kbot", [image_bytes]
 
 
 def handle_ranking_posts(api, cache, parsed, history_manager):

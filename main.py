@@ -18,7 +18,7 @@ import socketserver
 if hasattr(sys.stdout, 'reconfigure'):
     sys.stdout.reconfigure(line_buffering=True)
 
-from config import USERNAME, POLL_INTERVAL, CACHE_UPDATE_INTERVAL, SEEN_FILE
+from config import USERNAME, POLL_INTERVAL, CACHE_UPDATE_INTERVAL, SEEN_FILE, DISABLE_KAROTTER_WRITES
 from api.auth import AuthManager
 from api.karotter import KarotterAPI
 from services.ranking_cache import RankingCache
@@ -36,6 +36,7 @@ from utils.formatter import format_general_info, format_ranking_help, format_err
 
 # === グローバル状態 ===
 bot_status = "starting"
+_backup_lock = threading.Lock()
 
 
 # === 処理済み通知の管理 ===
@@ -82,6 +83,10 @@ def claim_notification_for_reply(post_id):
     filesystem altogether.  The cache branch is shared by those instances, so
     use GitHub's file SHA as a compare-and-swap lock before sending a reply.
     """
+    if DISABLE_KAROTTER_WRITES:
+        print(f"[BOT] Reply claim skipped because KBOT_DISABLE_WRITES is enabled: {post_id}")
+        return False
+
     import base64
     import json
     import urllib.error
@@ -91,7 +96,8 @@ def claim_notification_for_reply(post_id):
     github_repo = os.environ.get("GITHUB_REPO", "").strip()
     if not github_token or not github_repo:
         print("[BOT] Shared reply lock unavailable: GITHUB_TOKEN/GITHUB_REPO is not set")
-        return True
+        # 二重返信を避けるため、共有予約を確認できない時は発信しない。
+        return False
 
     post_id = str(post_id)
     lock_path = "data/reply_claims.json"
@@ -116,10 +122,10 @@ def claim_notification_for_reply(post_id):
         except urllib.error.HTTPError as error:
             if error.code != 404:
                 print(f"[BOT] Shared reply lock read failed: HTTP {error.code}")
-                return True
+                return False
         except Exception as error:
             print(f"[BOT] Shared reply lock read failed: {error}")
-            return True
+            return False
 
         if post_id in claims:
             print(f"[BOT] Reply already claimed by another instance: {post_id}")
@@ -155,10 +161,10 @@ def claim_notification_for_reply(post_id):
                 time.sleep(0.3 * (attempt + 1))
                 continue
             print(f"[BOT] Shared reply lock write failed: HTTP {error.code}")
-            return True
+            return False
         except Exception as error:
             print(f"[BOT] Shared reply lock write failed: {error}")
-            return True
+            return False
 
     if saw_conflict:
         # A concurrent instance changed the file repeatedly.  Skipping is
@@ -260,6 +266,17 @@ def _upload_file_to_github(repo, token, filepath, source_path, message):
 def backup_cache_to_github(cache):
     """GitHub API を使って cache ブランチにキャッシュファイルをバックアップ"""
     import os
+    if not _backup_lock.acquire(blocking=False):
+        print("[CACHE] Backup already running; skipping overlapping backup")
+        return False
+    try:
+        return _backup_cache_to_github_locked(cache)
+    finally:
+        _backup_lock.release()
+
+
+def _backup_cache_to_github_locked(cache):
+    """重複実行を排除した実際のバックアップ処理。"""
     if os.environ.get("DISABLE_GITHUB_CACHE", "").lower() == "true":
         print("[CACHE] DISABLE_GITHUB_CACHE is set to true, skipping backup")
         return False
@@ -274,12 +291,10 @@ def backup_cache_to_github(cache):
 
     cache.save()
     
-    success = False
-    if _upload_file_to_github(github_repo, github_token, "data/users_cache.json", "data/users_cache.json", f"[auto] Cache backup ({cache.user_count()} users)"):
-        success = True
-    
-    _upload_file_to_github(github_repo, github_token, "data/history_daily.json", "data/history_daily.json", "[auto] Daily history backup")
-    _upload_file_to_github(github_repo, github_token, "data/history_weekly.json", "data/history_weekly.json", "[auto] Weekly history backup")
+    cache_ok = _upload_file_to_github(github_repo, github_token, "data/users_cache.json", "data/users_cache.json", f"[auto] Cache backup ({cache.user_count()} users)")
+    daily_ok = _upload_file_to_github(github_repo, github_token, "data/history_daily.json", "data/history_daily.json", "[auto] Daily history backup")
+    weekly_ok = _upload_file_to_github(github_repo, github_token, "data/history_weekly.json", "data/history_weekly.json", "[auto] Weekly history backup")
+    success = cache_ok and daily_ok and weekly_ok
 
     detector.trace("GITHUB_BACKUP_AFTER", "backup_cache_to_github", cache_obj=cache, extra={"success": success})
     return success
@@ -299,6 +314,11 @@ def execute_command(parsed, author_username, api, cache, collector, history_mana
 
     # コマンドの種類に関わらず、常に対象ユーザーの最新データを取得
     enrich_success = collector.enrich_single_user(effective_user)
+    if isinstance(enrich_success, str) and enrich_success:
+        effective_user = enrich_success
+        if target_username:
+            parsed = dict(parsed)
+            parsed["target"] = effective_user
 
     if command is None:
         # 総合情報表示
@@ -451,7 +471,7 @@ def bot_worker():
         try:
             from utils.anomaly_detector import detector
             for target in detector.targets:
-                t_data = cache.users.get(target, {})
+                t_data = cache.get_user(target) or {}
                 posts = t_data.get("postsCount")
                 detector.check_value(target, posts)
 
@@ -475,14 +495,14 @@ def bot_worker():
                         
                 def run_normal():
                     try:
-                        for api in collector.normal_api_pool:
+                        for api in (collector.normal_api_pool or collector.priority_api_pool):
                             api.auth.ensure_login()
                         collector.update_normal_users()
                     except Exception as e:
                         print(f"[BOT] 一般更新エラー: {e}")
                         
                 threading.Thread(target=run_priority, daemon=True).start()
-                if collector.normal_api_pool:
+                if collector.normal_api_pool or collector.priority_api_pool:
                     threading.Thread(target=run_normal, daemon=True).start()
 
             # 定期的にGitHubにバックアップ（別スレッド）
@@ -508,7 +528,9 @@ def bot_worker():
             need_daily_snapshot = False
             need_weekly_snapshot = False
             
-            if history_manager.daily_timestamp:
+            if getattr(history_manager, "daily_schema_version", 1) < 2 and cache.user_count() > 0:
+                need_daily_snapshot = True
+            elif history_manager.daily_timestamp:
                 try:
                     last_daily_dt = datetime.fromisoformat(history_manager.daily_timestamp).astimezone(jst)
                     if last_daily_dt.date() < now_jst.date():
@@ -518,7 +540,9 @@ def bot_worker():
             elif cache.user_count() > 0:
                 need_daily_snapshot = True
                 
-            if history_manager.weekly_timestamp:
+            if getattr(history_manager, "weekly_schema_version", 1) < 2 and cache.user_count() > 0:
+                need_weekly_snapshot = True
+            elif history_manager.weekly_timestamp:
                 try:
                     last_weekly_dt = datetime.fromisoformat(history_manager.weekly_timestamp).astimezone(jst)
                     if last_weekly_dt.isocalendar()[:2] < now_jst.isocalendar()[:2]:
@@ -599,6 +623,10 @@ def bot_worker():
                 if not claim_notification_for_reply(post_id):
                     mark_notification_seen(seen_ids, post_id)
                     continue
+
+                # 共有予約が取れた時点でローカルにも永続化する。以後に例外や
+                # 応答不明が起きても同じメンションは自動再送しない。
+                mark_notification_seen(seen_ids, post_id)
 
                 print(f"[BOT] メンション受信: @{author_username} -> {content[:80]}")
 

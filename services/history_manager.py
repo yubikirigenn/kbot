@@ -1,231 +1,230 @@
 # -*- coding: utf-8 -*-
-"""履歴データ（日間・週間スナップショット）の管理と差分計算"""
-import os
+"""日間・週間スナップショットの管理と、IDベースの差分計算。"""
 import json
+import os
+import threading
 from datetime import datetime, timezone
+
+from config import HISTORY_MAX_SAMPLE_AGE_HOURS
+
 
 DATA_DIR = os.path.join(os.path.dirname(__file__), "..", "data")
 DAILY_HISTORY_FILE = os.path.join(DATA_DIR, "history_daily.json")
 WEEKLY_HISTORY_FILE = os.path.join(DATA_DIR, "history_weekly.json")
+SNAPSHOT_SCHEMA_VERSION = 2
+
+
+def _parse_datetime(value):
+    if not value:
+        return None
+    try:
+        parsed = datetime.fromisoformat(str(value).replace("Z", "+00:00"))
+        if parsed.tzinfo is None:
+            parsed = parsed.replace(tzinfo=timezone.utc)
+        return parsed.astimezone(timezone.utc)
+    except (TypeError, ValueError):
+        return None
+
+
+def _user_id(data):
+    value = data.get("userId") or data.get("id")
+    return "" if value is None or value == "" else str(value)
 
 
 class HistoryManager:
     def __init__(self):
+        self._lock = threading.RLock()
         self.daily_snapshot = {}
         self.weekly_snapshot = {}
         self.daily_timestamp = None
         self.weekly_timestamp = None
+        self.daily_schema_version = 1
+        self.weekly_schema_version = 1
         self._ensure_data_dir()
         self.load()
 
     def _ensure_data_dir(self):
         os.makedirs(DATA_DIR, exist_ok=True)
 
-    def load(self):
-        """スナップショットの読み込み"""
-        if os.path.exists(DAILY_HISTORY_FILE):
-            try:
-                with open(DAILY_HISTORY_FILE, "r", encoding="utf-8") as f:
-                    data = json.load(f)
-                    self.daily_snapshot = data.get("users", {})
-                    self.daily_timestamp = data.get("timestamp")
-            except Exception as e:
-                print(f"⚠️ 日間履歴読み込みエラー: {e}")
+    def _load_file(self, path):
+        with open(path, "r", encoding="utf-8") as f:
+            data = json.load(f)
+        return data.get("users", {}), data.get("timestamp"), int(data.get("schemaVersion", 1))
 
-        if os.path.exists(WEEKLY_HISTORY_FILE):
+    def load(self):
+        with self._lock:
+            if os.path.exists(DAILY_HISTORY_FILE):
+                try:
+                    self.daily_snapshot, self.daily_timestamp, self.daily_schema_version = self._load_file(DAILY_HISTORY_FILE)
+                except Exception as e:
+                    print(f"⚠️ 日間履歴読み込みエラー: {e}")
+            if os.path.exists(WEEKLY_HISTORY_FILE):
+                try:
+                    self.weekly_snapshot, self.weekly_timestamp, self.weekly_schema_version = self._load_file(WEEKLY_HISTORY_FILE)
+                except Exception as e:
+                    print(f"⚠️ 週間履歴読み込みエラー: {e}")
+
+    @staticmethod
+    def _atomic_write(path, payload):
+        temp_path = f"{path}.tmp"
+        try:
+            with open(temp_path, "w", encoding="utf-8") as f:
+                json.dump(payload, f, ensure_ascii=False, indent=2)
+                f.flush()
+                os.fsync(f.fileno())
+            os.replace(temp_path, path)
+        except Exception:
             try:
-                with open(WEEKLY_HISTORY_FILE, "r", encoding="utf-8") as f:
-                    data = json.load(f)
-                    self.weekly_snapshot = data.get("users", {})
-                    self.weekly_timestamp = data.get("timestamp")
-            except Exception as e:
-                print(f"⚠️ 週間履歴読み込みエラー: {e}")
+                if os.path.exists(temp_path):
+                    os.remove(temp_path)
+            except OSError:
+                pass
+            raise
+
+    @staticmethod
+    def _sample_age_hours(data, reference_time):
+        sampled = _parse_datetime(data.get("sampledAt") or data.get("updatedAt"))
+        if sampled is None:
+            return None
+        return max(0.0, (reference_time - sampled).total_seconds() / 3600.0)
 
     def save_snapshot(self, cache, period):
-        """現在のキャッシュ状態をスナップショットとして保存"""
+        """ロック下で取得したキャッシュの一貫したコピーを保存する。"""
         from utils.anomaly_detector import detector
         detector.trace("SNAPSHOT_SAVE_BEFORE", f"save_snapshot_{period}", cache_obj=cache)
-
+        users = cache.get_users_snapshot()
+        now = datetime.now(timezone.utc)
+        now_str = now.isoformat()
         snapshot = {}
-        for username, data in cache.users.items():
+        for username, data in users.items():
+            age = self._sample_age_hours(data, now)
             snapshot[username] = {
-                "postsCount": data.get("postsCount") or 0,
-                "followersCount": data.get("followersCount") or 0,
-                "rate": data.get("rate") or 0.0,
-                "updatedAt": data.get("updatedAt", "")
+                "userId": _user_id(data),
+                "username": data.get("username") or username,
+                "postsCount": data.get("postsCount"),
+                "followersCount": data.get("followersCount"),
+                "createdAt": data.get("createdAt", ""),
+                "sampledAt": data.get("sampledAt") or data.get("updatedAt", ""),
+                "baselineFresh": age is not None and age <= HISTORY_MAX_SAMPLE_AGE_HOURS,
             }
-        
-        now_str = datetime.now(timezone.utc).isoformat()
-        save_data = {
-            "timestamp": now_str,
-            "users": snapshot
-        }
 
+        save_data = {
+            "schemaVersion": SNAPSHOT_SCHEMA_VERSION,
+            "timestamp": now_str,
+            "maxSampleAgeHours": HISTORY_MAX_SAMPLE_AGE_HOURS,
+            "users": snapshot,
+        }
         file_path = DAILY_HISTORY_FILE if period == "day" else WEEKLY_HISTORY_FILE
         try:
-            with open(file_path, "w", encoding="utf-8") as f:
-                json.dump(save_data, f, ensure_ascii=False, indent=2)
-            
-            if period == "day":
-                self.daily_snapshot = snapshot
-                self.daily_timestamp = now_str
-            else:
-                self.weekly_snapshot = snapshot
-                self.weekly_timestamp = now_str
-                
-            print(f"📂 {period} のスナップショットを保存しました。")
+            self._atomic_write(file_path, save_data)
+            with self._lock:
+                if period == "day":
+                    self.daily_snapshot = snapshot
+                    self.daily_timestamp = now_str
+                    self.daily_schema_version = SNAPSHOT_SCHEMA_VERSION
+                else:
+                    self.weekly_snapshot = snapshot
+                    self.weekly_timestamp = now_str
+                    self.weekly_schema_version = SNAPSHOT_SCHEMA_VERSION
+            fresh_count = sum(1 for value in snapshot.values() if value["baselineFresh"])
+            print(f"📂 {period} のスナップショットを保存しました（有効基準 {fresh_count}/{len(snapshot)}）。")
+            return True
         except Exception as e:
             print(f"⚠️ {period} 履歴保存エラー: {e}")
+            return False
+
+    @staticmethod
+    def _snapshot_indexes(snapshot):
+        by_id = {}
+        by_name = {}
+        for key, data in snapshot.items():
+            uid = _user_id(data)
+            if uid:
+                by_id[uid] = data
+            name = str(data.get("username") or key)
+            by_name[name.casefold()] = data
+        return by_id, by_name
 
     def get_deltas(self, cache, period):
-        """指定期間の差分（増加量）を計算して返す
-        戻り値: {username: {"postsCount": delta, "followersCount": delta, "rate": delta}}
-        """
-        snapshot = self.daily_snapshot if period == "day" else self.weekly_snapshot
-        snapshot_timestamp = self.daily_timestamp if period == "day" else self.weekly_timestamp
-        
-        # スナップショットが空の場合は、現在をスナップショットとして保存し、差分0を返す
+        """差分を返す。古い標本からの推測値は作らず valid=False にする。"""
+        with self._lock:
+            snapshot = dict(self.daily_snapshot if period == "day" else self.weekly_snapshot)
+            snapshot_timestamp = self.daily_timestamp if period == "day" else self.weekly_timestamp
+            schema_version = self.daily_schema_version if period == "day" else self.weekly_schema_version
+
         if not snapshot:
             self.save_snapshot(cache, period)
-            snapshot = self.daily_snapshot if period == "day" else self.weekly_snapshot
-            snapshot_timestamp = self.daily_timestamp if period == "day" else self.weekly_timestamp
+            with self._lock:
+                snapshot = dict(self.daily_snapshot if period == "day" else self.weekly_snapshot)
+                snapshot_timestamp = self.daily_timestamp if period == "day" else self.weekly_timestamp
+                schema_version = self.daily_schema_version if period == "day" else self.weekly_schema_version
 
         now = datetime.now(timezone.utc)
-        hours_passed = 1.0
-        if snapshot_timestamp:
-            try:
-                st_dt = datetime.fromisoformat(snapshot_timestamp)
-                hours_passed = (now - st_dt).total_seconds() / 3600.0
-                if hours_passed <= 0:
-                    hours_passed = 1.0
-            except Exception:
-                pass
-
+        snapshot_dt = _parse_datetime(snapshot_timestamp)
+        hours_passed = max((now - snapshot_dt).total_seconds() / 3600.0, 1 / 60) if snapshot_dt else 1.0
+        current_users = cache.get_users_snapshot()
+        by_id, by_name = self._snapshot_indexes(snapshot)
         deltas = {}
-        snapshot_dirty = False
 
-        for username, current_data in cache.users.items():
-            # 大文字小文字を無視して一致する過去のキーをスナップショットから安全に検索
-            past_key = next((k for k in snapshot.keys() if k.lower() == username.lower()), None)
-            past_data = snapshot.get(past_key, {}) if past_key else {}
-            
-            past_posts = past_data.get("postsCount")
-            past_followers = past_data.get("followersCount")
+        for username, current in current_users.items():
+            uid = _user_id(current)
+            past = by_id.get(uid) if uid else None
+            # v2同士でIDがない旧アカウントだけusername照合を許可する。
+            if past is None and not uid and schema_version >= SNAPSHOT_SCHEMA_VERSION:
+                past = by_name.get(username.casefold())
 
-            cur_posts = current_data.get("postsCount")
-            if cur_posts is None:
-                cur_posts = 0
-            cur_followers = current_data.get("followersCount")
-            if cur_followers is None:
-                cur_followers = 0
-            created_at = current_data.get("createdAt")
+            current_age = self._sample_age_hours(current, now)
+            current_fresh = current_age is not None and current_age <= HISTORY_MAX_SAMPLE_AGE_HOURS
+            reason = ""
+            valid = True
 
-            if past_posts is None:
-                # スナップショットに存在しない場合、
-                # アカウント作成日が「スナップショット作成日時」より後であれば新規登録者とみなし过去値を0とする
-                # 昔からいるユーザーがBotに初めて認知されただけの場合は、現在の値を過去値として増分を0にする
-                is_new_account = False
-                if snapshot_timestamp and created_at:
-                    try:
-                        st_dt = datetime.fromisoformat(snapshot_timestamp)
-                        c_dt = datetime.fromisoformat(created_at.replace("Z", "+00:00"))
-                        if c_dt > st_dt:
-                            is_new_account = True
-                    except Exception:
-                        pass
-                
-                if is_new_account:
+            if past is None:
+                created = _parse_datetime(current.get("createdAt"))
+                if snapshot_dt and created and created > snapshot_dt and current_fresh:
                     past_posts = 0
                     past_followers = 0
                 else:
-                    past_posts = cur_posts
-                    past_followers = cur_followers
-                
-                # 補完した過去値をスナップショットに記録する
-                # (大文字小文字のズレで別人扱いにしないため、元の表記 username をキーにする)
-                snapshot[username] = {
-                    "postsCount": past_posts,
-                    "followersCount": past_followers,
-                    "rate": current_data.get("rate", 0.0),
-                    "updatedAt": current_data.get("updatedAt", "")
-                }
-                snapshot_dirty = True
+                    past_posts = current.get("postsCount") or 0
+                    past_followers = current.get("followersCount") or 0
+                    valid = False
+                    reason = "no_identity_baseline"
+            else:
+                past_posts = past.get("postsCount")
+                past_followers = past.get("followersCount")
+                if past_posts is None or past_followers is None:
+                    valid = False
+                    reason = "missing_baseline_value"
+                if schema_version < SNAPSHOT_SCHEMA_VERSION or not past.get("baselineFresh", False):
+                    valid = False
+                    reason = "stale_or_legacy_baseline"
 
-            # 個別に None 安全性を保証
-            if past_posts is None:
-                past_posts = 0
-            if past_followers is None:
-                past_followers = 0
+            if not current_fresh:
+                valid = False
+                reason = "stale_current_sample"
 
-            delta_posts = max(0, cur_posts - past_posts)
+            cur_posts = current.get("postsCount")
+            cur_followers = current.get("followersCount")
+            if cur_posts is None or cur_followers is None:
+                valid = False
+                reason = "missing_current_value"
+            cur_posts = cur_posts or 0
+            cur_followers = cur_followers or 0
+            past_posts = past_posts or 0
+            past_followers = past_followers or 0
+            delta_posts = cur_posts - past_posts
             delta_followers = cur_followers - past_followers
-            
-            # APIデータ取得遅延による一括加算の平準化ロジック
-            past_updated_at = past_data.get("updatedAt", "")
-            cur_updated_at = current_data.get("updatedAt", "")
-            
-            if past_updated_at and cur_updated_at:
-                try:
-                    past_dt = datetime.fromisoformat(past_updated_at.replace("Z", "+00:00"))
-                    cur_dt = datetime.fromisoformat(cur_updated_at.replace("Z", "+00:00"))
-                    
-                    update_interval_hours = (cur_dt - past_dt).total_seconds() / 3600.0
-                    
-                    target_hours = 24.0 if period == "day" else 168.0
-                    threshold_hours = 36.0 if period == "day" else 252.0
-                    
-                    if update_interval_hours >= threshold_hours:
-                        ratio = target_hours / update_interval_hours
-                        delta_posts = int(delta_posts * ratio)
-                        delta_followers = int(delta_followers * ratio)
-                except Exception:
-                    pass
-            
-            # レートは単純な差分ではなく、「期間内の純粋なレート（増分投稿数 ÷ 経過時間）」とする
-            calc_rate = round(delta_posts / hours_passed, 4)
 
             deltas[username] = {
-                "postsCount": delta_posts,
-                "followersCount": delta_followers,
-                "rate": calc_rate
+                "postsCount": delta_posts if valid else 0,
+                "followersCount": delta_followers if valid else 0,
+                "rate": round(delta_posts / hours_passed, 4) if valid else 0.0,
+                "valid": valid,
+                "reason": reason,
+                "userId": uid,
+                "sampleAgeHours": current_age,
             }
-            
-        # 補完が発生した場合はスナップショットファイルを再保存
-        if snapshot_dirty:
-            self._save_modified_snapshot(period)
-        
         return deltas
 
-    def _save_modified_snapshot(self, period):
-        """get_deltas 内で補完されたスナップショットをディスクに保存"""
-        snapshot = self.daily_snapshot if period == "day" else self.weekly_snapshot
-        snapshot_timestamp = self.daily_timestamp if period == "day" else self.weekly_timestamp
-        
-        save_data = {
-            "timestamp": snapshot_timestamp,
-            "users": snapshot
-        }
-        
-        file_path = DAILY_HISTORY_FILE if period == "day" else WEEKLY_HISTORY_FILE
-        try:
-            with open(file_path, "w", encoding="utf-8") as f:
-                json.dump(save_data, f, ensure_ascii=False, indent=2)
-            print(f"📂 {period} のスナップショット（補完データ追加）を永続化しました。")
-        except Exception as e:
-            print(f"⚠️ {period} 履歴の自動永続化エラー: {e}")
-
     def force_reset_snapshot(self, cache):
-        """現在のキャッシュ状態を日間スナップショットとして強制的に保存"""
-        print("[FORCE_RESET] 日間スナップショットの強制リセットを開始します...")
-        self.save_snapshot(cache, "day")
-        
-        # Oi_oistar(実際はOi_oistar)とmiyaaa_96の値を確認
-        oister_cache = cache.users.get("Oi_oistar", {}).get("postsCount") or cache.users.get("Oi_oister", {}).get("postsCount")
-        miyaaa_cache = cache.users.get("miyaaa_96", {}).get("postsCount")
-        
-        oister_snap = self.daily_snapshot.get("Oi_oistar", {}).get("postsCount") or self.daily_snapshot.get("Oi_oister", {}).get("postsCount")
-        miyaaa_snap = self.daily_snapshot.get("miyaaa_96", {}).get("postsCount")
-        
-        print(f"[FORCE_RESET] @Oi_oistar / @Oi_oister -> Cache: {oister_cache}, Snapshot: {oister_snap} (Match: {oister_cache == oister_snap})")
-        print(f"[FORCE_RESET] @miyaaa_96 -> Cache: {miyaaa_cache}, Snapshot: {miyaaa_snap} (Match: {miyaaa_cache == miyaaa_snap})")
-        print("[FORCE_RESET] 日間スナップショットの強制リセットが完了しました。")
+        print("[FORCE_RESET] 日間スナップショットを現在値へリセットします...")
+        return self.save_snapshot(cache, "day")

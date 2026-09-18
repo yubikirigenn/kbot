@@ -7,7 +7,7 @@ def handle_posts(username, api, cache, collector):
     """ユーザーの投稿数を表示"""
     user_data = cache.get_user(username)
 
-    if not user_data or not user_data.get("postsCount"):
+    if not user_data or user_data.get("postsCount") is None:
         return format_error(f"@{username} のデータを取得できませんでした。")
 
     posts_count = user_data["postsCount"]

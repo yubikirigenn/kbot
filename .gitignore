@@ -4,4 +4,5 @@ data/seen_notifications.txt
 __pycache__/
 *.pyc
 test_*.py
+!tests/test_*.py
 .env

@@ -125,7 +125,8 @@ class UserCollector:
                 try:
                     username, user_data = future.result()
                     
-                    cache_before_posts = self.cache.users.get(username, {}).get("postsCount")
+                    cached_before = self.cache.get_user(username) or {}
+                    cache_before_posts = cached_before.get("postsCount")
                     update_user_called = False
                     user_data_is_none = user_data is None
                     is_deleted = isinstance(user_data, dict) and user_data.get("is_deleted", False)
@@ -157,23 +158,20 @@ class UserCollector:
                     }
                     print(json.dumps(raw_log), flush=True)
 
+                    canonical_username = username
                     if user_data:
                         if is_deleted:
                             self.cache.delete_user(username)
                         else:
-                            # 成功した場合は fail_count を 0 にリセット
-                            if username in self.cache.users:
-                                self.cache.users[username]["fail_count"] = 0
-                            self.cache.update_user(username, user_data)
+                            # APIが返したIDと正規usernameで更新し、改名を追跡する。
+                            canonical_username = self.cache.update_user(username, user_data) or username
                             enriched += 1
                             update_user_called = True
                     else:
-                        # 失敗（または None）した場合、fail_count を +1
-                        if username in self.cache.users:
-                            self.cache.users[username]["fail_count"] = self.cache.users[username].get("fail_count", 0) + 1
-                        pass
+                        self.cache.mark_fetch_failure(username)
                     
-                    cache_after_posts = self.cache.users.get(username, {}).get("postsCount") if username in self.cache.users else None
+                    cached_after = self.cache.get_user(canonical_username) or {}
+                    cache_after_posts = cached_after.get("postsCount")
 
                     is_trace_target = username in ['zc', 'yis', 'miyaaa_96', 'DA', 'komone_neko222']
                     is_anomaly = False
@@ -307,12 +305,13 @@ class UserCollector:
                 # 優先度（更新日時 updatedAt が古い順）にソートして、上位15件のみを今回の更新対象とする
                 # updatedAt が空文字（""）または存在しないユーザーは除外する
                 # fail_count が 3 以上のユーザーを除外する
+                cache_users = self.cache.get_users_snapshot()
                 target_users = [
-                    (username, self.cache.users[username].get("updatedAt"))
+                    (username, cache_users[username].get("updatedAt"))
                     for username in top_users
-                    if username in self.cache.users 
-                    and self.cache.users[username].get("updatedAt")
-                    and self.cache.users[username].get("fail_count", 0) < 3
+                    if username in cache_users
+                    and cache_users[username].get("updatedAt")
+                    and self.cache.should_retry(username)
                 ]
                 target_users.sort(key=lambda x: x[1])  # updatedAt が古い順
                 
@@ -337,9 +336,11 @@ class UserCollector:
             self._priority_run_lock.release()
             
     def update_normal_users(self):
-        """一般ユーザーを地道に更新する（サブアカウント専用。データ欠損を最優先）"""
-        if not self.normal_api_pool:
-            print("[NORMAL] サブアカウントが未設定のため一般更新をスキップします")
+        """一般ユーザーを巡回更新する。サブアカウント不在時は収集用メインを使う。"""
+        active_pool = self.normal_api_pool or self.priority_api_pool
+        active_queue = self._normal_api_queue if self.normal_api_pool else self._priority_api_queue
+        if not active_pool:
+            print("[NORMAL] 収集用APIがないため一般更新をスキップします")
             return
 
         if not self._normal_run_lock.acquire(blocking=False):
@@ -354,10 +355,13 @@ class UserCollector:
             self.collect_from_recommended()
             
             with self._lock:
-                # 1. まずデータ欠損（createdAt/updatedAtなし）のユーザーを抽出
+                cache_users = self.cache.get_users_snapshot()
+                # 1. まずデータ欠損（createdAt/updatedAtなし）のユーザーを抽出。
+                # 連続失敗ユーザーはクールダウンし、先頭固定による全体更新の飢餓を防ぐ。
                 missing_users = [
-                    username for username, data in self.cache.users.items()
+                    username for username, data in cache_users.items()
                     if not data.get("createdAt") or not data.get("updatedAt")
+                    if self.cache.should_retry(username)
                 ]
                 
                 # 2. 上位ユーザー（Top30）の抽出
@@ -367,19 +371,24 @@ class UserCollector:
                 top_users = set(top_posts + top_followers + top_rate)
                 
                 # 一般更新で優先的に更新する上位ユーザー（欠損ユーザーではないもの）
-                priority_in_normal = [u for u in top_users if u in self.cache.users and u not in missing_users]
-                priority_in_normal.sort(key=lambda u: self.cache.users[u].get("updatedAt", ""))
+                priority_in_normal = [
+                    u for u in top_users
+                    if u in cache_users and u not in missing_users and self.cache.should_retry(u)
+                ]
+                priority_in_normal.sort(key=lambda u: cache_users[u].get("updatedAt", ""))
                 
                 # 3. それ以外の一般ユーザーを updatedAt が古い順に取得
                 existing_users = [
                     (username, data.get("updatedAt", "")) 
-                    for username, data in self.cache.users.items()
-                    if username not in missing_users and username not in top_users
+                    for username, data in cache_users.items()
+                    if data.get("createdAt") and data.get("updatedAt")
+                    and username not in top_users
+                    and self.cache.should_retry(username)
                 ]
                 existing_users.sort(key=lambda x: x[1])
                 
                 # APIプールの数に応じて1度に更新する件数を決める（1アカウントあたり200件）
-                rotation_count = 200 * len(self.normal_api_pool) if self.normal_api_pool else 200
+                rotation_count = 200 * len(active_pool)
                 
                 # 欠損ユーザーを最優先で詰め、足りない分を上位ユーザー、残りを古いユーザーで補う
                 needs_enrichment = missing_users[:rotation_count]
@@ -391,13 +400,10 @@ class UserCollector:
                     needs_enrichment.extend([username for username, _ in existing_users[:fill_count]])
 
             if needs_enrichment:
-                q = self._normal_api_queue
-                size = len(self.normal_api_pool)
-                
                 self._enrich_user_details_with_pool(
                     needs_enrichment, 
-                    q, 
-                    size,
+                    active_queue,
+                    len(active_pool),
                     tag="NORMAL"
                 )
         finally:
@@ -414,12 +420,14 @@ class UserCollector:
             top_rate = [u[0] for u in self.cache.get_top_n("rate", 15)] if hasattr(self.cache, 'get_top_n') else []
             top_users = list(set(top_posts + top_followers + top_rate))
 
-        # スレッドプールを使って同期更新を実行（優先プールを使用）
+        # スレッドプールを使って同期更新を実行（利用可能なプールを使用）
+        active_pool = self.priority_api_pool or self.normal_api_pool
+        active_queue = self._priority_api_queue if self.priority_api_pool else self._normal_api_queue
         if top_users:
             self._enrich_user_details_with_pool(
                 top_users,
-                self._priority_api_queue,
-                len(self.priority_api_pool),
+                active_queue,
+                len(active_pool),
                 tag="SNAPSHOT_SYNC"
             )
         print("[SNAPSHOT_SYNC] 同期更新が完了しました。")

@@ -1,192 +1,366 @@
 # -*- coding: utf-8 -*-
-"""ユーザーデータのキャッシュ管理とランキング計算"""
-import os
+"""ユーザーデータのキャッシュ管理とランキング計算。
+
+username は変更・再利用されるため、API の安定 ID を同一人物判定に使う。
+公開インターフェースは従来どおり username ベースだが、更新時は userId を
+優先して改名を追跡する。
+"""
+import copy
 import json
-import time
+import os
 import threading
 from datetime import datetime, timezone
+
 from config import USER_CACHE_FILE, EXCLUDED_USERS_FILE
+
+
+def _as_user_id(value):
+    if value is None or value == "":
+        return ""
+    return str(value)
 
 
 class RankingCache:
     def __init__(self):
         self._lock = threading.RLock()
-        with self._lock:
-            self.users = {}  # {username: {postsCount, followersCount, followingCount, createdAt, rate, updatedAt}}
-            self.excluded_users = set()
-            self._ensure_data_dir()
-            self.load()
-            self.load_excluded_users()
+        self.users = {}
+        self.excluded_users = set()
+        self._id_to_username = {}
+        self._casefold_to_username = {}
+        self._ensure_data_dir()
+        self.load()
+        self.load_excluded_users()
 
     def _ensure_data_dir(self):
-        os.makedirs(os.path.dirname(USER_CACHE_FILE), exist_ok=True)
+        directory = os.path.dirname(USER_CACHE_FILE)
+        if directory:
+            os.makedirs(directory, exist_ok=True)
+
+    @staticmethod
+    def _record_score(data):
+        posts = data.get("postsCount")
+        sampled = data.get("sampledAt") or data.get("updatedAt") or ""
+        return (
+            1 if _as_user_id(data.get("userId") or data.get("id")) else 0,
+            1 if posts not in (None, 0) else 0,
+            sampled,
+        )
+
+    @staticmethod
+    def _same_legacy_identity(left, right):
+        left_id = _as_user_id(left.get("userId") or left.get("id"))
+        right_id = _as_user_id(right.get("userId") or right.get("id"))
+        if left_id and right_id:
+            return left_id == right_id
+        left_created = left.get("createdAt") or ""
+        right_created = right.get("createdAt") or ""
+        return bool(left_created and right_created and left_created == right_created)
+
+    def _normalize_loaded_users_locked(self):
+        """大文字小文字だけ異なる重複を一つにし、索引を再構築する。"""
+        normalized = {}
+        folded_to_key = {}
+        for raw_name, raw_data in self.users.items():
+            if not isinstance(raw_data, dict):
+                continue
+            name = str(raw_data.get("username") or raw_name).strip()
+            if not name:
+                continue
+            data = dict(raw_data)
+            data["username"] = name
+            user_id = _as_user_id(data.get("userId") or data.get("id"))
+            if user_id:
+                data["userId"] = user_id
+            data.pop("id", None)
+
+            folded = name.casefold()
+            previous_key = folded_to_key.get(folded)
+            if previous_key is None:
+                normalized[name] = data
+                folded_to_key[folded] = name
+                continue
+
+            previous = normalized[previous_key]
+            winner_name, winner, loser = previous_key, previous, data
+            if self._record_score(data) > self._record_score(previous):
+                winner_name, winner, loser = name, data, previous
+                del normalized[previous_key]
+                normalized[winner_name] = winner
+                folded_to_key[folded] = winner_name
+
+            if self._same_legacy_identity(winner, loser):
+                for key, value in loser.items():
+                    if winner.get(key) in (None, "") and value not in (None, ""):
+                        winner[key] = value
+
+        self.users = normalized
+        self._rebuild_indexes_locked()
+
+    def _rebuild_indexes_locked(self):
+        self._id_to_username = {}
+        self._casefold_to_username = {}
+        duplicate_ids = []
+        for username, data in self.users.items():
+            self._casefold_to_username[username.casefold()] = username
+            user_id = _as_user_id(data.get("userId"))
+            if not user_id:
+                continue
+            previous = self._id_to_username.get(user_id)
+            if previous is None:
+                self._id_to_username[user_id] = username
+            else:
+                keep, drop = previous, username
+                if self._record_score(data) > self._record_score(self.users[previous]):
+                    keep, drop = username, previous
+                    self._id_to_username[user_id] = keep
+                duplicate_ids.append((keep, drop))
+
+        for keep, drop in duplicate_ids:
+            if keep == drop or drop not in self.users:
+                continue
+            kept = self.users[keep]
+            removed = self.users.pop(drop)
+            for key, value in removed.items():
+                if kept.get(key) in (None, "") and value not in (None, ""):
+                    kept[key] = value
+
+        if duplicate_ids:
+            self._id_to_username = {}
+            self._casefold_to_username = {}
+            for username, data in self.users.items():
+                self._casefold_to_username[username.casefold()] = username
+                user_id = _as_user_id(data.get("userId"))
+                if user_id:
+                    self._id_to_username[user_id] = username
+
+    def _resolve_key_locked(self, username):
+        if not username:
+            return None
+        return self._casefold_to_username.get(str(username).casefold())
 
     def load(self):
-        """キャッシュファイルからユーザーデータを読み込み"""
         with self._lock:
-            if os.path.exists(USER_CACHE_FILE):
-                try:
-                    with open(USER_CACHE_FILE, "r", encoding="utf-8") as f:
-                        self.users = json.load(f)
-                    print(f"📂 キャッシュ読み込み完了: {len(self.users)}ユーザー")
-                except Exception as e:
-                    print(f"⚠️ キャッシュ読み込みエラー: {e}")
-                    self.users = {}
+            if not os.path.exists(USER_CACHE_FILE):
+                return
+            try:
+                with open(USER_CACHE_FILE, "r", encoding="utf-8") as f:
+                    loaded = json.load(f)
+                self.users = loaded.get("users", {}) if isinstance(loaded, dict) and "users" in loaded else loaded
+                if not isinstance(self.users, dict):
+                    raise ValueError("users cache must be a JSON object")
+                self._normalize_loaded_users_locked()
+                print(f"📂 キャッシュ読み込み完了: {len(self.users)}ユーザー")
+            except Exception as e:
+                print(f"⚠️ キャッシュ読み込みエラー: {e}")
+                self.users = {}
+                self._rebuild_indexes_locked()
 
     def save(self):
-        """キャッシュファイルに保存"""
+        """一時ファイルを使い、途中終了でJSONを壊さない。"""
         with self._lock:
             from utils.anomaly_detector import detector
             detector.trace("SAVE_BEFORE", "save", cache_obj=self)
-
+            temp_path = f"{USER_CACHE_FILE}.tmp"
             try:
                 self._ensure_data_dir()
-                with open(USER_CACHE_FILE, "w", encoding="utf-8") as f:
+                with open(temp_path, "w", encoding="utf-8") as f:
                     json.dump(self.users, f, ensure_ascii=False, indent=2)
+                    f.flush()
+                    os.fsync(f.fileno())
+                os.replace(temp_path, USER_CACHE_FILE)
             except Exception as e:
                 print(f"⚠️ キャッシュ保存エラー: {e}")
-
+                try:
+                    if os.path.exists(temp_path):
+                        os.remove(temp_path)
+                except OSError:
+                    pass
             detector.trace("SAVE_AFTER", "save", cache_obj=self)
 
+    @staticmethod
+    def _identity_mismatch(old_data, new_user_id, new_created_at):
+        old_id = _as_user_id(old_data.get("userId"))
+        if old_id and new_user_id:
+            return old_id != new_user_id
+        old_created = old_data.get("createdAt") or ""
+        return bool(old_created and new_created_at and old_created != new_created_at)
+
     def update_user(self, username, user_data):
-        """ユーザーデータを更新"""
+        """詳細APIの結果を更新し、APIが返した正規usernameを返す。"""
         if not user_data or not username:
-            return
+            return None
+        canonical = str(user_data.get("username") or username).strip()
+        if not canonical:
+            return None
+        new_user_id = _as_user_id(user_data.get("id") or user_data.get("userId"))
+        new_created_at = user_data.get("createdAt") or ""
+        sampled_at = datetime.now(timezone.utc).isoformat()
 
         with self._lock:
             from utils.anomaly_detector import detector
-            detector.trace("CACHE_UPDATE_BEFORE", f"update_user_{username}", cache_obj=self, extra={"update_data": {"postsCount": user_data.get("postsCount")}})
+            detector.trace(
+                "CACHE_UPDATE_BEFORE", f"update_user_{username}", cache_obj=self,
+                extra={"update_data": {"postsCount": user_data.get("postsCount"), "userId": new_user_id}},
+            )
+            identity_key = self._id_to_username.get(new_user_id) if new_user_id else None
+            requested_key = self._resolve_key_locked(username)
+            canonical_key = self._resolve_key_locked(canonical)
+            source_key = identity_key or canonical_key or requested_key
+            old_data = dict(self.users.get(source_key, {})) if source_key else {}
 
-            old_data = self.users.get(username, {})
-            fail_count = old_data.get("fail_count", 0)
+            if old_data and self._identity_mismatch(old_data, new_user_id, new_created_at):
+                old_data = {}
 
-            # APIから取得した new_posts が 0 または None の場合は「無効なAPIレスポンス」とみなす
             new_posts = user_data.get("postsCount")
-            if new_posts is None or new_posts == 0:
-                # postsCount の上書きおよび updatedAt の更新をスキップ
-                posts_count = old_data.get("postsCount")
-                updated_at = old_data.get("updatedAt", "")
-            else:
-                # 既存の保護ロジック max(old, new) は、old が None の場合にエラーになるため、old が None または 0 の場合はスキップ
-                old_posts = old_data.get("postsCount")
-                if old_posts is None or old_posts == 0:
-                    posts_count = new_posts
-                else:
-                    posts_count = max(old_posts, new_posts)
-                updated_at = datetime.now(timezone.utc).isoformat()
+            posts_count = old_data.get("postsCount") if new_posts is None else new_posts
+            new_followers = user_data.get("followersCount")
+            followers_count = old_data.get("followersCount", 0) if new_followers is None else new_followers
+            new_following = user_data.get("followingCount")
+            following_count = old_data.get("followingCount", 0) if new_following is None else new_following
+            created_at = new_created_at or old_data.get("createdAt", "")
+            user_id = new_user_id or _as_user_id(old_data.get("userId"))
 
-            new_followers = user_data.get("followersCount", 0)
-            followers_count = max(old_data.get("followersCount", 0), new_followers) if new_followers == 0 else new_followers
-
-            new_following = user_data.get("followingCount", 0)
-            following_count = max(old_data.get("followingCount", 0), new_following) if new_following == 0 else new_following
-
-            created_at = user_data.get("createdAt", "") or old_data.get("createdAt", "")
-            
-            is_bot = user_data.get("isBotAccount", old_data.get("isBot", False))
-            is_private = user_data.get("isPrivate", old_data.get("isPrivate", False))
-            
-            display_name = user_data.get("displayName") or user_data.get("name") or old_data.get("displayName") or username
-            avatar_url = user_data.get("avatarUrl") or user_data.get("profileImageUrl") or old_data.get("avatarUrl") or ""
-
-            # 内部キャッシュ用レート計算（表示・ソート用は後で動的計算）
             rate = 0.0
             if created_at and posts_count is not None and posts_count > 0:
                 try:
                     created_dt = datetime.fromisoformat(created_at.replace("Z", "+00:00"))
-                    now = datetime.now(timezone.utc)
-                    hours = (now - created_dt).total_seconds() / 3600
-                    hours = max(hours, 1.0) # 1時間未満は1時間に丸めて無限レートを防ぐ
-                    if hours > 0:
-                        rate = round(posts_count / hours, 4)
+                    hours = max((datetime.now(timezone.utc) - created_dt).total_seconds() / 3600, 1.0)
+                    rate = round(posts_count / hours, 4)
                 except Exception:
                     pass
 
-            self.users[username] = {
+            record = {
+                "userId": user_id,
+                "username": canonical,
                 "postsCount": posts_count,
                 "followersCount": followers_count,
                 "followingCount": following_count,
                 "createdAt": created_at,
                 "rate": rate,
-                "isBot": is_bot,
-                "isPrivate": is_private,
-                "displayName": display_name,
-                "avatarUrl": avatar_url,
-                "updatedAt": updated_at,
-                "fail_count": fail_count
+                "isBot": user_data.get("isBotAccount", old_data.get("isBot", False)),
+                "isPrivate": user_data.get("isPrivate", old_data.get("isPrivate", False)),
+                "displayName": user_data.get("displayName") or user_data.get("name") or old_data.get("displayName") or canonical,
+                "avatarUrl": user_data.get("avatarUrl") or user_data.get("profileImageUrl") or old_data.get("avatarUrl") or "",
+                "sampledAt": sampled_at,
+                "updatedAt": sampled_at,
+                "fail_count": 0,
             }
-            from utils.anomaly_detector import detector
-            detector.trace("CACHE_UPDATE_AFTER", f"update_user_{username}", cache_obj=self)
+
+            keys_to_remove = set()
+            for candidate in (source_key, requested_key, canonical_key):
+                if candidate and candidate != canonical:
+                    keys_to_remove.add(candidate)
+            if user_id:
+                keys_to_remove.update(
+                    key for key, value in self.users.items()
+                    if key != canonical and _as_user_id(value.get("userId")) == user_id
+                )
+            for key in keys_to_remove:
+                self.users.pop(key, None)
+            self.users[canonical] = record
+            self._rebuild_indexes_locked()
+            detector.trace("CACHE_UPDATE_AFTER", f"update_user_{canonical}", cache_obj=self)
+            return canonical
 
     def update_user_from_search(self, user_data):
-        """検索APIの結果からユーザーデータを部分更新（followersCountのみ）"""
-        username = user_data.get("username", "")
+        """検索結果をID対応の部分レコードとして取り込む。"""
+        username = str(user_data.get("username") or "").strip()
         if not username:
-            return
+            return None
+        user_id = _as_user_id(user_data.get("id") or user_data.get("userId"))
         with self._lock:
-            if username not in self.users:
-                self.users[username] = {
-                    "postsCount": None,
-                    "followersCount": 0,
-                    "followingCount": 0,
-                    "createdAt": "",
-                    "rate": 0.0,
-                    "isBot": user_data.get("isBotAccount", False),
-                    "isPrivate": user_data.get("isPrivate", False),
-                    "updatedAt": "",
-                    "fail_count": 0
-                }
-            self.users[username]["followersCount"] = user_data.get("followersCount", 0)
-            self.users[username]["followingCount"] = user_data.get("followingCount", 0)
-            self.users[username]["isBot"] = user_data.get("isBotAccount", False)
-            self.users[username]["isPrivate"] = user_data.get("isPrivate", self.users[username].get("isPrivate", False))
+            identity_key = self._id_to_username.get(user_id) if user_id else None
+            name_key = self._resolve_key_locked(username)
+            source_key = identity_key or name_key
+            old_data = dict(self.users.get(source_key, {})) if source_key else {}
+            incoming_created = user_data.get("createdAt") or ""
+            if old_data and self._identity_mismatch(old_data, user_id, incoming_created):
+                old_data = {}
+
+            record = dict(old_data)
+            record.update({
+                "userId": user_id or _as_user_id(old_data.get("userId")),
+                "username": username,
+                "followersCount": user_data.get("followersCount", old_data.get("followersCount", 0)),
+                "followingCount": user_data.get("followingCount", old_data.get("followingCount", 0)),
+                "isBot": user_data.get("isBotAccount", old_data.get("isBot", False)),
+                "isPrivate": user_data.get("isPrivate", old_data.get("isPrivate", False)),
+                "displayName": user_data.get("displayName") or old_data.get("displayName") or username,
+                "avatarUrl": user_data.get("avatarUrl") or old_data.get("avatarUrl") or "",
+                "createdAt": incoming_created or old_data.get("createdAt", ""),
+                "postsCount": old_data.get("postsCount"),
+                "rate": old_data.get("rate", 0.0),
+                "updatedAt": old_data.get("updatedAt", ""),
+                "sampledAt": old_data.get("sampledAt", old_data.get("updatedAt", "")),
+                "fail_count": old_data.get("fail_count", 0),
+            })
+            if source_key and source_key != username:
+                self.users.pop(source_key, None)
+            self.users[username] = record
+            self._normalize_loaded_users_locked()
+            return username
+
+    def mark_fetch_failure(self, username):
+        with self._lock:
+            key = self._resolve_key_locked(username)
+            if key:
+                self.users[key]["fail_count"] = self.users[key].get("fail_count", 0) + 1
+                self.users[key]["lastFailureAt"] = datetime.now(timezone.utc).isoformat()
+
+    def should_retry(self, username, cooldown_hours=6):
+        """連続失敗ユーザーを毎巡回で叩かず、一定時間後にだけ再試行する。"""
+        with self._lock:
+            key = self._resolve_key_locked(username)
+            if not key:
+                return False
+            data = self.users[key]
+            if data.get("fail_count", 0) < 3:
+                return True
+            last_failure = data.get("lastFailureAt")
+            if not last_failure:
+                return False
+            try:
+                failed_at = datetime.fromisoformat(str(last_failure).replace("Z", "+00:00"))
+                return (datetime.now(timezone.utc) - failed_at).total_seconds() >= cooldown_hours * 3600
+            except (TypeError, ValueError):
+                return False
+
+    def get_users_snapshot(self):
+        with self._lock:
+            return copy.deepcopy(self.users)
 
     def _get_dynamic_rate(self, data, now):
-        """現在時刻での動的レート計算"""
         posts_count = data.get("postsCount") or 0
         created_at = data.get("createdAt")
         if not created_at or posts_count <= 0:
             return 0.0
         try:
             created_dt = datetime.fromisoformat(created_at.replace("Z", "+00:00"))
-            hours = (now - created_dt).total_seconds() / 3600
-            hours = max(hours, 1.0)
+            hours = max((now - created_dt).total_seconds() / 3600, 1.0)
             return round(posts_count / hours, 4)
         except Exception:
             return 0.0
 
     def load_excluded_users(self):
-        """除外ユーザーリストを読み込み"""
         with self._lock:
             if os.path.exists(EXCLUDED_USERS_FILE):
                 try:
                     with open(EXCLUDED_USERS_FILE, "r", encoding="utf-8") as f:
                         data = json.load(f)
-                        if isinstance(data, list):
-                            self.excluded_users = {str(u).lower() for u in data}
-                        else:
-                            self.excluded_users = set()
+                    self.excluded_users = {str(u).casefold() for u in data} if isinstance(data, list) else set()
                 except Exception as e:
                     print(f"⚠️ 除外ユーザーリスト読み込みエラー: {e}")
                     self.excluded_users = set()
             else:
                 self.excluded_users = set()
-                try:
-                    self._ensure_data_dir()
-                    with open(EXCLUDED_USERS_FILE, "w", encoding="utf-8") as f:
-                        json.dump([], f, ensure_ascii=False, indent=2)
-                except Exception as e:
-                    print(f"⚠️ 除外ユーザーリスト作成エラー: {e}")
 
     def is_excluded(self, username):
-        """指定ユーザーが除外対象かどうかを判定"""
         if not username:
             return False
         with self._lock:
-            return username.lower() in self.excluded_users
+            return str(username).casefold() in self.excluded_users
 
     def get_active_users(self):
-        """アクティブユーザー（Bot・非公開・除外ユーザーを除く、投稿数1以上）をフィルタリング"""
         now = datetime.now(timezone.utc)
         with self._lock:
             self.load_excluded_users()
@@ -199,7 +373,6 @@ class RankingCache:
             return result
 
     def get_all_users_for_followers(self):
-        """フォロワーランキング用ユーザー（Bot・除外ユーザー除外、投稿なくてもOK）"""
         now = datetime.now(timezone.utc)
         with self._lock:
             self.load_excluded_users()
@@ -212,66 +385,44 @@ class RankingCache:
             return result
 
     def get_ranking(self, sort_key, username):
-        """指定キーでソートして、指定ユーザーの順位を返す"""
         with self._lock:
-            if sort_key == "followers":
-                pool = self.get_all_users_for_followers()
-            else:
-                pool = self.get_active_users()
-
-            if sort_key == "rate":
-                sorted_users = sorted(pool.items(), key=lambda x: x[1].get("rate", 0), reverse=True)
-            elif sort_key == "posts":
-                sorted_users = sorted(pool.items(), key=lambda x: x[1].get("postsCount") or 0, reverse=True)
-            elif sort_key == "followers":
-                sorted_users = sorted(pool.items(), key=lambda x: x[1].get("followersCount", 0), reverse=True)
-            else:
+            pool = self.get_all_users_for_followers() if sort_key == "followers" else self.get_active_users()
+            key_name = {"rate": "rate", "posts": "postsCount", "followers": "followersCount"}.get(sort_key)
+            if not key_name:
                 return None, 0
-
-            rank = 1
-            for uname, _ in sorted_users:
-                if uname == username:
+            sorted_users = sorted(pool.items(), key=lambda x: x[1].get(key_name) or 0, reverse=True)
+            target = str(username).casefold()
+            for rank, (uname, _) in enumerate(sorted_users, 1):
+                if uname.casefold() == target:
                     return rank, len(sorted_users)
-                rank += 1
             return None, len(sorted_users)
 
     def get_top_n(self, sort_key, n=10):
-        """上位N件を返す"""
         with self._lock:
-            if sort_key == "followers":
-                # get_all_users_for_followers は RLock なのでそのまま呼び出せる
-                pool = self.get_all_users_for_followers()
-            else:
-                pool = self.get_active_users()
-
-            if sort_key == "rate":
-                sorted_users = sorted(pool.items(), key=lambda x: x[1].get("rate", 0), reverse=True)
-            elif sort_key == "posts":
-                sorted_users = sorted(pool.items(), key=lambda x: x[1].get("postsCount") or 0, reverse=True)
-            elif sort_key == "followers":
-                sorted_users = sorted(pool.items(), key=lambda x: x[1].get("followersCount", 0), reverse=True)
-            else:
+            pool = self.get_all_users_for_followers() if sort_key == "followers" else self.get_active_users()
+            key_name = {"rate": "rate", "posts": "postsCount", "followers": "followersCount"}.get(sort_key)
+            if not key_name:
                 return []
-            return sorted_users[:n]
+            return sorted(pool.items(), key=lambda x: x[1].get(key_name) or 0, reverse=True)[:n]
 
     def get_user(self, username):
-        """特定ユーザーのキャッシュデータを取得"""
         with self._lock:
-            return self.users.get(username)
+            key = self._resolve_key_locked(username)
+            return self.users.get(key) if key else None
 
     def delete_user(self, username):
-        """ユーザーをキャッシュから削除"""
         with self._lock:
-            if username in self.users:
-                del self.users[username]
-                print(f"🗑️ キャッシュからユーザーを削除しました: {username}")
-                return True
-        return False
+            key = self._resolve_key_locked(username)
+            if not key:
+                return False
+            del self.users[key]
+            self._rebuild_indexes_locked()
+            print(f"🗑️ キャッシュからユーザーを削除しました: {key}")
+            return True
 
     def user_count(self):
         with self._lock:
             return len(self.users)
 
     def active_user_count(self):
-        with self._lock:
-            return len(self.get_active_users())
+        return len(self.get_active_users())

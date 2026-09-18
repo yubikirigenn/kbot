@@ -8,7 +8,7 @@ import threading
 import requests
 from config import (
     KAROTTER_INTERNAL_URL, KAROTTER_DEV_API_URL,
-    KAROTTER_API_KEY, API_SLEEP, USERNAME
+    KAROTTER_API_KEY, API_SLEEP, USERNAME, DISABLE_KAROTTER_WRITES
 )
 
 
@@ -141,6 +141,9 @@ class KarotterAPI:
             media_files: list of bytes (画像バイナリデータ) or None
             as_rekarot: Trueの場合、通常のリプライではなく引用リカロートで投稿する
         """
+        if DISABLE_KAROTTER_WRITES:
+            print(f"[API] Reply blocked by KBOT_DISABLE_WRITES (post {parent_id})")
+            return False
         self._throttle()
         
         if media_files:
@@ -224,6 +227,9 @@ class KarotterAPI:
 
     def post_karoto(self, text):
         """通常投稿（カロート）"""
+        if DISABLE_KAROTTER_WRITES:
+            print("[API] Post blocked by KBOT_DISABLE_WRITES")
+            return None
         self._throttle()
         payload = {
             "content": text,
