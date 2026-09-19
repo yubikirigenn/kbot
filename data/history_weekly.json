@@ -1,6 +1,6 @@
 {
   "schemaVersion": 2,
-  "timestamp": "2026-09-18T08:24:05.032424+00:00",
+  "timestamp": "2026-09-18T08:24:41.312690+00:00",
   "maxSampleAgeHours": 3.0,
   "users": {
     "karon": {
@@ -9,7 +9,7 @@
       "postsCount": 830,
       "followersCount": 2263,
       "createdAt": "2026-03-18T14:08:17.245Z",
-      "sampledAt": "2026-09-18T08:23:16.913379+00:00",
+      "sampledAt": "2026-09-18T08:24:38.181443+00:00",
       "baselineFresh": true
     },
     "karotter": {
@@ -18,7 +18,7 @@
       "postsCount": 147,
       "followersCount": 1932,
       "createdAt": "2026-03-19T13:29:19.650Z",
-      "sampledAt": "2026-09-18T08:23:11.934454+00:00",
+      "sampledAt": "2026-09-18T08:24:10.699617+00:00",
       "baselineFresh": true
     },
     "Dr_mario": {
@@ -27,7 +27,7 @@
       "postsCount": 3467,
       "followersCount": 1890,
       "createdAt": "2026-03-23T06:11:09.212Z",
-      "sampledAt": "2026-09-18T08:23:46.901677+00:00",
+      "sampledAt": "2026-09-18T08:23:40.296347+00:00",
       "baselineFresh": true
     },
     "0e": {
@@ -36,7 +36,7 @@
       "postsCount": 112,
       "followersCount": 1829,
       "createdAt": "2026-03-24T06:10:53.877Z",
-      "sampledAt": "2026-09-18T08:22:51.924202+00:00",
+      "sampledAt": "2026-09-18T08:24:40.699835+00:00",
       "baselineFresh": true
     },
     "Mutou": {
@@ -45,7 +45,7 @@
       "postsCount": 40966,
       "followersCount": 1779,
       "createdAt": "2026-03-23T02:27:00.675Z",
-      "sampledAt": "2026-09-18T08:23:34.477557+00:00",
+      "sampledAt": "2026-09-18T08:23:35.391867+00:00",
       "baselineFresh": true
     },
     "v0": {
@@ -54,7 +54,7 @@
       "postsCount": 5129,
       "followersCount": 1540,
       "createdAt": "2026-03-22T15:12:50.155Z",
-      "sampledAt": "2026-09-18T08:23:51.933894+00:00",
+      "sampledAt": "2026-09-18T08:24:13.201073+00:00",
       "baselineFresh": true
     },
     "status": {
@@ -72,7 +72,7 @@
       "postsCount": 2423,
       "followersCount": 1304,
       "createdAt": "2026-03-23T03:26:51.889Z",
-      "sampledAt": "2026-09-18T08:23:39.425766+00:00",
+      "sampledAt": "2026-09-18T08:24:03.195350+00:00",
       "baselineFresh": true
     },
     "dysmorphia": {
@@ -81,7 +81,7 @@
       "postsCount": 424,
       "followersCount": 1172,
       "createdAt": "2026-03-23T02:05:52.201Z",
-      "sampledAt": "2026-09-18T08:23:42.315554+00:00",
+      "sampledAt": "2026-09-18T08:24:08.183086+00:00",
       "baselineFresh": true
     },
     "1l": {
@@ -90,7 +90,7 @@
       "postsCount": 2197,
       "followersCount": 1106,
       "createdAt": "2026-03-23T01:15:26.032Z",
-      "sampledAt": "2026-09-18T08:24:04.445637+00:00",
+      "sampledAt": "2026-09-18T08:24:00.731339+00:00",
       "baselineFresh": true
     },
     "G": {
@@ -99,7 +99,7 @@
       "postsCount": 59,
       "followersCount": 1064,
       "createdAt": "2026-03-22T10:56:39.036Z",
-      "sampledAt": "2026-09-18T08:22:56.946053+00:00",
+      "sampledAt": "2026-09-18T08:23:42.881972+00:00",
       "baselineFresh": true
     },
     "1111": {
@@ -108,7 +108,7 @@
       "postsCount": 220,
       "followersCount": 1112,
       "createdAt": "2026-03-23T02:13:50.886Z",
-      "sampledAt": "2026-09-18T08:23:04.504778+00:00",
+      "sampledAt": "2026-09-18T08:24:26.177256+00:00",
       "baselineFresh": true
     },
     "lze_0080": {
@@ -126,7 +126,7 @@
       "postsCount": 35477,
       "followersCount": 1059,
       "createdAt": "2026-03-22T14:17:59.258Z",
-      "sampledAt": "2026-09-18T08:23:59.469880+00:00",
+      "sampledAt": "2026-09-18T08:23:58.218645+00:00",
       "baselineFresh": true
     },
     "ebitama": {
@@ -198,7 +198,7 @@
       "postsCount": 0,
       "followersCount": 1,
       "createdAt": "2026-08-08T03:53:12.809Z",
-      "sampledAt": "2026-09-18T08:23:26.927009+00:00",
+      "sampledAt": "2026-09-18T08:24:29.682677+00:00",
       "baselineFresh": true
     },
     "Wp": {
@@ -369,7 +369,7 @@
       "postsCount": 20617,
       "followersCount": 512,
       "createdAt": "2026-03-26T16:44:25.414Z",
-      "sampledAt": "2026-09-18T08:22:59.499999+00:00",
+      "sampledAt": "2026-09-18T08:23:53.280914+00:00",
       "baselineFresh": true
     },
     "Rami": {
@@ -477,7 +477,7 @@
       "postsCount": 19400,
       "followersCount": 443,
       "createdAt": "2026-03-22T15:13:18.631Z",
-      "sampledAt": "2026-09-18T08:23:19.457629+00:00",
+      "sampledAt": "2026-09-18T08:23:32.833870+00:00",
       "baselineFresh": true
     },
     "yozakura": {
@@ -495,7 +495,7 @@
       "postsCount": 22048,
       "followersCount": 490,
       "createdAt": "2026-04-19T09:51:56.760Z",
-      "sampledAt": "2026-09-18T08:23:44.432038+00:00",
+      "sampledAt": "2026-09-18T08:23:37.811578+00:00",
       "baselineFresh": true
     },
     "hibari_wings": {
@@ -639,7 +639,7 @@
       "postsCount": 28947,
       "followersCount": 325,
       "createdAt": "2026-03-23T02:47:45.332Z",
-      "sampledAt": "2026-09-18T08:23:31.997413+00:00",
+      "sampledAt": "2026-09-18T08:23:55.729887+00:00",
       "baselineFresh": true
     },
     "IKST": {
@@ -735,10 +735,10 @@
     "xzeaup": {
       "userId": "37153",
       "username": "xzeaup",
-      "postsCount": 26256,
+      "postsCount": 26258,
       "followersCount": 31,
       "createdAt": "2026-06-13T04:18:35.835Z",
-      "sampledAt": "2026-09-18T08:22:54.484868+00:00",
+      "sampledAt": "2026-09-18T08:23:50.729321+00:00",
       "baselineFresh": true
     },
     "karonsub": {
@@ -765,7 +765,7 @@
       "postsCount": 17417,
       "followersCount": 284,
       "createdAt": "2026-03-22T17:10:24.289Z",
-      "sampledAt": "2026-09-18T08:22:51.741445+00:00",
+      "sampledAt": "2026-09-18T08:23:48.015492+00:00",
       "baselineFresh": true
     },
     "Mumei_HK": {
@@ -1215,7 +1215,7 @@
       "postsCount": 20810,
       "followersCount": 195,
       "createdAt": "2026-03-23T08:01:37.611Z",
-      "sampledAt": "2026-09-18T08:24:02.018707+00:00",
+      "sampledAt": "2026-09-18T08:24:23.267090+00:00",
       "baselineFresh": true
     },
     "kamata_kuririn": {
@@ -1287,7 +1287,7 @@
       "postsCount": 1157,
       "followersCount": 44,
       "createdAt": "2026-07-22T21:30:55.220Z",
-      "sampledAt": "2026-09-18T08:23:29.439967+00:00",
+      "sampledAt": "2026-09-18T08:23:27.812949+00:00",
       "baselineFresh": true
     },
     "Aneber": {
@@ -1944,7 +1944,7 @@
       "postsCount": 23295,
       "followersCount": 124,
       "createdAt": "2026-03-23T01:40:18.065Z",
-      "sampledAt": "2026-09-18T08:23:24.439272+00:00",
+      "sampledAt": "2026-09-18T08:24:20.733501+00:00",
       "baselineFresh": true
     },
     "yupadayo": {
@@ -3879,7 +3879,7 @@
       "postsCount": 2493,
       "followersCount": 1026,
       "createdAt": "2026-03-23T04:23:38.204Z",
-      "sampledAt": "2026-09-18T08:23:49.435145+00:00",
+      "sampledAt": "2026-09-18T08:24:05.731424+00:00",
       "baselineFresh": true
     },
     "milkchoco_2012": {
@@ -3951,7 +3951,7 @@
       "postsCount": 16516,
       "followersCount": 193,
       "createdAt": "2026-03-23T15:04:08.920Z",
-      "sampledAt": "2026-09-18T08:23:06.986857+00:00",
+      "sampledAt": "2026-09-18T08:23:30.332275+00:00",
       "baselineFresh": true
     },
     "CHIZIN_M": {
@@ -5571,7 +5571,7 @@
       "postsCount": 223,
       "followersCount": 1202,
       "createdAt": "2026-03-23T01:26:22.601Z",
-      "sampledAt": "2026-09-18T08:23:14.441368+00:00",
+      "sampledAt": "2026-09-18T08:23:25.636515+00:00",
       "baselineFresh": true
     },
     "Genshin": {
@@ -5580,7 +5580,7 @@
       "postsCount": 0,
       "followersCount": 1101,
       "createdAt": "2026-03-23T05:33:12.032Z",
-      "sampledAt": "2026-09-18T08:23:22.961110+00:00",
+      "sampledAt": "2026-09-18T08:24:35.666051+00:00",
       "baselineFresh": true
     },
     "Yuuen": {
@@ -7227,7 +7227,7 @@
       "postsCount": 7,
       "followersCount": 16,
       "createdAt": "2026-07-15T13:40:21.944Z",
-      "sampledAt": "2026-09-18T08:23:54.448080+00:00",
+      "sampledAt": "2026-09-18T08:23:48.205920+00:00",
       "baselineFresh": true
     },
     "RG": {
@@ -10242,7 +10242,7 @@
       "postsCount": 24388,
       "followersCount": 162,
       "createdAt": "2026-03-23T01:55:41.186Z",
-      "sampledAt": "2026-09-18T08:23:57.004342+00:00",
+      "sampledAt": "2026-09-18T08:24:18.279686+00:00",
       "baselineFresh": true
     },
     "00p": {
@@ -20070,7 +20070,7 @@
       "postsCount": 15126,
       "followersCount": 325,
       "createdAt": "2026-07-08T11:44:03.019Z",
-      "sampledAt": "2026-09-18T08:23:09.458428+00:00",
+      "sampledAt": "2026-09-18T08:24:30.759922+00:00",
       "baselineFresh": true
     },
     "yukasub": {
@@ -20358,7 +20358,7 @@
       "postsCount": 35384,
       "followersCount": 980,
       "createdAt": "2026-03-22T15:18:36.134Z",
-      "sampledAt": "2026-09-18T08:23:01.999200+00:00",
+      "sampledAt": "2026-09-18T08:24:15.761075+00:00",
       "baselineFresh": true
     },
     "yis": {
@@ -20367,7 +20367,7 @@
       "postsCount": 38710,
       "followersCount": 711,
       "createdAt": "2026-03-23T10:13:58.788Z",
-      "sampledAt": "2026-09-18T08:23:36.979666+00:00",
+      "sampledAt": "2026-09-18T08:24:33.292358+00:00",
       "baselineFresh": true
     },
     "Sh1rasagiSe2Na": {
