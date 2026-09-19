@@ -14,8 +14,9 @@ USERNAME = os.getenv("KBOT_USERNAME", "kbot")
 PASSWORD = os.getenv("KBOT_PASSWORD", "")
 KAROTTER_API_KEY = os.getenv("KAROTTER_API_KEY", "")
 KAROTTER_ACCOUNTS = os.getenv("KAROTTER_ACCOUNTS", "")  # カンマ区切りの user:pass リスト
-# 安全側を既定値にする。実運用で返信を有効化する時だけ false を明示する。
-DISABLE_KAROTTER_WRITES = os.getenv("KBOT_DISABLE_WRITES", "true").lower() != "false"
+# 通常運用では返信を有効にする。ローカル検証や保守作業では true を明示し、
+# API層でも /posts への書き込みを遮断する。
+DISABLE_KAROTTER_WRITES = os.getenv("KBOT_DISABLE_WRITES", "false").lower() != "false"
 
 # === API URL ===
 KAROTTER_INTERNAL_URL = "https://api.karotter.com/api"

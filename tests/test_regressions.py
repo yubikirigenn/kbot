@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 """外部通信を一切行わない回帰テスト。"""
+import base64
 import json
 import os
 import sys
@@ -12,7 +13,7 @@ from unittest import mock
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
-os.environ.setdefault("KBOT_DISABLE_WRITES", "true")
+os.environ["KBOT_DISABLE_WRITES"] = "true"
 
 import services.ranking_cache as ranking_cache_module
 import services.history_manager as history_module
@@ -209,16 +210,57 @@ class NoExternalWriteTests(unittest.TestCase):
     def test_reply_claim_is_skipped_without_any_remote_call_in_safe_mode(self):
         main_module.DISABLE_KAROTTER_WRITES = True
         with mock.patch("urllib.request.urlopen") as urlopen:
-            self.assertFalse(main_module.claim_notification_for_reply("post-1"))
+            self.assertIsNone(main_module.claim_notification_for_reply("post-1"))
             urlopen.assert_not_called()
 
     def test_reply_claim_fails_closed_when_shared_lock_is_unconfigured(self):
         main_module.DISABLE_KAROTTER_WRITES = False
         with mock.patch.dict(os.environ, {"GITHUB_TOKEN": "", "GITHUB_REPO": ""}, clear=False):
             with mock.patch("urllib.request.urlopen") as urlopen:
-                self.assertFalse(main_module.claim_notification_for_reply("post-2"))
+                self.assertIsNone(main_module.claim_notification_for_reply("post-2"))
                 urlopen.assert_not_called()
         main_module.DISABLE_KAROTTER_WRITES = True
+
+    def test_existing_shared_claim_is_the_only_false_result(self):
+        main_module.DISABLE_KAROTTER_WRITES = False
+        response = mock.MagicMock()
+        response.__enter__.return_value.read.return_value = json.dumps({
+            "sha": "abc",
+            "content": base64.b64encode(
+                json.dumps({"post_ids": ["post-3"]}).encode("utf-8")
+            ).decode("ascii"),
+        }).encode("utf-8")
+        with mock.patch.dict(
+            os.environ,
+            {"GITHUB_TOKEN": "test-token", "GITHUB_REPO": "owner/repo"},
+            clear=False,
+        ):
+            with mock.patch("urllib.request.urlopen", return_value=response) as urlopen:
+                self.assertIs(main_module.claim_notification_for_reply("post-3"), False)
+                urlopen.assert_called_once()
+        main_module.DISABLE_KAROTTER_WRITES = True
+
+    def test_notification_created_after_startup_is_processed(self):
+        started_at = datetime(2026, 9, 19, 1, 20, tzinfo=timezone.utc)
+        notification = {"createdAt": "2026-09-19T01:27:16.449Z"}
+        self.assertFalse(
+            main_module.notification_is_from_before_startup(notification, started_at)
+        )
+
+    def test_notification_created_before_startup_is_not_replayed(self):
+        started_at = datetime(2026, 9, 19, 1, 30, tzinfo=timezone.utc)
+        notification = {"createdAt": "2026-09-19T01:27:16.449Z"}
+        self.assertTrue(
+            main_module.notification_is_from_before_startup(notification, started_at)
+        )
+
+    def test_notification_without_valid_timestamp_is_not_replayed(self):
+        started_at = datetime(2026, 9, 19, 1, 30, tzinfo=timezone.utc)
+        self.assertTrue(
+            main_module.notification_is_from_before_startup(
+                {"createdAt": "invalid"}, started_at
+            )
+        )
 
 
 if __name__ == "__main__":

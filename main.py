@@ -13,12 +13,19 @@ import time
 import threading
 import http.server
 import socketserver
+from datetime import datetime, timezone
 
 # Render等でのログ遅延を防ぐため、標準出力を強制的にアンバッファリング（ラインバッファ）する
 if hasattr(sys.stdout, 'reconfigure'):
     sys.stdout.reconfigure(line_buffering=True)
 
-from config import USERNAME, POLL_INTERVAL, CACHE_UPDATE_INTERVAL, SEEN_FILE, DISABLE_KAROTTER_WRITES
+from config import (
+    USERNAME,
+    POLL_INTERVAL,
+    CACHE_UPDATE_INTERVAL,
+    SEEN_FILE,
+    DISABLE_KAROTTER_WRITES,
+)
 from api.auth import AuthManager
 from api.karotter import KarotterAPI
 from services.ranking_cache import RankingCache
@@ -68,6 +75,29 @@ def notification_post_id(notification):
     return str(notification.get("postId") or post.get("id") or "")
 
 
+def notification_is_from_before_startup(notification, startup_time):
+    """Keep a deployment from replaying notifications that predate its start.
+
+    An unknown timestamp is skipped as well: avoiding a possible duplicate
+    reply takes precedence over guessing that an unparseable item is new.
+    """
+    if not isinstance(notification, dict):
+        return True
+    post = notification.get("post") or {}
+    raw_timestamp = notification.get("createdAt") or post.get("createdAt")
+    if not raw_timestamp:
+        return True
+    try:
+        parsed = datetime.fromisoformat(str(raw_timestamp).replace("Z", "+00:00"))
+        if parsed.tzinfo is None:
+            parsed = parsed.replace(tzinfo=timezone.utc)
+        if startup_time.tzinfo is None:
+            startup_time = startup_time.replace(tzinfo=timezone.utc)
+        return parsed.astimezone(timezone.utc) <= startup_time.astimezone(timezone.utc)
+    except (TypeError, ValueError):
+        return True
+
+
 def mark_notification_seen(seen_ids, post_id):
     """Persist a notification only after it has been handled intentionally."""
     if post_id and post_id not in seen_ids:
@@ -82,10 +112,14 @@ def claim_notification_for_reply(post_id):
     briefly overlap, and an accidentally duplicated service has a separate
     filesystem altogether.  The cache branch is shared by those instances, so
     use GitHub's file SHA as a compare-and-swap lock before sending a reply.
+
+    Returns True for a new claim, False when another instance already claimed
+    it, and None when claiming could not be verified.  Only the False case may
+    be marked handled without sending from this process.
     """
     if DISABLE_KAROTTER_WRITES:
         print(f"[BOT] Reply claim skipped because KBOT_DISABLE_WRITES is enabled: {post_id}")
-        return False
+        return None
 
     import base64
     import json
@@ -97,7 +131,7 @@ def claim_notification_for_reply(post_id):
     if not github_token or not github_repo:
         print("[BOT] Shared reply lock unavailable: GITHUB_TOKEN/GITHUB_REPO is not set")
         # 二重返信を避けるため、共有予約を確認できない時は発信しない。
-        return False
+        return None
 
     post_id = str(post_id)
     lock_path = "data/reply_claims.json"
@@ -122,10 +156,10 @@ def claim_notification_for_reply(post_id):
         except urllib.error.HTTPError as error:
             if error.code != 404:
                 print(f"[BOT] Shared reply lock read failed: HTTP {error.code}")
-                return False
+                return None
         except Exception as error:
             print(f"[BOT] Shared reply lock read failed: {error}")
-            return False
+            return None
 
         if post_id in claims:
             print(f"[BOT] Reply already claimed by another instance: {post_id}")
@@ -161,18 +195,18 @@ def claim_notification_for_reply(post_id):
                 time.sleep(0.3 * (attempt + 1))
                 continue
             print(f"[BOT] Shared reply lock write failed: HTTP {error.code}")
-            return False
+            return None
         except Exception as error:
             print(f"[BOT] Shared reply lock write failed: {error}")
-            return False
+            return None
 
     if saw_conflict:
         # A concurrent instance changed the file repeatedly.  Skipping is
         # safer than risking a duplicate reply; the user can mention again if
         # that instance later fails before posting.
         print(f"[BOT] Reply claim conflict; skipping to prevent duplicates: {post_id}")
-        return False
-    return True
+        return None
+    return None
 
 
 # === GitHub キャッシュ永続化 ===
@@ -367,6 +401,7 @@ def execute_command(parsed, author_username, api, cache, collector, history_mana
 def bot_worker():
     """Bot本体の処理。別スレッドで実行される。"""
     global bot_status
+    notification_started_at = datetime.now(timezone.utc)
 
     print("[BOT] ログイン試行中...")
     auth = AuthManager()
@@ -449,16 +484,8 @@ def bot_worker():
     collection_thread = threading.Thread(target=initial_collection, daemon=True)
     collection_thread.start()
 
-    # === 起動時に通知を既読化して、デプロイ時の二重返信を防ぐ ===
-    print("[BOT] 起動時の通知履歴をスキップしています...")
-    initial_notifications = api.get_notifications(limit=30)
-    for n in initial_notifications:
-        if isinstance(n, dict):
-            post_id = notification_post_id(n)
-            if post_id:
-                mark_notification_seen(seen_ids, post_id)
-    print(f"[BOT] 起動時の通知 {len(initial_notifications)}件をスキップしました。")
-
+    # 起動処理中に届いた新規通知も通常処理する一方、起動前の通知は再送しない。
+    deferred_notification_ids = set()
     print(f"[BOT] 稼働開始！通知ポーリング間隔: {POLL_INTERVAL}秒")
 
     # 最後にインクリメンタル更新を行った時刻
@@ -607,6 +634,12 @@ def bot_worker():
                 if post_id in seen_ids or not post_id:
                     continue
 
+                # デプロイ前の通知へ突然再返信しない。通知時刻を確認できない場合も
+                # 二重返信防止を優先して処理対象外にする。
+                if notification_is_from_before_startup(n, notification_started_at):
+                    mark_notification_seen(seen_ids, post_id)
+                    continue
+
                 # メンション確認
                 if f"@{USERNAME.lower()}" not in content.lower():
                     mark_notification_seen(seen_ids, post_id)
@@ -620,14 +653,32 @@ def bot_worker():
                     mark_notification_seen(seen_ids, post_id)
                     continue
 
-                if not claim_notification_for_reply(post_id):
+                # 保守・テスト用の書き込み禁止中は受信だけ行い、処理済みにしない。
+                # 次回、書き込みを有効にして起動した時に期限内なら処理できる。
+                if DISABLE_KAROTTER_WRITES:
+                    if post_id not in deferred_notification_ids:
+                        print(f"[BOT] メンション受信: @{author_username} -> {content[:80]}")
+                        print(f"[BOT] 返信保留（KBOT_DISABLE_WRITES=true）: {post_id}")
+                        deferred_notification_ids.add(post_id)
+                    continue
+
+                claim_result = claim_notification_for_reply(post_id)
+                if claim_result is False:
+                    # 共有予約済みなら、別インスタンスが担当済みなのでローカルでも完了扱い。
                     mark_notification_seen(seen_ids, post_id)
+                    continue
+                if claim_result is not True:
+                    # 共有予約の確認不能時は発信せず、通知も消化しない。復旧後に再確認する。
+                    if post_id not in deferred_notification_ids:
+                        print(f"[BOT] メンション受信: @{author_username} -> {content[:80]}")
+                        print(f"[BOT] 返信保留（共有予約を確認できません）: {post_id}")
+                        deferred_notification_ids.add(post_id)
                     continue
 
                 # 共有予約が取れた時点でローカルにも永続化する。以後に例外や
                 # 応答不明が起きても同じメンションは自動再送しない。
+                deferred_notification_ids.discard(post_id)
                 mark_notification_seen(seen_ids, post_id)
-
                 print(f"[BOT] メンション受信: @{author_username} -> {content[:80]}")
 
                 # キャッシュが完全に空の場合のみ収集中メッセージを返す
