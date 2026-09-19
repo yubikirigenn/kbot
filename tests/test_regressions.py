@@ -155,6 +155,9 @@ class HistoryTestCase(CacheTestCase):
 
 
 class NoExternalWriteTests(unittest.TestCase):
+    def test_bot_worker_does_not_shadow_datetime_import(self):
+        self.assertNotIn("datetime", main_module.bot_worker.__code__.co_varnames)
+
     def test_zero_post_account_is_valid_data(self):
         cache = mock.Mock()
         cache.get_user.return_value = {"postsCount": 0}

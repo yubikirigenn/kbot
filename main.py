@@ -13,7 +13,7 @@ import time
 import threading
 import http.server
 import socketserver
-from datetime import datetime, timezone
+from datetime import datetime, timedelta, timezone
 
 # Render等でのログ遅延を防ぐため、標準出力を強制的にアンバッファリング（ラインバッファ）する
 if hasattr(sys.stdout, 'reconfigure'):
@@ -547,7 +547,6 @@ def bot_worker():
                 threading.Thread(target=run_backup, daemon=True).start()
 
             # 日間・週間スナップショットの更新チェック
-            from datetime import datetime, timezone, timedelta
             jst = timezone(timedelta(hours=9))
             now_jst = datetime.now(jst)
             
