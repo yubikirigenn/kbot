@@ -10,6 +10,7 @@ Render Free Tier (Web Service) 対応:
 import os
 import sys
 import time
+import json
 import threading
 import http.server
 import socketserver
@@ -25,6 +26,7 @@ from config import (
     CACHE_UPDATE_INTERVAL,
     SEEN_FILE,
     DISABLE_KAROTTER_WRITES,
+    HISTORY_SNAPSHOT_RETRY_SECONDS,
 )
 from api.auth import AuthManager
 from api.karotter import KarotterAPI
@@ -258,7 +260,39 @@ def restore_cache_from_github():
     return bool(users_data)
 
 
-def _upload_file_to_github(repo, token, filepath, source_path, message):
+def _json_document_timestamp(content):
+    """Extract an aware timestamp from a JSON document, or None."""
+    try:
+        payload = json.loads(content)
+        value = payload.get("timestamp") if isinstance(payload, dict) else None
+        if not value:
+            return None
+        parsed = datetime.fromisoformat(str(value).replace("Z", "+00:00"))
+        if parsed.tzinfo is None:
+            parsed = parsed.replace(tzinfo=timezone.utc)
+        return parsed.astimezone(timezone.utc)
+    except (TypeError, ValueError, json.JSONDecodeError):
+        return None
+
+
+def _remote_history_is_newer_or_equal(local_content, remote_content):
+    local_timestamp = _json_document_timestamp(local_content)
+    remote_timestamp = _json_document_timestamp(remote_content)
+    return bool(
+        local_timestamp
+        and remote_timestamp
+        and remote_timestamp >= local_timestamp
+    )
+
+
+def _upload_file_to_github(
+    repo,
+    token,
+    filepath,
+    source_path,
+    message,
+    protect_newer_timestamp=False,
+):
     import urllib.request, json, base64, os
     if not os.path.exists(source_path):
         return False
@@ -271,15 +305,26 @@ def _upload_file_to_github(repo, token, filepath, source_path, message):
         api_url = f"https://api.github.com/repos/{repo}/contents/{filepath}"
 
         sha = None
+        remote_content = None
         try:
             req = urllib.request.Request(
                 f"{api_url}?ref=cache",
                 headers={"Authorization": f"token {token}", "Accept": "application/vnd.github.v3+json"}
             )
             with urllib.request.urlopen(req, timeout=15) as resp:
-                sha = json.loads(resp.read().decode("utf-8")).get("sha")
+                file_info = json.loads(resp.read().decode("utf-8"))
+                sha = file_info.get("sha")
+                remote_content = base64.b64decode(file_info.get("content", "")).decode("utf-8")
         except Exception:
             pass
+
+        if (
+            protect_newer_timestamp
+            and remote_content
+            and _remote_history_is_newer_or_equal(content, remote_content)
+        ):
+            print(f"[CACHE] Kept newer/equal remote history: {filepath}")
+            return True
 
         payload = {"message": message, "content": content_b64, "branch": "cache"}
         if sha: payload["sha"] = sha
@@ -326,8 +371,22 @@ def _backup_cache_to_github_locked(cache):
     cache.save()
     
     cache_ok = _upload_file_to_github(github_repo, github_token, "data/users_cache.json", "data/users_cache.json", f"[auto] Cache backup ({cache.user_count()} users)")
-    daily_ok = _upload_file_to_github(github_repo, github_token, "data/history_daily.json", "data/history_daily.json", "[auto] Daily history backup")
-    weekly_ok = _upload_file_to_github(github_repo, github_token, "data/history_weekly.json", "data/history_weekly.json", "[auto] Weekly history backup")
+    daily_ok = _upload_file_to_github(
+        github_repo,
+        github_token,
+        "data/history_daily.json",
+        "data/history_daily.json",
+        "[auto] Daily history backup",
+        protect_newer_timestamp=True,
+    )
+    weekly_ok = _upload_file_to_github(
+        github_repo,
+        github_token,
+        "data/history_weekly.json",
+        "data/history_weekly.json",
+        "[auto] Weekly history backup",
+        protect_newer_timestamp=True,
+    )
     success = cache_ok and daily_ok and weekly_ok
 
     detector.trace("GITHUB_BACKUP_AFTER", "backup_cache_to_github", cache_obj=cache, extra={"success": success})
@@ -491,6 +550,7 @@ def bot_worker():
     # 最後にインクリメンタル更新を行った時刻
     last_update_time = time.time()
     last_backup_time = time.time()
+    last_snapshot_attempt = {"day": 0.0, "week": 0.0}
     loop_count = 0
     BACKUP_INTERVAL = 3600  # 1時間ごとにGitHubにバックアップ
 
@@ -577,6 +637,20 @@ def bot_worker():
                     pass
             elif cache.user_count() > 0:
                 need_weekly_snapshot = True
+
+            snapshot_clock = time.monotonic()
+            if (
+                need_daily_snapshot
+                and snapshot_clock - last_snapshot_attempt["day"]
+                < HISTORY_SNAPSHOT_RETRY_SECONDS
+            ):
+                need_daily_snapshot = False
+            if (
+                need_weekly_snapshot
+                and snapshot_clock - last_snapshot_attempt["week"]
+                < HISTORY_SNAPSHOT_RETRY_SECONDS
+            ):
+                need_weekly_snapshot = False
                 
             # 更新が必要なスナップショットがあれば、保存する前に同期更新を実行
             snapshot_updated = False
@@ -587,17 +661,19 @@ def bot_worker():
                     print(f"[BOT] スナップショット保存前の同期更新でエラー（続行します）: {e}")
                 
                 if need_daily_snapshot:
+                    last_snapshot_attempt["day"] = snapshot_clock
                     try:
-                        history_manager.save_snapshot(cache, "day")
-                        snapshot_updated = True
+                        if history_manager.save_snapshot(cache, "day"):
+                            snapshot_updated = True
                     except Exception as e:
                         import sys
                         print(f"[FATAL] SNAPSHOT SAVE ERROR: {e}", file=sys.stderr, flush=True)
                         
                 if need_weekly_snapshot:
+                    last_snapshot_attempt["week"] = snapshot_clock
                     try:
-                        history_manager.save_snapshot(cache, "week")
-                        snapshot_updated = True
+                        if history_manager.save_snapshot(cache, "week"):
+                            snapshot_updated = True
                     except Exception as e:
                         import sys
                         print(f"[FATAL] SNAPSHOT SAVE ERROR: {e}", file=sys.stderr, flush=True)

@@ -1,6 +1,10 @@
 # -*- coding: utf-8 -*-
 """ranking コマンド群 - 画像生成対応"""
 import io
+from config import (
+    HISTORY_EXACT_COUNT_MAX_CANDIDATES,
+    HISTORY_EXACT_COUNT_MIN_BASELINE_AGE_MINUTES,
+)
 from utils.formatter import format_ranking_help
 from utils.image_generator import draw_ranking_image
 
@@ -56,11 +60,85 @@ def _generate_image_bytes(title, metric_name, ranking_data):
     return buf.getvalue()
 
 
+def _calibrate_period_post_counts(
+    api, history_manager, period, deltas, sorted_list, target_user=None
+):
+    """Correct inflated period deltas for stale baselines using read-only posts.
+
+    Snapshot deltas are upper bounds when the baseline was sampled before the
+    calendar boundary.  Verify only candidates that can still reach the top 10,
+    plus an explicitly requested user.
+    """
+    if not hasattr(api, "count_user_posts_since"):
+        return sorted_list
+    if period not in ("day", "week"):
+        return sorted_list
+    boundary = history_manager.get_period_boundary(period)
+    if boundary is None:
+        return sorted_list
+
+    original = list(sorted_list)
+    corrected = {}
+    checked = set()
+    max_candidates = min(len(original), HISTORY_EXACT_COUNT_MAX_CANDIDATES)
+
+    def verify(item):
+        username, approximate, _ = item
+        key = username.casefold()
+        if key in checked:
+            return
+        checked.add(key)
+        delta = deltas.get(username, {})
+        baseline_age = delta.get("baselineAgeMinutes")
+        if baseline_age is None or baseline_age <= HISTORY_EXACT_COUNT_MIN_BASELINE_AGE_MINUTES:
+            return
+        try:
+            exact = api.count_user_posts_since(username, boundary)
+        except Exception as error:
+            print(f"[RANKING] Exact period count failed for @{username}: {error}")
+            return
+        if exact is not None:
+            corrected[key] = exact
+
+    processed = 0
+    while processed < max_candidates:
+        verify(original[processed])
+        processed += 1
+        if processed >= 10:
+            prefix_values = sorted(
+                (
+                    corrected.get(username.casefold(), value)
+                    for username, value, _ in original[:processed]
+                ),
+                reverse=True,
+            )
+            tenth_value = prefix_values[9]
+            next_upper_bound = original[processed][1] if processed < len(original) else None
+            if next_upper_bound is None or next_upper_bound <= tenth_value:
+                break
+
+    if target_user:
+        target_item = next(
+            (item for item in original if item[0].casefold() == target_user.casefold()),
+            None,
+        )
+        if target_item:
+            verify(target_item)
+
+    calibrated = [
+        (username, corrected.get(username.casefold(), value), data)
+        for username, value, data in original
+    ]
+    calibrated.sort(key=lambda item: item[1], reverse=True)
+    return calibrated
+
+
 def _handle_generic_ranking(api, cache, parsed, history_manager, sort_key, title_base, metric_name):
     period = parsed.get("period")
     start = parsed.get("start", 1)
     end = parsed.get("end", 10)
     target_user = parsed.get("target")
+    target_note = ""
 
     width = end - start + 1
     if width < 2 or width > 15:
@@ -71,6 +149,16 @@ def _handle_generic_ranking(api, cache, parsed, history_manager, sort_key, title
     sorted_list = []
     
     if period in ("day", "week"):
+        if (
+            hasattr(history_manager, "snapshot_is_current")
+            and not history_manager.snapshot_is_current(period)
+        ):
+            label = "日間" if period == "day" else "週間"
+            return (
+                f"⚠️ {label}ランキングの期間基準を更新中です。"
+                "不完全な人数・件数では返さず、集計準備が完了してから表示します。",
+                None,
+            )
         deltas = history_manager.get_deltas(cache, period)
         title_prefix = "【日間】" if period == "day" else "【週間】"
         metric_disp = metric_name + "増加"
@@ -85,6 +173,10 @@ def _handle_generic_ranking(api, cache, parsed, history_manager, sort_key, title
             sorted_list.append((uname, dval, udata))
             
         sorted_list.sort(key=lambda x: x[1], reverse=True)
+        if sort_key == "postsCount":
+            sorted_list = _calibrate_period_post_counts(
+                api, history_manager, period, deltas, sorted_list, target_user
+            )
     else:
         title_prefix = ""
         metric_disp = metric_name
@@ -115,6 +207,30 @@ def _handle_generic_ranking(api, cache, parsed, history_manager, sort_key, title
                 "avatarUrl": udata.get("avatarUrl", ""),
                 "is_target": True
             })
+        elif period in ("day", "week"):
+            target_delta = next(
+                (
+                    data
+                    for username, data in deltas.items()
+                    if username.casefold() == target_user.casefold()
+                ),
+                None,
+            )
+            if target_delta and not target_delta.get("valid", False):
+                reason_labels = {
+                    "no_identity_baseline": "期間開始時の本人確認済み基準がありません",
+                    "stale_or_legacy_baseline": "期間開始時の基準データが不完全です",
+                    "missing_baseline_value": "期間開始時の件数が欠けています",
+                    "missing_current_sample_time": "最新取得時刻を確認できません",
+                    "current_older_than_baseline": "最新値が期間開始時の基準より古い状態です",
+                    "missing_current_value": "最新件数が欠けています",
+                }
+                reason = reason_labels.get(
+                    target_delta.get("reason"), "この期間の有効な差分を計算できません"
+                )
+                target_note = f"\n⚠️ @{target_user}: {reason}。"
+            else:
+                target_note = f"\n⚠️ @{target_user}: このランキングの集計対象外です。"
 
     title = f"{title_prefix}{title_base} ({start}-{end}位)"
     
@@ -133,7 +249,7 @@ def _handle_generic_ranking(api, cache, parsed, history_manager, sort_key, title
     image_bytes = _generate_image_bytes(title, metric_disp, ranking_data)
     
     coverage = f"（集計対象 {len(sorted_list)}人）" if period in ("day", "week") else ""
-    return f"{title}{coverage} #kbot", [image_bytes]
+    return f"{title}{coverage}{target_note} #kbot", [image_bytes]
 
 
 def handle_ranking_posts(api, cache, parsed, history_manager):

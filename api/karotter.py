@@ -6,6 +6,7 @@ import time
 import uuid
 import threading
 import requests
+from datetime import datetime, timezone
 from config import (
     KAROTTER_INTERNAL_URL, KAROTTER_DEV_API_URL,
     KAROTTER_API_KEY, API_SLEEP, USERNAME, DISABLE_KAROTTER_WRITES
@@ -42,6 +43,68 @@ class KarotterAPI:
                 return data.get("user", data)
             elif res.status_code == 404:
                 return {"is_deleted": True}
+        return None
+
+    def count_user_posts_since(self, username, since, max_pages=20):
+        """GETだけで、指定時刻以降のユーザー投稿数を数える。
+
+        一覧には古い固定投稿が混ざる場合があるため、境界より古いページを
+        2ページ連続で確認するまで走査する。上限到達時は不完全な件数を返さない。
+        """
+        if not isinstance(since, datetime):
+            return None
+        if since.tzinfo is None:
+            since = since.replace(tzinfo=timezone.utc)
+        since = since.astimezone(timezone.utc)
+
+        count = 0
+        old_only_pages = 0
+        for page in range(1, max_pages + 1):
+            self._throttle()
+            res = self.auth.request(
+                "GET", f"/users/{username}/posts?page={page}&limit=50"
+            )
+            if not res or res.status_code != 200:
+                return None
+            try:
+                payload = res.json()
+            except ValueError:
+                return None
+            posts = payload if isinstance(payload, list) else payload.get("posts", [])
+            if not isinstance(posts, list):
+                return None
+
+            page_has_recent = False
+            for item in posts:
+                if not isinstance(item, dict):
+                    continue
+                post = item.get("post") or item
+                raw_created = post.get("createdAt")
+                if not raw_created:
+                    continue
+                try:
+                    created = datetime.fromisoformat(
+                        str(raw_created).replace("Z", "+00:00")
+                    )
+                    if created.tzinfo is None:
+                        created = created.replace(tzinfo=timezone.utc)
+                    if created.astimezone(timezone.utc) >= since:
+                        count += 1
+                        page_has_recent = True
+                except (TypeError, ValueError):
+                    continue
+
+            pagination = payload.get("pagination", {}) if isinstance(payload, dict) else {}
+            has_next = bool(pagination.get("hasNext"))
+            if page_has_recent:
+                old_only_pages = 0
+            else:
+                old_only_pages += 1
+            if not has_next or old_only_pages >= 2:
+                return count
+
+        # まだ新しい投稿を含む可能性がある状態で上限に達した場合、過少な値を
+        # ランキングへ混ぜない。
         return None
 
     def search_users(self, query, limit=100, page=1):

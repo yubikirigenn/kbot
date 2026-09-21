@@ -3,9 +3,13 @@
 import json
 import os
 import threading
-from datetime import datetime, timezone
+from datetime import datetime, timedelta, timezone
 
-from config import HISTORY_MAX_SAMPLE_AGE_HOURS
+from config import (
+    HISTORY_COVERAGE_MIN_USERS,
+    HISTORY_MAX_SAMPLE_AGE_HOURS,
+    HISTORY_MIN_FRESH_COVERAGE,
+)
 
 
 DATA_DIR = os.path.join(os.path.dirname(__file__), "..", "data")
@@ -114,6 +118,35 @@ class HistoryManager:
             "maxSampleAgeHours": HISTORY_MAX_SAMPLE_AGE_HOURS,
             "users": snapshot,
         }
+        eligible_count = sum(
+            1
+            for value in snapshot.values()
+            if value.get("userId")
+            and value.get("postsCount") is not None
+            and value.get("followersCount") is not None
+        )
+        fresh_count = sum(
+            1
+            for value in snapshot.values()
+            if value.get("baselineFresh")
+            and value.get("userId")
+            and value.get("postsCount") is not None
+            and value.get("followersCount") is not None
+        )
+        save_data["eligibleUserCount"] = eligible_count
+        save_data["freshBaselineCount"] = fresh_count
+        coverage = fresh_count / eligible_count if eligible_count else 0.0
+        if (
+            eligible_count >= HISTORY_COVERAGE_MIN_USERS
+            and coverage < HISTORY_MIN_FRESH_COVERAGE
+        ):
+            print(
+                f"⚠️ {period} スナップショットを保留しました"
+                f"（有効基準 {fresh_count}/{eligible_count} = {coverage:.1%}、"
+                f"必要 {HISTORY_MIN_FRESH_COVERAGE:.0%}）。"
+            )
+            return False
+
         file_path = DAILY_HISTORY_FILE if period == "day" else WEEKLY_HISTORY_FILE
         try:
             self._atomic_write(file_path, save_data)
@@ -126,7 +159,6 @@ class HistoryManager:
                     self.weekly_snapshot = snapshot
                     self.weekly_timestamp = now_str
                     self.weekly_schema_version = SNAPSHOT_SCHEMA_VERSION
-            fresh_count = sum(1 for value in snapshot.values() if value["baselineFresh"])
             print(f"📂 {period} のスナップショットを保存しました（有効基準 {fresh_count}/{len(snapshot)}）。")
             return True
         except Exception as e:
@@ -144,6 +176,40 @@ class HistoryManager:
             name = str(data.get("username") or key)
             by_name[name.casefold()] = data
         return by_id, by_name
+
+    def get_period_boundary(self, period):
+        """Return the calendar boundary represented by the current snapshot."""
+        with self._lock:
+            raw_timestamp = self.daily_timestamp if period == "day" else self.weekly_timestamp
+        snapshot_dt = _parse_datetime(raw_timestamp)
+        if snapshot_dt is None:
+            return None
+        jst = timezone(timedelta(hours=9))
+        local = snapshot_dt.astimezone(jst)
+        if period == "week":
+            local = local - timedelta(days=local.weekday())
+        boundary = local.replace(hour=0, minute=0, second=0, microsecond=0)
+        return boundary.astimezone(timezone.utc)
+
+    def snapshot_is_current(self, period, now=None):
+        """Return whether the snapshot belongs to the current JST period."""
+        with self._lock:
+            raw_timestamp = self.daily_timestamp if period == "day" else self.weekly_timestamp
+            schema_version = (
+                self.daily_schema_version if period == "day" else self.weekly_schema_version
+            )
+        snapshot_dt = _parse_datetime(raw_timestamp)
+        if snapshot_dt is None or schema_version < SNAPSHOT_SCHEMA_VERSION:
+            return False
+        current = now or datetime.now(timezone.utc)
+        if current.tzinfo is None:
+            current = current.replace(tzinfo=timezone.utc)
+        jst = timezone(timedelta(hours=9))
+        snapshot_local = snapshot_dt.astimezone(jst)
+        current_local = current.astimezone(jst)
+        if period == "week":
+            return snapshot_local.isocalendar()[:2] == current_local.isocalendar()[:2]
+        return snapshot_local.date() == current_local.date()
 
     def get_deltas(self, cache, period):
         """差分を返す。古い標本からの推測値は作らず valid=False にする。"""
@@ -174,13 +240,20 @@ class HistoryManager:
                 past = by_name.get(username.casefold())
 
             current_age = self._sample_age_hours(current, now)
-            current_fresh = current_age is not None and current_age <= HISTORY_MAX_SAMPLE_AGE_HOURS
+            current_sample = _parse_datetime(current.get("sampledAt") or current.get("updatedAt"))
+            baseline_sample = _parse_datetime(past.get("sampledAt")) if past else snapshot_dt
+            baseline_age_minutes = None
+            if snapshot_dt and baseline_sample:
+                baseline_age_minutes = max(
+                    0.0, (snapshot_dt - baseline_sample).total_seconds() / 60.0
+                )
+            current_usable = current_sample is not None
             reason = ""
             valid = True
 
             if past is None:
                 created = _parse_datetime(current.get("createdAt"))
-                if snapshot_dt and created and created > snapshot_dt and current_fresh:
+                if snapshot_dt and created and created > snapshot_dt and current_usable:
                     past_posts = 0
                     past_followers = 0
                 else:
@@ -198,9 +271,12 @@ class HistoryManager:
                     valid = False
                     reason = "stale_or_legacy_baseline"
 
-            if not current_fresh:
+            if not current_usable:
                 valid = False
-                reason = "stale_current_sample"
+                reason = "missing_current_sample_time"
+            elif baseline_sample and current_sample < baseline_sample:
+                valid = False
+                reason = "current_older_than_baseline"
 
             cur_posts = current.get("postsCount")
             cur_followers = current.get("followersCount")
@@ -222,6 +298,8 @@ class HistoryManager:
                 "reason": reason,
                 "userId": uid,
                 "sampleAgeHours": current_age,
+                "sampledAt": current_sample.isoformat() if current_sample else None,
+                "baselineAgeMinutes": baseline_age_minutes,
             }
         return deltas
 

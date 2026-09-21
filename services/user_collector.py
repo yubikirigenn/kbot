@@ -410,7 +410,7 @@ class UserCollector:
             self._normal_run_lock.release()
 
     def enrich_top_users_for_snapshot(self):
-        """スナップショット保存前に、最重要ユーザー（Top15）のデータを同期的に更新する"""
+        """期間境界前後で、累計上位と直近活動上位を同期更新する。"""
         print("[SNAPSHOT_SYNC] スナップショット作成前の重要ユーザー同期更新を開始...")
         
         with self._lock:
@@ -418,7 +418,36 @@ class UserCollector:
             top_posts = [u[0] for u in self.cache.get_top_n("posts", 15)] if hasattr(self.cache, 'get_top_n') else []
             top_followers = [u[0] for u in self.cache.get_top_n("followers", 15)] if hasattr(self.cache, 'get_top_n') else []
             top_rate = [u[0] for u in self.cache.get_top_n("rate", 15)] if hasattr(self.cache, 'get_top_n') else []
-            top_users = list(set(top_posts + top_followers + top_rate))
+            recent_users = []
+
+            # 累計上位だけでは、直前に急増した利用者を期間境界で取り逃がす。
+            # 直近の日間・週間投稿上位も同期し、ランキング候補の基準時刻を
+            # できるだけ日付境界へ近づける。
+            if self.history_manager:
+                for period in ("day", "week"):
+                    try:
+                        deltas = self.history_manager.get_deltas(self.cache, period)
+                        recent = sorted(
+                            (
+                                (username, data.get("postsCount", 0))
+                                for username, data in deltas.items()
+                                if data.get("valid", False)
+                            ),
+                            key=lambda item: item[1],
+                            reverse=True,
+                        )
+                        recent_users.extend(username for username, _ in recent[:30])
+                    except Exception as error:
+                        print(f"[SNAPSHOT_SYNC] {period} 活動上位の抽出に失敗しました: {error}")
+
+            # 活動上位を先に取得し、境界からの時間差を最小化する。
+            top_users = []
+            seen = set()
+            for username in recent_users + top_posts + top_rate + top_followers:
+                key = username.casefold()
+                if key not in seen:
+                    seen.add(key)
+                    top_users.append(username)
 
         # スレッドプールを使って同期更新を実行（利用可能なプールを使用）
         active_pool = self.priority_api_pool or self.normal_api_pool
