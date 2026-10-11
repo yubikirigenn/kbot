@@ -11,9 +11,10 @@
     "isPrivate": false,
     "displayName": "かろん / Karon",
     "avatarUrl": "/uploads/avatars/avatar_1_1774523195871.webp",
-    "sampledAt": "2026-10-11T15:06:27.891091+00:00",
-    "updatedAt": "2026-10-11T15:06:27.891091+00:00",
-    "fail_count": 0
+    "sampledAt": "2026-10-11T15:10:20.670435+00:00",
+    "updatedAt": "2026-10-11T15:10:20.670435+00:00",
+    "fail_count": 1,
+    "lastFailureAt": "2026-10-11T15:14:51.788802+00:00"
   },
   "karotter": {
     "userId": "85",
@@ -27,9 +28,10 @@
     "isPrivate": false,
     "displayName": "Karotter",
     "avatarUrl": "/uploads/avatars/avatar_85_1779591535814.webp",
-    "sampledAt": "2026-10-11T15:06:30.437010+00:00",
-    "updatedAt": "2026-10-11T15:06:30.437010+00:00",
-    "fail_count": 0
+    "sampledAt": "2026-10-11T15:10:23.142379+00:00",
+    "updatedAt": "2026-10-11T15:10:23.142379+00:00",
+    "fail_count": 1,
+    "lastFailureAt": "2026-10-11T15:10:25.077584+00:00"
   },
   "Dr_mario": {
     "userId": "21206",
@@ -38,14 +40,15 @@
     "followersCount": 1887,
     "followingCount": 18034,
     "createdAt": "2026-03-23T06:11:09.212Z",
-    "rate": 0.7079,
+    "rate": 0.7078,
     "isBot": false,
     "isPrivate": false,
     "displayName": "D.M",
     "avatarUrl": "/uploads/avatars/avatar_21206_1779600547961.webp",
-    "sampledAt": "2026-10-11T15:06:32.862075+00:00",
-    "updatedAt": "2026-10-11T15:06:32.862075+00:00",
-    "fail_count": 0
+    "sampledAt": "2026-10-11T15:10:25.662771+00:00",
+    "updatedAt": "2026-10-11T15:10:25.662771+00:00",
+    "fail_count": 1,
+    "lastFailureAt": "2026-10-11T15:10:35.077689+00:00"
   },
   "0e": {
     "userId": "26513",
@@ -59,9 +62,10 @@
     "isPrivate": false,
     "displayName": "Mof:Re.0eヾ(•ω•`)o",
     "avatarUrl": "/uploads/avatars/avatar_26513_1774708379050.webp",
-    "sampledAt": "2026-10-11T15:06:35.417444+00:00",
-    "updatedAt": "2026-10-11T15:06:35.417444+00:00",
-    "fail_count": 0
+    "sampledAt": "2026-10-11T15:10:28.125760+00:00",
+    "updatedAt": "2026-10-11T15:10:28.125760+00:00",
+    "fail_count": 1,
+    "lastFailureAt": "2026-10-11T15:10:45.077933+00:00"
   },
   "Mutou": {
     "userId": "18779",
@@ -70,14 +74,15 @@
     "followersCount": 1764,
     "followingCount": 2774,
     "createdAt": "2026-03-23T02:27:00.675Z",
-    "rate": 8.3618,
+    "rate": 8.3617,
     "isBot": false,
     "isPrivate": false,
     "displayName": "無糖",
     "avatarUrl": "/uploads/avatars/avatar_18779_1775192378598.webp",
-    "sampledAt": "2026-10-11T15:06:05.422553+00:00",
-    "updatedAt": "2026-10-11T15:06:05.422553+00:00",
-    "fail_count": 0
+    "sampledAt": "2026-10-11T15:09:38.169306+00:00",
+    "updatedAt": "2026-10-11T15:09:38.169306+00:00",
+    "fail_count": 2,
+    "lastFailureAt": "2026-10-11T15:13:21.779060+00:00"
   },
   "v0": {
     "userId": "7968",
@@ -91,9 +96,10 @@
     "isPrivate": false,
     "displayName": "0v0",
     "avatarUrl": "https://cdn.discordapp.com/avatars/1205604297518350340/a_a83615b5e98e8b03ed7ea8d98f4b33b6.gif",
-    "sampledAt": "2026-10-11T15:06:37.898736+00:00",
-    "updatedAt": "2026-10-11T15:06:37.898736+00:00",
-    "fail_count": 0
+    "sampledAt": "2026-10-11T15:10:30.740349+00:00",
+    "updatedAt": "2026-10-11T15:10:30.740349+00:00",
+    "fail_count": 1,
+    "lastFailureAt": "2026-10-11T15:10:55.078150+00:00"
   },
   "status": {
     "userId": "26477",
@@ -107,9 +113,10 @@
     "isPrivate": false,
     "displayName": "status",
     "avatarUrl": "/uploads/avatars/avatar_26477_1775754495782.webp",
-    "sampledAt": "2026-10-11T15:05:05.068734+00:00",
-    "updatedAt": "2026-10-11T15:05:05.068734+00:00",
-    "fail_count": 0
+    "sampledAt": "2026-10-11T15:08:35.416806+00:00",
+    "updatedAt": "2026-10-11T15:08:35.416806+00:00",
+    "fail_count": 1,
+    "lastFailureAt": "2026-10-11T15:12:31.778679+00:00"
   },
   "syakuradrop": {
     "userId": "19483",
@@ -123,9 +130,10 @@
     "isPrivate": false,
     "displayName": "しゃくらどろっぷ",
     "avatarUrl": "/uploads/avatars/avatar_19483_1778153316665.webp",
-    "sampledAt": "2026-10-11T15:06:40.518248+00:00",
-    "updatedAt": "2026-10-11T15:06:40.518248+00:00",
-    "fail_count": 0
+    "sampledAt": "2026-10-11T15:10:33.164106+00:00",
+    "updatedAt": "2026-10-11T15:10:33.164106+00:00",
+    "fail_count": 1,
+    "lastFailureAt": "2026-10-11T15:11:05.078384+00:00"
   },
   "dysmorphia": {
     "userId": "18595",
@@ -139,9 +147,10 @@
     "isPrivate": false,
     "displayName": "ᅠ",
     "avatarUrl": "/uploads/avatars/avatar_18595_1778498374248.webp",
-    "sampledAt": "2026-10-11T15:06:45.440809+00:00",
-    "updatedAt": "2026-10-11T15:06:45.440809+00:00",
-    "fail_count": 0
+    "sampledAt": "2026-10-11T15:10:38.132732+00:00",
+    "updatedAt": "2026-10-11T15:10:38.132732+00:00",
+    "fail_count": 1,
+    "lastFailureAt": "2026-10-11T15:11:25.078910+00:00"
   },
   "1l": {
     "userId": "18187",
@@ -150,13 +159,13 @@
     "followersCount": 1099,
     "followingCount": 1073,
     "createdAt": "2026-03-23T01:15:26.032Z",
-    "rate": 0.4435,
+    "rate": 0.4434,
     "isBot": false,
     "isPrivate": false,
     "displayName": "ろこもこ",
     "avatarUrl": "/uploads/avatars/avatar_18187_1784558055405.webp",
-    "sampledAt": "2026-10-11T15:06:50.567722+00:00",
-    "updatedAt": "2026-10-11T15:06:50.567722+00:00",
+    "sampledAt": "2026-10-11T15:11:35.686048+00:00",
+    "updatedAt": "2026-10-11T15:11:35.686048+00:00",
     "fail_count": 0
   },
   "G": {
@@ -171,8 +180,8 @@
     "isPrivate": false,
     "displayName": "朝姫و𒈙و",
     "avatarUrl": "/uploads/avatars/avatar_425_1776502617139.webp",
-    "sampledAt": "2026-10-11T15:06:55.436369+00:00",
-    "updatedAt": "2026-10-11T15:06:55.436369+00:00",
+    "sampledAt": "2026-10-11T15:11:40.717426+00:00",
+    "updatedAt": "2026-10-11T15:11:40.717426+00:00",
     "fail_count": 0
   },
   "1111": {
@@ -187,8 +196,8 @@
     "isPrivate": false,
     "displayName": "mor!ya?",
     "avatarUrl": "/uploads/avatars/avatar_18660_1774232075929.webp",
-    "sampledAt": "2026-10-11T15:06:47.990598+00:00",
-    "updatedAt": "2026-10-11T15:06:47.990598+00:00",
+    "sampledAt": "2026-10-11T15:11:33.157807+00:00",
+    "updatedAt": "2026-10-11T15:11:33.157807+00:00",
     "fail_count": 0
   },
   "lze_0080": {
@@ -211,18 +220,19 @@
   "miyaaa_96": {
     "userId": "1278",
     "username": "miyaaa_96",
-    "postsCount": 36470,
+    "postsCount": 36471,
     "followersCount": 1048,
     "followingCount": 1709,
     "createdAt": "2026-03-22T14:17:59.258Z",
-    "rate": 7.4844,
+    "rate": 7.4845,
     "isBot": false,
     "isPrivate": false,
     "displayName": "ちろる",
     "avatarUrl": "/uploads/avatars/avatar_1278_1786806371983.webp",
-    "sampledAt": "2026-10-11T15:06:10.438297+00:00",
-    "updatedAt": "2026-10-11T15:06:10.438297+00:00",
-    "fail_count": 0
+    "sampledAt": "2026-10-11T15:10:03.119394+00:00",
+    "updatedAt": "2026-10-11T15:10:03.119394+00:00",
+    "fail_count": 1,
+    "lastFailureAt": "2026-10-11T15:13:41.779538+00:00"
   },
   "ebitama": {
     "userId": "30198",
@@ -346,18 +356,19 @@
   "zc": {
     "userId": "42053",
     "username": "zc",
-    "postsCount": 9,
+    "postsCount": 10,
     "followersCount": 1,
     "followingCount": 0,
     "createdAt": "2026-08-08T03:53:12.809Z",
-    "rate": 0.0058,
+    "rate": 0.0065,
     "isBot": false,
     "isPrivate": false,
     "displayName": "user",
     "avatarUrl": "",
-    "sampledAt": "2026-10-11T13:26:22.293877+00:00",
-    "updatedAt": "2026-10-11T13:26:22.293877+00:00",
-    "fail_count": 0
+    "sampledAt": "2026-10-11T15:09:28.137927+00:00",
+    "updatedAt": "2026-10-11T15:09:28.137927+00:00",
+    "fail_count": 1,
+    "lastFailureAt": "2026-10-11T15:13:11.778834+00:00"
   },
   "Wp": {
     "userId": "22748",
@@ -366,14 +377,15 @@
     "followersCount": 680,
     "followingCount": 1399,
     "createdAt": "2026-03-23T09:25:29.879Z",
-    "rate": 0.4013,
+    "rate": 0.4011,
     "isBot": false,
     "isPrivate": false,
     "displayName": "ﾜｯﾎﾟﾌ🔪",
     "avatarUrl": "/uploads/avatars/avatar_22748_1774597202018.webp",
-    "sampledAt": "2026-10-11T13:26:19.992581+00:00",
-    "updatedAt": "2026-10-11T13:26:19.992581+00:00",
-    "fail_count": 0
+    "sampledAt": "2026-10-11T15:09:23.205647+00:00",
+    "updatedAt": "2026-10-11T15:09:23.205647+00:00",
+    "fail_count": 1,
+    "lastFailureAt": "2026-10-11T15:13:01.778637+00:00"
   },
   "WinMacX_NT": {
     "userId": "19039",
@@ -399,14 +411,15 @@
     "followersCount": 674,
     "followingCount": 1777,
     "createdAt": "2026-03-23T13:57:14.660Z",
-    "rate": 0.0607,
+    "rate": 0.0606,
     "isBot": false,
     "isPrivate": false,
     "displayName": "暇なんやが、どうしてくれんの",
     "avatarUrl": "/uploads/avatars/avatar_24522_1774276207051.webp",
-    "sampledAt": "2026-10-11T13:26:14.835044+00:00",
-    "updatedAt": "2026-10-11T13:26:14.835044+00:00",
-    "fail_count": 0
+    "sampledAt": "2026-10-11T15:09:13.227055+00:00",
+    "updatedAt": "2026-10-11T15:09:13.227055+00:00",
+    "fail_count": 1,
+    "lastFailureAt": "2026-10-11T15:12:41.778158+00:00"
   },
   "dysmorphic": {
     "userId": "29206",
@@ -420,9 +433,10 @@
     "isPrivate": false,
     "displayName": "@Dysmorphia #BDD",
     "avatarUrl": "",
-    "sampledAt": "2026-10-11T13:26:17.255833+00:00",
-    "updatedAt": "2026-10-11T13:26:17.255833+00:00",
-    "fail_count": 0
+    "sampledAt": "2026-10-11T15:09:18.112784+00:00",
+    "updatedAt": "2026-10-11T15:09:18.112784+00:00",
+    "fail_count": 1,
+    "lastFailureAt": "2026-10-11T15:12:51.778416+00:00"
   },
   "mushikera": {
     "userId": "33120",
@@ -436,8 +450,8 @@
     "isPrivate": false,
     "displayName": "的屋",
     "avatarUrl": "https://cdn.discordapp.com/avatars/1421756241901781073/a_0f9e607bfdcf8ce66d6829fab3b7c069.gif",
-    "sampledAt": "2026-10-11T14:26:40.371458+00:00",
-    "updatedAt": "2026-10-11T14:26:40.371458+00:00",
+    "sampledAt": "2026-10-11T15:11:50.682446+00:00",
+    "updatedAt": "2026-10-11T15:11:50.682446+00:00",
     "fail_count": 0
   },
   "KAMI": {
@@ -454,7 +468,8 @@
     "avatarUrl": "/uploads/avatars/avatar_561_1774234289697.webp",
     "sampledAt": "2026-10-11T14:26:37.706190+00:00",
     "updatedAt": "2026-10-11T14:26:37.706190+00:00",
-    "fail_count": 0
+    "fail_count": 1,
+    "lastFailureAt": "2026-10-11T15:08:28.182362+00:00"
   },
   "Doey": {
     "userId": "22629",
@@ -470,7 +485,8 @@
     "avatarUrl": "/uploads/avatars/avatar_22629_1774260311378.webp",
     "sampledAt": "2026-10-11T14:26:35.250460+00:00",
     "updatedAt": "2026-10-11T14:26:35.250460+00:00",
-    "fail_count": 0
+    "fail_count": 1,
+    "lastFailureAt": "2026-10-11T15:08:18.182148+00:00"
   },
   "sinzinsyain0507": {
     "userId": "30821",
@@ -486,7 +502,8 @@
     "avatarUrl": "",
     "sampledAt": "2026-10-11T14:26:32.682499+00:00",
     "updatedAt": "2026-10-11T14:26:32.682499+00:00",
-    "fail_count": 0
+    "fail_count": 1,
+    "lastFailureAt": "2026-10-11T15:08:08.182489+00:00"
   },
   "namekorori": {
     "userId": "18904",
@@ -659,9 +676,10 @@
     "isPrivate": false,
     "displayName": "まめくろ",
     "avatarUrl": "/uploads/avatars/avatar_30023_1778140266142.webp",
-    "sampledAt": "2026-10-11T15:06:20.449689+00:00",
-    "updatedAt": "2026-10-11T15:06:20.449689+00:00",
-    "fail_count": 0
+    "sampledAt": "2026-10-11T15:10:13.247330+00:00",
+    "updatedAt": "2026-10-11T15:10:13.247330+00:00",
+    "fail_count": 1,
+    "lastFailureAt": "2026-10-11T15:14:21.783746+00:00"
   },
   "Rami": {
     "postsCount": 1533,
@@ -846,14 +864,15 @@
     "followersCount": 447,
     "followingCount": 1017,
     "createdAt": "2026-03-22T15:13:18.631Z",
-    "rate": 4.0962,
+    "rate": 4.0961,
     "isBot": false,
     "isPrivate": false,
     "displayName": "だゆ",
     "avatarUrl": "/uploads/avatars/avatar_8117_1775405944261.webp",
-    "sampledAt": "2026-10-11T15:06:22.878659+00:00",
-    "updatedAt": "2026-10-11T15:06:22.878659+00:00",
-    "fail_count": 0
+    "sampledAt": "2026-10-11T15:10:15.639542+00:00",
+    "updatedAt": "2026-10-11T15:10:15.639542+00:00",
+    "fail_count": 1,
+    "lastFailureAt": "2026-10-11T15:14:31.784907+00:00"
   },
   "yozakura": {
     "userId": "17533",
@@ -883,9 +902,10 @@
     "isPrivate": false,
     "displayName": "天オ(かしこいんちゅ)🐴",
     "avatarUrl": "https://cdn.discordapp.com/avatars/1437369129496481863/0b7374abad774cf60e809994b7c0e396.png",
-    "sampledAt": "2026-10-11T15:06:15.374991+00:00",
-    "updatedAt": "2026-10-11T15:06:15.374991+00:00",
-    "fail_count": 0
+    "sampledAt": "2026-10-11T15:10:08.144238+00:00",
+    "updatedAt": "2026-10-11T15:10:08.144238+00:00",
+    "fail_count": 1,
+    "lastFailureAt": "2026-10-11T15:14:01.783182+00:00"
   },
   "hibari_wings": {
     "userId": "30168",
@@ -1227,13 +1247,13 @@
     "followersCount": 269,
     "followingCount": 303,
     "createdAt": "2026-03-23T01:45:24.642Z",
-    "rate": 2.4582,
+    "rate": 2.4581,
     "isBot": false,
     "isPrivate": false,
     "displayName": "🐚ｵｲｵｲｽﾀｰ🐚",
     "avatarUrl": "/uploads/avatars/avatar_18425_1787575334486.webp",
-    "sampledAt": "2026-10-11T15:05:19.988801+00:00",
-    "updatedAt": "2026-10-11T15:05:19.988801+00:00",
+    "sampledAt": "2026-10-11T15:11:00.665986+00:00",
+    "updatedAt": "2026-10-11T15:11:00.665986+00:00",
     "fail_count": 0
   },
   "Rayella_sub": {
@@ -1334,17 +1354,17 @@
   "koi_shirahama": {
     "userId": "17539",
     "username": "koi_shirahama",
-    "postsCount": 18402,
+    "postsCount": 18403,
     "followersCount": 285,
     "followingCount": 329,
     "createdAt": "2026-03-22T17:10:24.289Z",
-    "rate": 3.7787,
+    "rate": 3.7788,
     "isBot": false,
     "isPrivate": false,
     "displayName": "koi (別名:れいか)",
     "avatarUrl": "/uploads/avatars/avatar_17539_1786307510869.webp",
-    "sampledAt": "2026-10-11T15:05:10.006840+00:00",
-    "updatedAt": "2026-10-11T15:05:10.006840+00:00",
+    "sampledAt": "2026-10-11T15:10:55.756302+00:00",
+    "updatedAt": "2026-10-11T15:10:55.756302+00:00",
     "fail_count": 0
   },
   "Mumei_HK": {
@@ -2137,14 +2157,15 @@
     "followersCount": 193,
     "followingCount": 193,
     "createdAt": "2026-03-23T08:01:37.611Z",
-    "rate": 4.4426,
+    "rate": 4.4425,
     "isBot": false,
     "isPrivate": false,
     "displayName": "鯖缶",
     "avatarUrl": "/uploads/avatars/avatar_22232_1791275633759.webp",
-    "sampledAt": "2026-10-11T15:06:17.895030+00:00",
-    "updatedAt": "2026-10-11T15:06:17.895030+00:00",
-    "fail_count": 0
+    "sampledAt": "2026-10-11T15:10:10.650883+00:00",
+    "updatedAt": "2026-10-11T15:10:10.650883+00:00",
+    "fail_count": 1,
+    "lastFailureAt": "2026-10-11T15:14:11.783503+00:00"
   },
   "kamata_kuririn": {
     "userId": "29791",
@@ -2505,14 +2526,15 @@
     "followersCount": 69,
     "followingCount": 16,
     "createdAt": "2026-07-06T21:47:24.863Z",
-    "rate": 3.7496,
+    "rate": 3.7495,
     "isBot": false,
     "isPrivate": false,
     "displayName": "月夜桜",
     "avatarUrl": "/uploads/avatars/avatar_37399_1785153137339.webp",
-    "sampledAt": "2026-10-11T15:06:25.500937+00:00",
-    "updatedAt": "2026-10-11T15:06:25.500937+00:00",
-    "fail_count": 0
+    "sampledAt": "2026-10-11T15:10:18.218156+00:00",
+    "updatedAt": "2026-10-11T15:10:18.218156+00:00",
+    "fail_count": 1,
+    "lastFailureAt": "2026-10-11T15:14:41.785149+00:00"
   },
   "nakatayukkuri": {
     "userId": "35",
@@ -3413,14 +3435,15 @@
     "followersCount": 127,
     "followingCount": 10,
     "createdAt": "2026-03-23T01:40:18.065Z",
-    "rate": 5.1888,
+    "rate": 5.1887,
     "isBot": false,
     "isPrivate": false,
     "displayName": "手楽",
     "avatarUrl": "/uploads/avatars/avatar_18374_1790124393691.webp",
-    "sampledAt": "2026-10-11T15:06:12.854562+00:00",
-    "updatedAt": "2026-10-11T15:06:12.854562+00:00",
-    "fail_count": 0
+    "sampledAt": "2026-10-11T15:10:05.773028+00:00",
+    "updatedAt": "2026-10-11T15:10:05.773028+00:00",
+    "fail_count": 1,
+    "lastFailureAt": "2026-10-11T15:13:51.783057+00:00"
   },
   "yupadayo": {
     "userId": "81",
@@ -3717,13 +3740,13 @@
     "followersCount": 114,
     "followingCount": 85,
     "createdAt": "2026-03-22T13:38:31.591Z",
-    "rate": 3.2942,
+    "rate": 3.2941,
     "isBot": false,
     "isPrivate": false,
     "displayName": "ドミニカの犬砲𝑽𝑺@powerd by 𝓭𝓸𝓰",
     "avatarUrl": "/uploads/avatars/avatar_1115_1787831640197.webp",
-    "sampledAt": "2026-10-11T15:05:14.983288+00:00",
-    "updatedAt": "2026-10-11T15:05:14.983288+00:00",
+    "sampledAt": "2026-10-11T15:10:58.193938+00:00",
+    "updatedAt": "2026-10-11T15:10:58.193938+00:00",
     "fail_count": 0
   },
   "a_ya": {
@@ -4426,8 +4449,8 @@
     "isPrivate": false,
     "displayName": "りふ",
     "avatarUrl": "/uploads/avatars/avatar_24016_1774268992375.webp",
-    "sampledAt": "2026-10-11T13:23:19.239339+00:00",
-    "updatedAt": "2026-10-11T13:23:19.239339+00:00",
+    "sampledAt": "2026-10-11T15:13:20.713012+00:00",
+    "updatedAt": "2026-10-11T15:13:20.713012+00:00",
     "fail_count": 0
   },
   "Putin": {
@@ -5022,17 +5045,17 @@
   "q": {
     "userId": "381",
     "username": "q",
-    "postsCount": 1234,
+    "postsCount": 1235,
     "followersCount": 72,
     "followingCount": 73,
     "createdAt": "2026-03-22T10:48:45.851Z",
-    "rate": 0.2532,
+    "rate": 0.2533,
     "isBot": false,
     "isPrivate": false,
     "displayName": "社会科見学",
     "avatarUrl": "/uploads/avatars/avatar_381_1774260033254.webp",
-    "sampledAt": "2026-10-11T13:20:44.309892+00:00",
-    "updatedAt": "2026-10-11T13:20:44.309892+00:00",
+    "sampledAt": "2026-10-11T15:11:48.214047+00:00",
+    "updatedAt": "2026-10-11T15:11:48.214047+00:00",
     "fail_count": 0
   },
   "Bananaday": {
@@ -5308,17 +5331,17 @@
   "ABC": {
     "userId": "187",
     "username": "ABC",
-    "postsCount": 117,
+    "postsCount": 119,
     "followersCount": 62,
     "followingCount": 62,
     "createdAt": "2026-03-22T10:17:37.937Z",
-    "rate": 0.024,
+    "rate": 0.0244,
     "isBot": false,
     "isPrivate": false,
     "displayName": "カエルのあかりちゃん！",
     "avatarUrl": "/uploads/avatars/avatar_187_1784392690704.webp",
-    "sampledAt": "2026-10-11T13:20:31.669621+00:00",
-    "updatedAt": "2026-10-11T13:20:31.669621+00:00",
+    "sampledAt": "2026-10-11T15:11:45.633281+00:00",
+    "updatedAt": "2026-10-11T15:11:45.633281+00:00",
     "fail_count": 0
   },
   "Akashi_ch148": {
@@ -6835,8 +6858,8 @@
     "isPrivate": false,
     "displayName": "Hochik1su",
     "avatarUrl": "/uploads/avatars/avatar_19951_1774240652013.webp",
-    "sampledAt": "2026-10-11T15:06:57.904410+00:00",
-    "updatedAt": "2026-10-11T15:06:57.904410+00:00",
+    "sampledAt": "2026-10-11T15:11:43.163094+00:00",
+    "updatedAt": "2026-10-11T15:11:43.163094+00:00",
     "fail_count": 0
   },
   "milkchoco_2012": {
@@ -6964,8 +6987,8 @@
     "isPrivate": false,
     "displayName": "チーズ2525🧀",
     "avatarUrl": "/uploads/avatars/avatar_24931_1774278270611.webp",
-    "sampledAt": "2026-10-11T15:05:07.423876+00:00",
-    "updatedAt": "2026-10-11T15:05:07.423876+00:00",
+    "sampledAt": "2026-10-11T15:10:53.170114+00:00",
+    "updatedAt": "2026-10-11T15:10:53.170114+00:00",
     "fail_count": 0
   },
   "CHIZIN_M": {
@@ -7124,8 +7147,8 @@
     "isPrivate": true,
     "displayName": "tenpファイル",
     "avatarUrl": "/uploads/avatars/avatar_34544_1776476835263.webp",
-    "sampledAt": "2026-10-11T13:21:11.745409+00:00",
-    "updatedAt": "2026-10-11T13:21:11.745409+00:00",
+    "sampledAt": "2026-10-11T15:07:50.411543+00:00",
+    "updatedAt": "2026-10-11T15:07:50.411543+00:00",
     "fail_count": 0
   },
   "necomaru": {
@@ -8892,7 +8915,7 @@
     "username": "newnanatonagano",
     "postsCount": 372,
     "followersCount": 103,
-    "followingCount": 108,
+    "followingCount": 109,
     "createdAt": "2026-05-19T00:08:47.546Z",
     "rate": 0.1065,
     "isBot": false,
@@ -9827,9 +9850,10 @@
     "isPrivate": false,
     "displayName": "InterLinkJPN",
     "avatarUrl": "/uploads/avatars/avatar_18260_1774229579858.webp",
-    "sampledAt": "2026-10-11T15:06:42.917101+00:00",
-    "updatedAt": "2026-10-11T15:06:42.917101+00:00",
-    "fail_count": 0
+    "sampledAt": "2026-10-11T15:10:35.642054+00:00",
+    "updatedAt": "2026-10-11T15:10:35.642054+00:00",
+    "fail_count": 1,
+    "lastFailureAt": "2026-10-11T15:11:15.079651+00:00"
   },
   "Genshin": {
     "userId": "20629",
@@ -9843,8 +9867,8 @@
     "isPrivate": false,
     "displayName": "ち○こデラックス",
     "avatarUrl": "/uploads/avatars/avatar_20629_1774334779781.webp",
-    "sampledAt": "2026-10-11T15:06:52.974814+00:00",
-    "updatedAt": "2026-10-11T15:06:52.974814+00:00",
+    "sampledAt": "2026-10-11T15:11:38.273280+00:00",
+    "updatedAt": "2026-10-11T15:11:38.273280+00:00",
     "fail_count": 0
   },
   "Yuuen": {
@@ -9859,8 +9883,8 @@
     "isPrivate": false,
     "displayName": "有塩",
     "avatarUrl": "/uploads/avatars/avatar_35491_1777378797302.webp",
-    "sampledAt": "2026-10-11T13:26:07.397312+00:00",
-    "updatedAt": "2026-10-11T13:26:07.397312+00:00",
+    "sampledAt": "2026-10-11T15:15:00.681603+00:00",
+    "updatedAt": "2026-10-11T15:15:00.681603+00:00",
     "fail_count": 0
   },
   "elonmsk": {
@@ -10340,8 +10364,8 @@
     "isPrivate": false,
     "displayName": "よく転ぶ女",
     "avatarUrl": "/uploads/avatars/avatar_23393_1774264762950.webp",
-    "sampledAt": "2026-10-11T13:21:54.175418+00:00",
-    "updatedAt": "2026-10-11T13:21:54.175418+00:00",
+    "sampledAt": "2026-10-11T15:11:55.633446+00:00",
+    "updatedAt": "2026-10-11T15:11:55.633446+00:00",
     "fail_count": 0
   },
   "mikansei_hentai": {
@@ -11996,8 +12020,8 @@
     "isPrivate": false,
     "displayName": "フォコ",
     "avatarUrl": "/uploads/avatars/avatar_24803_1774277883545.webp",
-    "sampledAt": "2026-10-11T13:22:59.381522+00:00",
-    "updatedAt": "2026-10-11T13:22:59.381522+00:00",
+    "sampledAt": "2026-10-11T15:13:00.772189+00:00",
+    "updatedAt": "2026-10-11T15:13:00.772189+00:00",
     "fail_count": 0
   },
   "komyusho_1": {
@@ -12012,8 +12036,8 @@
     "isPrivate": false,
     "displayName": "コミュ障 trickcal",
     "avatarUrl": "/uploads/avatars/avatar_20656_1774244304565.webp",
-    "sampledAt": "2026-10-11T13:23:01.884529+00:00",
-    "updatedAt": "2026-10-11T13:23:01.884529+00:00",
+    "sampledAt": "2026-10-11T15:13:03.275673+00:00",
+    "updatedAt": "2026-10-11T15:13:03.275673+00:00",
     "fail_count": 0
   },
   "lie_": {
@@ -15127,8 +15151,8 @@
     "isPrivate": false,
     "displayName": "Totto_mujika",
     "avatarUrl": "/uploads/avatars/avatar_21801_1774249278974.webp",
-    "sampledAt": "2026-10-11T13:23:06.871595+00:00",
-    "updatedAt": "2026-10-11T13:23:06.871595+00:00",
+    "sampledAt": "2026-10-11T15:13:08.184616+00:00",
+    "updatedAt": "2026-10-11T15:13:08.184616+00:00",
     "fail_count": 0
   },
   "exvs_shJJshoei7": {
@@ -15174,8 +15198,8 @@
     "isPrivate": false,
     "displayName": "Genshijin",
     "avatarUrl": "",
-    "sampledAt": "2026-10-11T13:23:09.384818+00:00",
-    "updatedAt": "2026-10-11T13:23:09.384818+00:00",
+    "sampledAt": "2026-10-11T15:13:10.676924+00:00",
+    "updatedAt": "2026-10-11T15:13:10.676924+00:00",
     "fail_count": 0
   },
   "Sayama": {
@@ -16326,8 +16350,8 @@
     "isPrivate": false,
     "displayName": "水銀燈",
     "avatarUrl": "/uploads/avatars/avatar_22443_1780998773696.webp",
-    "sampledAt": "2026-10-11T13:20:49.200529+00:00",
-    "updatedAt": "2026-10-11T13:20:49.200529+00:00",
+    "sampledAt": "2026-10-11T15:07:27.891506+00:00",
+    "updatedAt": "2026-10-11T15:07:27.891506+00:00",
     "fail_count": 0
   },
   "nattsu72": {
@@ -16614,8 +16638,8 @@
     "isPrivate": false,
     "displayName": "SussyRaiderJP",
     "avatarUrl": "/uploads/avatars/avatar_26886_1774351523718.webp",
-    "sampledAt": "2026-10-11T13:24:52.379538+00:00",
-    "updatedAt": "2026-10-11T13:24:52.379538+00:00",
+    "sampledAt": "2026-10-11T15:13:45.782148+00:00",
+    "updatedAt": "2026-10-11T15:13:45.782148+00:00",
     "fail_count": 0
   },
   "Jigarudedayo": {
@@ -16630,8 +16654,8 @@
     "isPrivate": false,
     "displayName": "じがるで",
     "avatarUrl": "/uploads/avatars/avatar_16780_1774194000574.webp",
-    "sampledAt": "2026-10-11T13:24:57.386834+00:00",
-    "updatedAt": "2026-10-11T13:24:57.386834+00:00",
+    "sampledAt": "2026-10-11T15:13:50.773400+00:00",
+    "updatedAt": "2026-10-11T15:13:50.773400+00:00",
     "fail_count": 0
   },
   "umux_24": {
@@ -17985,13 +18009,13 @@
     "followersCount": 305,
     "followingCount": 344,
     "createdAt": "2026-03-22T15:04:08.880Z",
-    "rate": 1.0346,
+    "rate": 1.0343,
     "isBot": false,
     "isPrivate": false,
     "displayName": "わいえぬ",
     "avatarUrl": "/uploads/avatars/avatar_5131_1774192040720.webp",
-    "sampledAt": "2026-10-11T13:21:26.737319+00:00",
-    "updatedAt": "2026-10-11T13:21:26.737319+00:00",
+    "sampledAt": "2026-10-11T15:08:05.435998+00:00",
+    "updatedAt": "2026-10-11T15:08:05.435998+00:00",
     "fail_count": 0
   },
   "Puyoyo244": {
@@ -18097,13 +18121,13 @@
     "followersCount": 163,
     "followingCount": 104,
     "createdAt": "2026-03-23T01:55:41.186Z",
-    "rate": 5.187,
+    "rate": 5.1869,
     "isBot": false,
     "isPrivate": false,
     "displayName": "†佐藤渦†",
     "avatarUrl": "/uploads/avatars/avatar_18503_1785857581043.webp",
-    "sampledAt": "2026-10-11T15:05:25.021115+00:00",
-    "updatedAt": "2026-10-11T15:05:25.021115+00:00",
+    "sampledAt": "2026-10-11T15:11:03.210608+00:00",
+    "updatedAt": "2026-10-11T15:11:03.210608+00:00",
     "fail_count": 0
   },
   "00p": {
@@ -18487,8 +18511,8 @@
     "isPrivate": false,
     "displayName": "ずずるく",
     "avatarUrl": "/uploads/avatars/avatar_23425_1774265224837.webp",
-    "sampledAt": "2026-10-11T13:22:24.371062+00:00",
-    "updatedAt": "2026-10-11T13:22:24.371062+00:00",
+    "sampledAt": "2026-10-11T15:12:25.682191+00:00",
+    "updatedAt": "2026-10-11T15:12:25.682191+00:00",
     "fail_count": 0
   },
   "EquusEquus123": {
@@ -19096,10 +19120,9 @@
     "isPrivate": false,
     "displayName": "mqz",
     "avatarUrl": "/uploads/avatars/avatar_18529_1774522151033.webp",
-    "sampledAt": "2026-10-11T13:19:54.275852+00:00",
-    "updatedAt": "2026-10-11T13:19:54.275852+00:00",
-    "fail_count": 1,
-    "lastFailureAt": "2026-10-11T15:05:10.070395+00:00"
+    "sampledAt": "2026-10-11T15:11:10.685919+00:00",
+    "updatedAt": "2026-10-11T15:11:10.685919+00:00",
+    "fail_count": 0
   },
   "Eamaru": {
     "userId": "30170",
@@ -19145,8 +19168,8 @@
     "isPrivate": false,
     "displayName": "WeatherQuake",
     "avatarUrl": "",
-    "sampledAt": "2026-10-11T13:25:04.973293+00:00",
-    "updatedAt": "2026-10-11T13:25:04.973293+00:00",
+    "sampledAt": "2026-10-11T15:13:58.182543+00:00",
+    "updatedAt": "2026-10-11T15:13:58.182543+00:00",
     "fail_count": 0
   },
   "Lunascape": {
@@ -19288,10 +19311,9 @@
     "isPrivate": false,
     "displayName": "qBittorrent",
     "avatarUrl": "/uploads/avatars/avatar_23067_1784733210761.webp",
-    "sampledAt": "2026-10-11T13:19:56.786585+00:00",
-    "updatedAt": "2026-10-11T13:19:56.786585+00:00",
-    "fail_count": 1,
-    "lastFailureAt": "2026-10-11T15:05:20.070620+00:00"
+    "sampledAt": "2026-10-11T15:11:13.178054+00:00",
+    "updatedAt": "2026-10-11T15:11:13.178054+00:00",
+    "fail_count": 0
   },
   "n4": {
     "userId": "14385",
@@ -19305,10 +19327,9 @@
     "isPrivate": false,
     "displayName": "Qz",
     "avatarUrl": "",
-    "sampledAt": "2026-10-11T13:19:59.283264+00:00",
-    "updatedAt": "2026-10-11T13:19:59.283264+00:00",
-    "fail_count": 1,
-    "lastFailureAt": "2026-10-11T15:05:30.070856+00:00"
+    "sampledAt": "2026-10-11T15:11:15.772833+00:00",
+    "updatedAt": "2026-10-11T15:11:15.772833+00:00",
+    "fail_count": 0
   },
   "ytrewQ_Previous": {
     "postsCount": 39,
@@ -19400,10 +19421,9 @@
     "isPrivate": false,
     "displayName": "Julius",
     "avatarUrl": "",
-    "sampledAt": "2026-10-11T13:20:02.075297+00:00",
-    "updatedAt": "2026-10-11T13:20:02.075297+00:00",
-    "fail_count": 1,
-    "lastFailureAt": "2026-10-11T15:05:40.071991+00:00"
+    "sampledAt": "2026-10-11T15:11:18.373207+00:00",
+    "updatedAt": "2026-10-11T15:11:18.373207+00:00",
+    "fail_count": 0
   },
   "liz": {
     "userId": "17829",
@@ -19417,10 +19437,9 @@
     "isPrivate": false,
     "displayName": "りず / liz",
     "avatarUrl": "/uploads/avatars/avatar_17829_1774214728467.webp",
-    "sampledAt": "2026-10-11T13:20:11.873296+00:00",
-    "updatedAt": "2026-10-11T13:20:11.873296+00:00",
-    "fail_count": 1,
-    "lastFailureAt": "2026-10-11T15:06:20.072402+00:00"
+    "sampledAt": "2026-10-11T15:11:28.180434+00:00",
+    "updatedAt": "2026-10-11T15:11:28.180434+00:00",
+    "fail_count": 0
   },
   "yuichi01_t": {
     "userId": "581",
@@ -19434,10 +19453,9 @@
     "isPrivate": false,
     "displayName": "ゆういち*",
     "avatarUrl": "/uploads/avatars/avatar_581_1774220484338.webp",
-    "sampledAt": "2026-10-11T13:20:14.286454+00:00",
-    "updatedAt": "2026-10-11T13:20:14.286454+00:00",
-    "fail_count": 1,
-    "lastFailureAt": "2026-10-11T15:06:30.072667+00:00"
+    "sampledAt": "2026-10-11T15:11:30.784405+00:00",
+    "updatedAt": "2026-10-11T15:11:30.784405+00:00",
+    "fail_count": 0
   },
   "youjo": {
     "userId": "18010",
@@ -19453,8 +19471,8 @@
     "avatarUrl": "/uploads/avatars/avatar_18010_1774222440179.webp",
     "sampledAt": "2026-10-11T13:20:16.781361+00:00",
     "updatedAt": "2026-10-11T13:20:16.781361+00:00",
-    "fail_count": 1,
-    "lastFailureAt": "2026-10-11T15:06:40.072972+00:00"
+    "fail_count": 2,
+    "lastFailureAt": "2026-10-11T15:11:40.784623+00:00"
   },
   "DG4": {
     "userId": "33699",
@@ -19548,10 +19566,9 @@
     "isPrivate": false,
     "displayName": "ふぇりしあ",
     "avatarUrl": "/uploads/avatars/avatar_17828_1774214539500.webp",
-    "sampledAt": "2026-10-11T13:20:19.370317+00:00",
-    "updatedAt": "2026-10-11T13:20:19.370317+00:00",
-    "fail_count": 1,
-    "lastFailureAt": "2026-10-11T15:06:50.073141+00:00"
+    "sampledAt": "2026-10-11T15:11:53.179780+00:00",
+    "updatedAt": "2026-10-11T15:11:53.179780+00:00",
+    "fail_count": 0
   },
   "aqku319_rbcn": {
     "userId": "29125",
@@ -19565,8 +19582,8 @@
     "isPrivate": false,
     "displayName": "あっくー",
     "avatarUrl": "/uploads/avatars/avatar_29125_1774428572471.webp",
-    "sampledAt": "2026-10-11T13:20:21.781104+00:00",
-    "updatedAt": "2026-10-11T13:20:21.781104+00:00",
+    "sampledAt": "2026-10-11T15:07:00.580509+00:00",
+    "updatedAt": "2026-10-11T15:07:00.580509+00:00",
     "fail_count": 0
   },
   "See": {
@@ -19581,8 +19598,8 @@
     "isPrivate": false,
     "displayName": "See",
     "avatarUrl": "/uploads/avatars/avatar_20205_1774241819402.webp",
-    "sampledAt": "2026-10-11T13:24:54.972231+00:00",
-    "updatedAt": "2026-10-11T13:24:54.972231+00:00",
+    "sampledAt": "2026-10-11T15:13:48.177692+00:00",
+    "updatedAt": "2026-10-11T15:13:48.177692+00:00",
     "fail_count": 0
   },
   "Dqf": {
@@ -19597,8 +19614,8 @@
     "isPrivate": false,
     "displayName": "だふ",
     "avatarUrl": "/uploads/avatars/avatar_24980_1774284608505.webp",
-    "sampledAt": "2026-10-11T13:20:24.277545+00:00",
-    "updatedAt": "2026-10-11T13:20:24.277545+00:00",
+    "sampledAt": "2026-10-11T15:07:02.889559+00:00",
+    "updatedAt": "2026-10-11T15:07:02.889559+00:00",
     "fail_count": 0
   },
   "lr": {
@@ -19613,8 +19630,8 @@
     "isPrivate": false,
     "displayName": "lr",
     "avatarUrl": "/uploads/avatars/avatar_18199_1774228626389.webp",
-    "sampledAt": "2026-10-11T13:20:26.681382+00:00",
-    "updatedAt": "2026-10-11T13:20:26.681382+00:00",
+    "sampledAt": "2026-10-11T15:07:05.589755+00:00",
+    "updatedAt": "2026-10-11T15:07:05.589755+00:00",
     "fail_count": 0
   },
   "doll": {
@@ -19629,8 +19646,8 @@
     "isPrivate": false,
     "displayName": "doll",
     "avatarUrl": "/uploads/avatars/avatar_17822_1774214086982.webp",
-    "sampledAt": "2026-10-11T13:20:29.286508+00:00",
-    "updatedAt": "2026-10-11T13:20:29.286508+00:00",
+    "sampledAt": "2026-10-11T15:07:08.381672+00:00",
+    "updatedAt": "2026-10-11T15:07:08.381672+00:00",
     "fail_count": 0
   },
   "60": {
@@ -19645,8 +19662,8 @@
     "isPrivate": false,
     "displayName": "60",
     "avatarUrl": "/uploads/avatars/avatar_20057_1774242298175.webp",
-    "sampledAt": "2026-10-11T13:20:34.372674+00:00",
-    "updatedAt": "2026-10-11T13:20:34.372674+00:00",
+    "sampledAt": "2026-10-11T15:07:12.977643+00:00",
+    "updatedAt": "2026-10-11T15:07:12.977643+00:00",
     "fail_count": 0
   },
   "bit": {
@@ -19805,8 +19822,8 @@
     "isPrivate": false,
     "displayName": "aqe2fuqy",
     "avatarUrl": "",
-    "sampledAt": "2026-10-11T13:21:04.283414+00:00",
-    "updatedAt": "2026-10-11T13:21:04.283414+00:00",
+    "sampledAt": "2026-10-11T15:07:42.892568+00:00",
+    "updatedAt": "2026-10-11T15:07:42.892568+00:00",
     "fail_count": 0
   },
   "qq": {
@@ -19821,8 +19838,8 @@
     "isPrivate": false,
     "displayName": "qq",
     "avatarUrl": "",
-    "sampledAt": "2026-10-11T13:25:57.385648+00:00",
-    "updatedAt": "2026-10-11T13:25:57.385648+00:00",
+    "sampledAt": "2026-10-11T15:14:50.794843+00:00",
+    "updatedAt": "2026-10-11T15:14:50.794843+00:00",
     "fail_count": 0
   },
   "pxxq": {
@@ -20029,8 +20046,8 @@
     "isPrivate": false,
     "displayName": "acqua",
     "avatarUrl": "",
-    "sampledAt": "2026-10-11T13:20:36.870271+00:00",
-    "updatedAt": "2026-10-11T13:20:36.870271+00:00",
+    "sampledAt": "2026-10-11T15:07:15.486336+00:00",
+    "updatedAt": "2026-10-11T15:07:15.486336+00:00",
     "fail_count": 0
   },
   "_x__qz": {
@@ -20045,8 +20062,8 @@
     "isPrivate": false,
     "displayName": "_x__qz",
     "avatarUrl": "",
-    "sampledAt": "2026-10-11T13:20:39.478193+00:00",
-    "updatedAt": "2026-10-11T13:20:39.478193+00:00",
+    "sampledAt": "2026-10-11T15:07:17.972182+00:00",
+    "updatedAt": "2026-10-11T15:07:17.972182+00:00",
     "fail_count": 0
   },
   "ChoroQ": {
@@ -20061,8 +20078,8 @@
     "isPrivate": false,
     "displayName": "ChoroQ",
     "avatarUrl": "",
-    "sampledAt": "2026-10-11T13:20:41.877862+00:00",
-    "updatedAt": "2026-10-11T13:20:41.877862+00:00",
+    "sampledAt": "2026-10-11T15:07:20.572805+00:00",
+    "updatedAt": "2026-10-11T15:07:20.572805+00:00",
     "fail_count": 0
   },
   "ykr": {
@@ -20189,8 +20206,8 @@
     "isPrivate": false,
     "displayName": "0cT3NqWlPCHS",
     "avatarUrl": "",
-    "sampledAt": "2026-10-11T13:20:46.875115+00:00",
-    "updatedAt": "2026-10-11T13:20:46.875115+00:00",
+    "sampledAt": "2026-10-11T15:07:25.381864+00:00",
+    "updatedAt": "2026-10-11T15:07:25.381864+00:00",
     "fail_count": 0
   },
   "cq": {
@@ -20205,8 +20222,8 @@
     "isPrivate": false,
     "displayName": "cq",
     "avatarUrl": "",
-    "sampledAt": "2026-10-11T13:20:51.780101+00:00",
-    "updatedAt": "2026-10-11T13:20:51.780101+00:00",
+    "sampledAt": "2026-10-11T15:07:30.381168+00:00",
+    "updatedAt": "2026-10-11T15:07:30.381168+00:00",
     "fail_count": 0
   },
   "mqnko": {
@@ -20221,8 +20238,8 @@
     "isPrivate": false,
     "displayName": "mqnko",
     "avatarUrl": "/uploads/avatars/avatar_21558_1774285767663.webp",
-    "sampledAt": "2026-10-11T13:20:54.282478+00:00",
-    "updatedAt": "2026-10-11T13:20:54.282478+00:00",
+    "sampledAt": "2026-10-11T15:07:32.979651+00:00",
+    "updatedAt": "2026-10-11T15:07:32.979651+00:00",
     "fail_count": 0
   },
   "Taqma": {
@@ -20237,8 +20254,8 @@
     "isPrivate": false,
     "displayName": "Taqma",
     "avatarUrl": "",
-    "sampledAt": "2026-10-11T13:20:56.789223+00:00",
-    "updatedAt": "2026-10-11T13:20:56.789223+00:00",
+    "sampledAt": "2026-10-11T15:07:35.571376+00:00",
+    "updatedAt": "2026-10-11T15:07:35.571376+00:00",
     "fail_count": 0
   },
   "asdqwe": {
@@ -20253,8 +20270,8 @@
     "isPrivate": false,
     "displayName": "asdqwe",
     "avatarUrl": "",
-    "sampledAt": "2026-10-11T13:20:59.279227+00:00",
-    "updatedAt": "2026-10-11T13:20:59.279227+00:00",
+    "sampledAt": "2026-10-11T15:07:37.987923+00:00",
+    "updatedAt": "2026-10-11T15:07:37.987923+00:00",
     "fail_count": 0
   },
   "bcor8fqqik": {
@@ -20269,8 +20286,8 @@
     "isPrivate": false,
     "displayName": "bcor8fqqik",
     "avatarUrl": "",
-    "sampledAt": "2026-10-11T13:21:01.786255+00:00",
-    "updatedAt": "2026-10-11T13:21:01.786255+00:00",
+    "sampledAt": "2026-10-11T15:07:40.385950+00:00",
+    "updatedAt": "2026-10-11T15:07:40.385950+00:00",
     "fail_count": 0
   },
   "tqm0724": {
@@ -20285,8 +20302,8 @@
     "isPrivate": false,
     "displayName": "tqm0724",
     "avatarUrl": "",
-    "sampledAt": "2026-10-11T13:21:06.871015+00:00",
-    "updatedAt": "2026-10-11T13:21:06.871015+00:00",
+    "sampledAt": "2026-10-11T15:07:45.481676+00:00",
+    "updatedAt": "2026-10-11T15:07:45.481676+00:00",
     "fail_count": 0
   },
   "Aqours": {
@@ -20301,8 +20318,8 @@
     "isPrivate": false,
     "displayName": "Aqours",
     "avatarUrl": "",
-    "sampledAt": "2026-10-11T13:21:09.283426+00:00",
-    "updatedAt": "2026-10-11T13:21:09.283426+00:00",
+    "sampledAt": "2026-10-11T15:07:47.879967+00:00",
+    "updatedAt": "2026-10-11T15:07:47.879967+00:00",
     "fail_count": 0
   },
   "Boy": {
@@ -20317,8 +20334,8 @@
     "isPrivate": false,
     "displayName": "Boy",
     "avatarUrl": "/uploads/avatars/avatar_20272_1774241773604.webp",
-    "sampledAt": "2026-10-11T13:21:14.286354+00:00",
-    "updatedAt": "2026-10-11T13:21:14.286354+00:00",
+    "sampledAt": "2026-10-11T15:07:53.072233+00:00",
+    "updatedAt": "2026-10-11T15:07:53.072233+00:00",
     "fail_count": 0
   },
   "_q": {
@@ -20333,8 +20350,8 @@
     "isPrivate": false,
     "displayName": "_q",
     "avatarUrl": "",
-    "sampledAt": "2026-10-11T13:21:16.782362+00:00",
-    "updatedAt": "2026-10-11T13:21:16.782362+00:00",
+    "sampledAt": "2026-10-11T15:07:55.471352+00:00",
+    "updatedAt": "2026-10-11T15:07:55.471352+00:00",
     "fail_count": 0
   },
   "czq1": {
@@ -20349,8 +20366,8 @@
     "isPrivate": false,
     "displayName": "2yanq",
     "avatarUrl": "/uploads/avatars/avatar_927_1774184595187.webp",
-    "sampledAt": "2026-10-11T13:24:47.471036+00:00",
-    "updatedAt": "2026-10-11T13:24:47.471036+00:00",
+    "sampledAt": "2026-10-11T15:13:40.683339+00:00",
+    "updatedAt": "2026-10-11T15:13:40.683339+00:00",
     "fail_count": 0
   },
   "qweo": {
@@ -20381,8 +20398,8 @@
     "isPrivate": false,
     "displayName": "qawase",
     "avatarUrl": "",
-    "sampledAt": "2026-10-11T13:21:19.282579+00:00",
-    "updatedAt": "2026-10-11T13:21:19.282579+00:00",
+    "sampledAt": "2026-10-11T15:07:57.980020+00:00",
+    "updatedAt": "2026-10-11T15:07:57.980020+00:00",
     "fail_count": 0
   },
   "xSurq": {
@@ -20397,8 +20414,8 @@
     "isPrivate": false,
     "displayName": "xSurq",
     "avatarUrl": "/uploads/avatars/avatar_36758_1779018549693.webp",
-    "sampledAt": "2026-10-11T13:21:21.870074+00:00",
-    "updatedAt": "2026-10-11T13:21:21.870074+00:00",
+    "sampledAt": "2026-10-11T15:08:00.477562+00:00",
+    "updatedAt": "2026-10-11T15:08:00.477562+00:00",
     "fail_count": 0
   },
   "queenly": {
@@ -20413,8 +20430,8 @@
     "isPrivate": false,
     "displayName": "queenly",
     "avatarUrl": "",
-    "sampledAt": "2026-10-11T13:21:24.282611+00:00",
-    "updatedAt": "2026-10-11T13:21:24.282611+00:00",
+    "sampledAt": "2026-10-11T15:08:02.970764+00:00",
+    "updatedAt": "2026-10-11T15:08:02.970764+00:00",
     "fail_count": 0
   },
   "Quiet": {
@@ -20429,8 +20446,8 @@
     "isPrivate": false,
     "displayName": "Quiet",
     "avatarUrl": "",
-    "sampledAt": "2026-10-11T13:21:29.372721+00:00",
-    "updatedAt": "2026-10-11T13:21:29.372721+00:00",
+    "sampledAt": "2026-10-11T15:08:08.075388+00:00",
+    "updatedAt": "2026-10-11T15:08:08.075388+00:00",
     "fail_count": 0
   },
   "qwerty": {
@@ -20445,8 +20462,8 @@
     "isPrivate": false,
     "displayName": "qwerty",
     "avatarUrl": "",
-    "sampledAt": "2026-10-11T13:21:31.873733+00:00",
-    "updatedAt": "2026-10-11T13:21:31.873733+00:00",
+    "sampledAt": "2026-10-11T15:08:10.378829+00:00",
+    "updatedAt": "2026-10-11T15:08:10.378829+00:00",
     "fail_count": 0
   },
   "yooonq2": {
@@ -20461,8 +20478,8 @@
     "isPrivate": false,
     "displayName": "yooonq2",
     "avatarUrl": "",
-    "sampledAt": "2026-10-11T13:21:34.285382+00:00",
-    "updatedAt": "2026-10-11T13:21:34.285382+00:00",
+    "sampledAt": "2026-10-11T15:08:12.878054+00:00",
+    "updatedAt": "2026-10-11T15:08:12.878054+00:00",
     "fail_count": 0
   },
   "TimeSquash29111": {
@@ -20477,8 +20494,8 @@
     "isPrivate": false,
     "displayName": "TimeSquash29111",
     "avatarUrl": "",
-    "sampledAt": "2026-10-11T13:21:51.776244+00:00",
-    "updatedAt": "2026-10-11T13:21:51.776244+00:00",
+    "sampledAt": "2026-10-11T15:08:30.570623+00:00",
+    "updatedAt": "2026-10-11T15:08:30.570623+00:00",
     "fail_count": 0
   },
   "quad": {
@@ -20493,8 +20510,8 @@
     "isPrivate": false,
     "displayName": "QuadCoLab",
     "avatarUrl": "/uploads/avatars/avatar_31444_1777737984832.webp",
-    "sampledAt": "2026-10-11T13:21:59.162802+00:00",
-    "updatedAt": "2026-10-11T13:21:59.162802+00:00",
+    "sampledAt": "2026-10-11T15:12:00.647792+00:00",
+    "updatedAt": "2026-10-11T15:12:00.647792+00:00",
     "fail_count": 0
   },
   "oqm10": {
@@ -20509,8 +20526,8 @@
     "isPrivate": false,
     "displayName": "oqm10",
     "avatarUrl": "",
-    "sampledAt": "2026-10-11T13:22:01.874659+00:00",
-    "updatedAt": "2026-10-11T13:22:01.874659+00:00",
+    "sampledAt": "2026-10-11T15:12:03.374188+00:00",
+    "updatedAt": "2026-10-11T15:12:03.374188+00:00",
     "fail_count": 0
   },
   "xq": {
@@ -20541,8 +20558,8 @@
     "isPrivate": false,
     "displayName": "dq",
     "avatarUrl": "",
-    "sampledAt": "2026-10-11T13:22:04.280438+00:00",
-    "updatedAt": "2026-10-11T13:22:04.280438+00:00",
+    "sampledAt": "2026-10-11T15:12:05.773181+00:00",
+    "updatedAt": "2026-10-11T15:12:05.773181+00:00",
     "fail_count": 0
   },
   "nlx_8q": {
@@ -20700,8 +20717,8 @@
     "isPrivate": false,
     "displayName": "qc",
     "avatarUrl": "",
-    "sampledAt": "2026-10-11T13:22:06.780354+00:00",
-    "updatedAt": "2026-10-11T13:22:06.780354+00:00",
+    "sampledAt": "2026-10-11T15:12:08.284576+00:00",
+    "updatedAt": "2026-10-11T15:12:08.284576+00:00",
     "fail_count": 0
   },
   "u0u3mr6qm1": {
@@ -20716,8 +20733,8 @@
     "isPrivate": false,
     "displayName": "u0u3mr6qm1",
     "avatarUrl": "",
-    "sampledAt": "2026-10-11T13:22:09.372386+00:00",
-    "updatedAt": "2026-10-11T13:22:09.372386+00:00",
+    "sampledAt": "2026-10-11T15:12:10.785212+00:00",
+    "updatedAt": "2026-10-11T15:12:10.785212+00:00",
     "fail_count": 0
   },
   "ad69pqsl00k": {
@@ -20732,8 +20749,8 @@
     "isPrivate": false,
     "displayName": "ad69pqsl00k",
     "avatarUrl": "",
-    "sampledAt": "2026-10-11T13:22:11.784625+00:00",
-    "updatedAt": "2026-10-11T13:22:11.784625+00:00",
+    "sampledAt": "2026-10-11T15:12:13.269969+00:00",
+    "updatedAt": "2026-10-11T15:12:13.269969+00:00",
     "fail_count": 0
   },
   "fTJVqZohMPtT": {
@@ -20748,8 +20765,8 @@
     "isPrivate": false,
     "displayName": "fTJVqZohMPtT",
     "avatarUrl": "",
-    "sampledAt": "2026-10-11T13:22:14.375672+00:00",
-    "updatedAt": "2026-10-11T13:22:14.375672+00:00",
+    "sampledAt": "2026-10-11T15:12:15.881886+00:00",
+    "updatedAt": "2026-10-11T15:12:15.881886+00:00",
     "fail_count": 0
   },
   "Klluq": {
@@ -20764,8 +20781,8 @@
     "isPrivate": false,
     "displayName": "Klluq",
     "avatarUrl": "",
-    "sampledAt": "2026-10-11T13:22:16.781622+00:00",
-    "updatedAt": "2026-10-11T13:22:16.781622+00:00",
+    "sampledAt": "2026-10-11T15:12:18.370854+00:00",
+    "updatedAt": "2026-10-11T15:12:18.370854+00:00",
     "fail_count": 0
   },
   "Q9": {
@@ -20780,8 +20797,8 @@
     "isPrivate": false,
     "displayName": "九杯",
     "avatarUrl": "",
-    "sampledAt": "2026-10-11T13:22:19.373805+00:00",
-    "updatedAt": "2026-10-11T13:22:19.373805+00:00",
+    "sampledAt": "2026-10-11T15:12:21.480615+00:00",
+    "updatedAt": "2026-10-11T15:12:21.480615+00:00",
     "fail_count": 0
   },
   "UUU": {
@@ -20796,8 +20813,8 @@
     "isPrivate": false,
     "displayName": "໋",
     "avatarUrl": "/uploads/avatars/avatar_24409_1774773089845.webp",
-    "sampledAt": "2026-10-11T13:22:21.874380+00:00",
-    "updatedAt": "2026-10-11T13:22:21.874380+00:00",
+    "sampledAt": "2026-10-11T15:12:23.274801+00:00",
+    "updatedAt": "2026-10-11T15:12:23.274801+00:00",
     "fail_count": 0
   },
   "pq4s76ghsd8": {
@@ -20812,8 +20829,8 @@
     "isPrivate": false,
     "displayName": "pq4s76ghsd8",
     "avatarUrl": "",
-    "sampledAt": "2026-10-11T13:22:26.786723+00:00",
-    "updatedAt": "2026-10-11T13:22:26.786723+00:00",
+    "sampledAt": "2026-10-11T15:12:28.278315+00:00",
+    "updatedAt": "2026-10-11T15:12:28.278315+00:00",
     "fail_count": 0
   },
   "mNyqn3": {
@@ -20828,8 +20845,8 @@
     "isPrivate": false,
     "displayName": "mNyqn3",
     "avatarUrl": "/uploads/avatars/avatar_17717_1774208309959.webp",
-    "sampledAt": "2026-10-11T13:22:29.389882+00:00",
-    "updatedAt": "2026-10-11T13:22:29.389882+00:00",
+    "sampledAt": "2026-10-11T15:12:30.778795+00:00",
+    "updatedAt": "2026-10-11T15:12:30.778795+00:00",
     "fail_count": 0
   },
   "YYY": {
@@ -20844,8 +20861,8 @@
     "isPrivate": false,
     "displayName": "໋",
     "avatarUrl": "/uploads/avatars/avatar_24401_1774772858674.webp",
-    "sampledAt": "2026-10-11T13:22:31.779328+00:00",
-    "updatedAt": "2026-10-11T13:22:31.779328+00:00",
+    "sampledAt": "2026-10-11T15:12:33.184895+00:00",
+    "updatedAt": "2026-10-11T15:12:33.184895+00:00",
     "fail_count": 0
   },
   "vq": {
@@ -20860,8 +20877,8 @@
     "isPrivate": false,
     "displayName": "vq",
     "avatarUrl": "",
-    "sampledAt": "2026-10-11T13:22:34.379663+00:00",
-    "updatedAt": "2026-10-11T13:22:34.379663+00:00",
+    "sampledAt": "2026-10-11T15:12:35.772425+00:00",
+    "updatedAt": "2026-10-11T15:12:35.772425+00:00",
     "fail_count": 0
   },
   "ybqpczxhzs": {
@@ -20876,8 +20893,8 @@
     "isPrivate": false,
     "displayName": "ybqpczxhzs",
     "avatarUrl": "",
-    "sampledAt": "2026-10-11T13:22:36.781690+00:00",
-    "updatedAt": "2026-10-11T13:22:36.781690+00:00",
+    "sampledAt": "2026-10-11T15:12:38.370761+00:00",
+    "updatedAt": "2026-10-11T15:12:38.370761+00:00",
     "fail_count": 0
   },
   "k1gqo6eogu": {
@@ -20892,8 +20909,8 @@
     "isPrivate": false,
     "displayName": "k1gqo6eogu",
     "avatarUrl": "",
-    "sampledAt": "2026-10-11T13:22:39.372189+00:00",
-    "updatedAt": "2026-10-11T13:22:39.372189+00:00",
+    "sampledAt": "2026-10-11T15:12:40.770496+00:00",
+    "updatedAt": "2026-10-11T15:12:40.770496+00:00",
     "fail_count": 0
   },
   "CCC": {
@@ -20908,8 +20925,8 @@
     "isPrivate": false,
     "displayName": "໋",
     "avatarUrl": "/uploads/avatars/avatar_26328_1774773684316.webp",
-    "sampledAt": "2026-10-11T13:22:41.872778+00:00",
-    "updatedAt": "2026-10-11T13:22:41.872778+00:00",
+    "sampledAt": "2026-10-11T15:12:43.184741+00:00",
+    "updatedAt": "2026-10-11T15:12:43.184741+00:00",
     "fail_count": 0
   },
   "Auquro": {
@@ -20924,8 +20941,8 @@
     "isPrivate": false,
     "displayName": "Auquro",
     "avatarUrl": "",
-    "sampledAt": "2026-10-11T13:22:44.473775+00:00",
-    "updatedAt": "2026-10-11T13:22:44.473775+00:00",
+    "sampledAt": "2026-10-11T15:12:45.779249+00:00",
+    "updatedAt": "2026-10-11T15:12:45.779249+00:00",
     "fail_count": 0
   },
   "tcq7q8f2bt": {
@@ -20940,8 +20957,8 @@
     "isPrivate": false,
     "displayName": "tcq7q8f2bt",
     "avatarUrl": "",
-    "sampledAt": "2026-10-11T13:22:46.776900+00:00",
-    "updatedAt": "2026-10-11T13:22:46.776900+00:00",
+    "sampledAt": "2026-10-11T15:12:48.277209+00:00",
+    "updatedAt": "2026-10-11T15:12:48.277209+00:00",
     "fail_count": 0
   },
   "wwoZQCYXdHqp": {
@@ -20956,8 +20973,8 @@
     "isPrivate": false,
     "displayName": "wwoZQCYXdHqp",
     "avatarUrl": "",
-    "sampledAt": "2026-10-11T13:22:49.278046+00:00",
-    "updatedAt": "2026-10-11T13:22:49.278046+00:00",
+    "sampledAt": "2026-10-11T15:12:50.770822+00:00",
+    "updatedAt": "2026-10-11T15:12:50.770822+00:00",
     "fail_count": 0
   },
   "aochqqn": {
@@ -20972,8 +20989,8 @@
     "isPrivate": false,
     "displayName": "aochqqn",
     "avatarUrl": "",
-    "sampledAt": "2026-10-11T13:22:51.779047+00:00",
-    "updatedAt": "2026-10-11T13:22:51.779047+00:00",
+    "sampledAt": "2026-10-11T15:12:53.270377+00:00",
+    "updatedAt": "2026-10-11T15:12:53.270377+00:00",
     "fail_count": 0
   },
   "lqx": {
@@ -20988,8 +21005,8 @@
     "isPrivate": false,
     "displayName": "lqx",
     "avatarUrl": "",
-    "sampledAt": "2026-10-11T13:22:54.280993+00:00",
-    "updatedAt": "2026-10-11T13:22:54.280993+00:00",
+    "sampledAt": "2026-10-11T15:12:55.682718+00:00",
+    "updatedAt": "2026-10-11T15:12:55.682718+00:00",
     "fail_count": 0
   },
   "Q2GIQ2OKU": {
@@ -21020,8 +21037,8 @@
     "isPrivate": false,
     "displayName": "yyyeqqq",
     "avatarUrl": "",
-    "sampledAt": "2026-10-11T13:22:56.874720+00:00",
-    "updatedAt": "2026-10-11T13:22:56.874720+00:00",
+    "sampledAt": "2026-10-11T15:12:58.178700+00:00",
+    "updatedAt": "2026-10-11T15:12:58.178700+00:00",
     "fail_count": 0
   },
   "makeitaquote": {
@@ -21036,8 +21053,8 @@
     "isPrivate": false,
     "displayName": "makeitaquote",
     "avatarUrl": "",
-    "sampledAt": "2026-10-11T13:23:12.881301+00:00",
-    "updatedAt": "2026-10-11T13:23:12.881301+00:00",
+    "sampledAt": "2026-10-11T15:13:13.179062+00:00",
+    "updatedAt": "2026-10-11T15:13:13.179062+00:00",
     "fail_count": 0
   },
   "qnk": {
@@ -21052,8 +21069,8 @@
     "isPrivate": false,
     "displayName": "qnk",
     "avatarUrl": "",
-    "sampledAt": "2026-10-11T13:23:14.371259+00:00",
-    "updatedAt": "2026-10-11T13:23:14.371259+00:00",
+    "sampledAt": "2026-10-11T15:13:15.775413+00:00",
+    "updatedAt": "2026-10-11T15:13:15.775413+00:00",
     "fail_count": 0
   },
   "k9tYaqQFicou": {
@@ -21068,8 +21085,8 @@
     "isPrivate": false,
     "displayName": "k9tYaqQFicou",
     "avatarUrl": "",
-    "sampledAt": "2026-10-11T13:23:16.780315+00:00",
-    "updatedAt": "2026-10-11T13:23:16.780315+00:00",
+    "sampledAt": "2026-10-11T15:13:18.289162+00:00",
+    "updatedAt": "2026-10-11T15:13:18.289162+00:00",
     "fail_count": 0
   },
   "GEQHL": {
@@ -21084,8 +21101,8 @@
     "isPrivate": false,
     "displayName": "GEQHL",
     "avatarUrl": "",
-    "sampledAt": "2026-10-11T13:24:32.376858+00:00",
-    "updatedAt": "2026-10-11T13:24:32.376858+00:00",
+    "sampledAt": "2026-10-11T15:13:25.681659+00:00",
+    "updatedAt": "2026-10-11T15:13:25.681659+00:00",
     "fail_count": 0
   },
   "sakuqgb6070": {
@@ -21100,8 +21117,8 @@
     "isPrivate": false,
     "displayName": "sakuqgb6070",
     "avatarUrl": "",
-    "sampledAt": "2026-10-11T13:24:34.884309+00:00",
-    "updatedAt": "2026-10-11T13:24:34.884309+00:00",
+    "sampledAt": "2026-10-11T15:13:28.178059+00:00",
+    "updatedAt": "2026-10-11T15:13:28.178059+00:00",
     "fail_count": 0
   },
   "13oqggcdoc4": {
@@ -21116,8 +21133,8 @@
     "isPrivate": false,
     "displayName": "13oqggcdoc4",
     "avatarUrl": "",
-    "sampledAt": "2026-10-11T13:24:37.473496+00:00",
-    "updatedAt": "2026-10-11T13:24:37.473496+00:00",
+    "sampledAt": "2026-10-11T15:13:30.683700+00:00",
+    "updatedAt": "2026-10-11T15:13:30.683700+00:00",
     "fail_count": 0
   },
   "qz": {
@@ -21132,8 +21149,8 @@
     "isPrivate": false,
     "displayName": "qz",
     "avatarUrl": "",
-    "sampledAt": "2026-10-11T13:24:40.179517+00:00",
-    "updatedAt": "2026-10-11T13:24:40.179517+00:00",
+    "sampledAt": "2026-10-11T15:13:33.270012+00:00",
+    "updatedAt": "2026-10-11T15:13:33.270012+00:00",
     "fail_count": 0
   },
   "sisquk_": {
@@ -21148,8 +21165,8 @@
     "isPrivate": false,
     "displayName": "sisquk_",
     "avatarUrl": "",
-    "sampledAt": "2026-10-11T13:24:42.379496+00:00",
-    "updatedAt": "2026-10-11T13:24:42.379496+00:00",
+    "sampledAt": "2026-10-11T15:13:35.772784+00:00",
+    "updatedAt": "2026-10-11T15:13:35.772784+00:00",
     "fail_count": 0
   },
   "Quinn": {
@@ -21164,8 +21181,8 @@
     "isPrivate": false,
     "displayName": "Quinn",
     "avatarUrl": "",
-    "sampledAt": "2026-10-11T13:24:44.894304+00:00",
-    "updatedAt": "2026-10-11T13:24:44.894304+00:00",
+    "sampledAt": "2026-10-11T15:13:38.271321+00:00",
+    "updatedAt": "2026-10-11T15:13:38.271321+00:00",
     "fail_count": 0
   },
   "ils9FHqpIb23440": {
@@ -21180,8 +21197,8 @@
     "isPrivate": false,
     "displayName": "ils9FHqpIb23440",
     "avatarUrl": "",
-    "sampledAt": "2026-10-11T13:24:49.880825+00:00",
-    "updatedAt": "2026-10-11T13:24:49.880825+00:00",
+    "sampledAt": "2026-10-11T15:13:43.178174+00:00",
+    "updatedAt": "2026-10-11T15:13:43.178174+00:00",
     "fail_count": 0
   },
   "Arme_7q": {
@@ -21196,8 +21213,8 @@
     "isPrivate": false,
     "displayName": "Arme_7q",
     "avatarUrl": "",
-    "sampledAt": "2026-10-11T13:24:59.973218+00:00",
-    "updatedAt": "2026-10-11T13:24:59.973218+00:00",
+    "sampledAt": "2026-10-11T15:13:53.274638+00:00",
+    "updatedAt": "2026-10-11T15:13:53.274638+00:00",
     "fail_count": 0
   },
   "wuyq41rzj2": {
@@ -21212,8 +21229,8 @@
     "isPrivate": false,
     "displayName": "wuyq41rzj2",
     "avatarUrl": "",
-    "sampledAt": "2026-10-11T13:25:02.470018+00:00",
-    "updatedAt": "2026-10-11T13:25:02.470018+00:00",
+    "sampledAt": "2026-10-11T15:13:55.773780+00:00",
+    "updatedAt": "2026-10-11T15:13:55.773780+00:00",
     "fail_count": 0
   },
   "sakunwq1952": {
@@ -21244,8 +21261,8 @@
     "isPrivate": false,
     "displayName": "question",
     "avatarUrl": "",
-    "sampledAt": "2026-10-11T13:25:07.486114+00:00",
-    "updatedAt": "2026-10-11T13:25:07.486114+00:00",
+    "sampledAt": "2026-10-11T15:14:00.678502+00:00",
+    "updatedAt": "2026-10-11T15:14:00.678502+00:00",
     "fail_count": 0
   },
   "DQWalk": {
@@ -21260,8 +21277,8 @@
     "isPrivate": false,
     "displayName": "DQWalk",
     "avatarUrl": "",
-    "sampledAt": "2026-10-11T13:25:09.981082+00:00",
-    "updatedAt": "2026-10-11T13:25:09.981082+00:00",
+    "sampledAt": "2026-10-11T15:14:03.182390+00:00",
+    "updatedAt": "2026-10-11T15:14:03.182390+00:00",
     "fail_count": 0
   },
   "0pqo": {
@@ -21276,8 +21293,8 @@
     "isPrivate": false,
     "displayName": "0pqo",
     "avatarUrl": "",
-    "sampledAt": "2026-10-11T13:25:12.477797+00:00",
-    "updatedAt": "2026-10-11T13:25:12.477797+00:00",
+    "sampledAt": "2026-10-11T15:14:05.776692+00:00",
+    "updatedAt": "2026-10-11T15:14:05.776692+00:00",
     "fail_count": 0
   },
   "TTT": {
@@ -21292,8 +21309,8 @@
     "isPrivate": false,
     "displayName": "໋",
     "avatarUrl": "/uploads/avatars/avatar_26347_1774830641031.webp",
-    "sampledAt": "2026-10-11T13:25:14.973808+00:00",
-    "updatedAt": "2026-10-11T13:25:14.973808+00:00",
+    "sampledAt": "2026-10-11T15:14:08.185863+00:00",
+    "updatedAt": "2026-10-11T15:14:08.185863+00:00",
     "fail_count": 0
   },
   "miqx": {
@@ -21308,8 +21325,8 @@
     "isPrivate": false,
     "displayName": "Miqx",
     "avatarUrl": "/uploads/avatars/avatar_18420_1774230623345.webp",
-    "sampledAt": "2026-10-11T13:25:17.382920+00:00",
-    "updatedAt": "2026-10-11T13:25:17.382920+00:00",
+    "sampledAt": "2026-10-11T15:14:10.779120+00:00",
+    "updatedAt": "2026-10-11T15:14:10.779120+00:00",
     "fail_count": 0
   },
   "q4": {
@@ -21324,8 +21341,8 @@
     "isPrivate": false,
     "displayName": "q4",
     "avatarUrl": "",
-    "sampledAt": "2026-10-11T13:25:19.883118+00:00",
-    "updatedAt": "2026-10-11T13:25:19.883118+00:00",
+    "sampledAt": "2026-10-11T15:14:13.272836+00:00",
+    "updatedAt": "2026-10-11T15:14:13.272836+00:00",
     "fail_count": 0
   },
   "qk": {
@@ -21340,8 +21357,8 @@
     "isPrivate": false,
     "displayName": "qk",
     "avatarUrl": "",
-    "sampledAt": "2026-10-11T13:25:22.474875+00:00",
-    "updatedAt": "2026-10-11T13:25:22.474875+00:00",
+    "sampledAt": "2026-10-11T15:14:15.883401+00:00",
+    "updatedAt": "2026-10-11T15:14:15.883401+00:00",
     "fail_count": 0
   },
   "EhqMJxRWCsjs": {
@@ -21356,8 +21373,8 @@
     "isPrivate": false,
     "displayName": "EhqMJxRWCsjs",
     "avatarUrl": "",
-    "sampledAt": "2026-10-11T13:25:24.976697+00:00",
-    "updatedAt": "2026-10-11T13:25:24.976697+00:00",
+    "sampledAt": "2026-10-11T15:14:18.375677+00:00",
+    "updatedAt": "2026-10-11T15:14:18.375677+00:00",
     "fail_count": 0
   },
   "pci2jlifdq": {
@@ -21372,8 +21389,8 @@
     "isPrivate": false,
     "displayName": "pci2jlifdq",
     "avatarUrl": "",
-    "sampledAt": "2026-10-11T13:26:30.076549+00:00",
-    "updatedAt": "2026-10-11T13:26:30.076549+00:00",
+    "sampledAt": "2026-10-11T15:15:13.273030+00:00",
+    "updatedAt": "2026-10-11T15:15:13.273030+00:00",
     "fail_count": 0
   },
   "hq": {
@@ -21388,8 +21405,8 @@
     "isPrivate": false,
     "displayName": "hq",
     "avatarUrl": "",
-    "sampledAt": "2026-10-11T13:26:32.382365+00:00",
-    "updatedAt": "2026-10-11T13:26:32.382365+00:00",
+    "sampledAt": "2026-10-11T15:15:15.777496+00:00",
+    "updatedAt": "2026-10-11T15:15:15.777496+00:00",
     "fail_count": 0
   },
   "e0qie": {
@@ -21852,8 +21869,8 @@
     "isPrivate": false,
     "displayName": "四浪京大志望",
     "avatarUrl": "/uploads/avatars/avatar_20045_1774242909610.webp",
-    "sampledAt": "2026-10-11T13:25:27.386926+00:00",
-    "updatedAt": "2026-10-11T13:25:27.386926+00:00",
+    "sampledAt": "2026-10-11T15:14:20.681613+00:00",
+    "updatedAt": "2026-10-11T15:14:20.681613+00:00",
     "fail_count": 0
   },
   "vi": {
@@ -21916,8 +21933,8 @@
     "isPrivate": false,
     "displayName": "ruri",
     "avatarUrl": "",
-    "sampledAt": "2026-10-11T13:25:29.973158+00:00",
-    "updatedAt": "2026-10-11T13:25:29.973158+00:00",
+    "sampledAt": "2026-10-11T15:14:23.186227+00:00",
+    "updatedAt": "2026-10-11T15:14:23.186227+00:00",
     "fail_count": 0
   },
   "nikuro_2010": {
@@ -22044,8 +22061,8 @@
     "isPrivate": false,
     "displayName": "1bsvw",
     "avatarUrl": "",
-    "sampledAt": "2026-10-11T13:25:32.478080+00:00",
-    "updatedAt": "2026-10-11T13:25:32.478080+00:00",
+    "sampledAt": "2026-10-11T15:14:25.777389+00:00",
+    "updatedAt": "2026-10-11T15:14:25.777389+00:00",
     "fail_count": 0
   },
   "Raichi_pp": {
@@ -22124,8 +22141,8 @@
     "isPrivate": false,
     "displayName": "level",
     "avatarUrl": "/uploads/avatars/avatar_45_1773934962660.webp",
-    "sampledAt": "2026-10-11T13:25:34.880929+00:00",
-    "updatedAt": "2026-10-11T13:25:34.880929+00:00",
+    "sampledAt": "2026-10-11T15:14:28.180572+00:00",
+    "updatedAt": "2026-10-11T15:14:28.180572+00:00",
     "fail_count": 0
   },
   "manasvin": {
@@ -22428,8 +22445,8 @@
     "isPrivate": false,
     "displayName": "loli_love",
     "avatarUrl": "/uploads/avatars/avatar_22986_1774260934707.webp",
-    "sampledAt": "2026-10-11T13:25:37.474963+00:00",
-    "updatedAt": "2026-10-11T13:25:37.474963+00:00",
+    "sampledAt": "2026-10-11T15:14:30.683084+00:00",
+    "updatedAt": "2026-10-11T15:14:30.683084+00:00",
     "fail_count": 0
   },
   "crazyraccoon406": {
@@ -22460,8 +22477,8 @@
     "isPrivate": false,
     "displayName": "ClawDieR＠AIVtuber",
     "avatarUrl": "/uploads/avatars/avatar_32933_1774782897749.webp",
-    "sampledAt": "2026-10-11T13:25:39.870528+00:00",
-    "updatedAt": "2026-10-11T13:25:39.870528+00:00",
+    "sampledAt": "2026-10-11T15:14:33.273243+00:00",
+    "updatedAt": "2026-10-11T15:14:33.273243+00:00",
     "fail_count": 0
   },
   "kotatsu": {
@@ -22524,8 +22541,8 @@
     "isPrivate": false,
     "displayName": "Miho_K39",
     "avatarUrl": "/uploads/avatars/avatar_31013_1774601544650.webp",
-    "sampledAt": "2026-10-11T13:25:42.380976+00:00",
-    "updatedAt": "2026-10-11T13:25:42.380976+00:00",
+    "sampledAt": "2026-10-11T15:14:35.772835+00:00",
+    "updatedAt": "2026-10-11T15:14:35.772835+00:00",
     "fail_count": 0
   },
   "lmoi33vmeo": {
@@ -22683,8 +22700,8 @@
     "isPrivate": false,
     "displayName": "water_valley",
     "avatarUrl": "",
-    "sampledAt": "2026-10-11T13:25:59.970912+00:00",
-    "updatedAt": "2026-10-11T13:25:59.970912+00:00",
+    "sampledAt": "2026-10-11T15:14:53.277693+00:00",
+    "updatedAt": "2026-10-11T15:14:53.277693+00:00",
     "fail_count": 0
   },
   "nacl2025": {
@@ -22699,8 +22716,8 @@
     "isPrivate": false,
     "displayName": "なーくるる",
     "avatarUrl": "/uploads/avatars/avatar_1289_1774191853180.webp",
-    "sampledAt": "2026-10-11T13:26:02.383286+00:00",
-    "updatedAt": "2026-10-11T13:26:02.383286+00:00",
+    "sampledAt": "2026-10-11T15:14:55.770144+00:00",
+    "updatedAt": "2026-10-11T15:14:55.770144+00:00",
     "fail_count": 0
   },
   "garimayo": {
@@ -22742,13 +22759,13 @@
     "followersCount": 20,
     "followingCount": 21,
     "createdAt": "2026-03-31T07:29:44.268Z",
-    "rate": 0.023,
+    "rate": 0.0229,
     "isBot": false,
     "isPrivate": true,
     "displayName": "精神美",
     "avatarUrl": "/uploads/avatars/avatar_33161_1774942713807.webp",
-    "sampledAt": "2026-10-11T13:26:09.790486+00:00",
-    "updatedAt": "2026-10-11T13:26:09.790486+00:00",
+    "sampledAt": "2026-10-11T15:15:03.144693+00:00",
+    "updatedAt": "2026-10-11T15:15:03.144693+00:00",
     "fail_count": 0
   },
   "Kyu_Vi": {
@@ -22907,8 +22924,8 @@
     "isPrivate": false,
     "displayName": "葉布団",
     "avatarUrl": "",
-    "sampledAt": "2026-10-11T13:26:04.981504+00:00",
-    "updatedAt": "2026-10-11T13:26:04.981504+00:00",
+    "sampledAt": "2026-10-11T15:14:58.280714+00:00",
+    "updatedAt": "2026-10-11T15:14:58.280714+00:00",
     "fail_count": 0
   },
   "Syouga003": {
@@ -23036,8 +23053,8 @@
     "isPrivate": false,
     "displayName": "さぶいぴー",
     "avatarUrl": "/uploads/avatars/avatar_1098_1774255328964.webp",
-    "sampledAt": "2026-10-11T13:26:12.480098+00:00",
-    "updatedAt": "2026-10-11T13:26:12.480098+00:00",
+    "sampledAt": "2026-10-11T15:15:05.874802+00:00",
+    "updatedAt": "2026-10-11T15:15:05.874802+00:00",
     "fail_count": 0
   },
   "kyorunzu_mv": {
@@ -23244,8 +23261,8 @@
     "isPrivate": false,
     "displayName": "nov_chemistry",
     "avatarUrl": "",
-    "sampledAt": "2026-10-11T13:26:27.470809+00:00",
-    "updatedAt": "2026-10-11T13:26:27.470809+00:00",
+    "sampledAt": "2026-10-11T15:15:10.781245+00:00",
+    "updatedAt": "2026-10-11T15:15:10.781245+00:00",
     "fail_count": 0
   },
   "hivision": {
@@ -23260,8 +23277,8 @@
     "isPrivate": false,
     "displayName": "hivision",
     "avatarUrl": "",
-    "sampledAt": "2026-10-11T13:26:34.884911+00:00",
-    "updatedAt": "2026-10-11T13:26:34.884911+00:00",
+    "sampledAt": "2026-10-11T15:15:18.284112+00:00",
+    "updatedAt": "2026-10-11T15:15:18.284112+00:00",
     "fail_count": 0
   },
   "DSLkrttrVFX": {
@@ -23420,8 +23437,8 @@
     "isPrivate": false,
     "displayName": "白銀の雨@小さな配信者",
     "avatarUrl": "/uploads/avatars/avatar_18987_1774234292012.webp",
-    "sampledAt": "2026-10-11T13:26:37.680624+00:00",
-    "updatedAt": "2026-10-11T13:26:37.680624+00:00",
+    "sampledAt": "2026-10-11T15:15:20.771234+00:00",
+    "updatedAt": "2026-10-11T15:15:20.771234+00:00",
     "fail_count": 0
   },
   "Bakumaru": {
@@ -23436,8 +23453,8 @@
     "isPrivate": false,
     "displayName": "ばくまる",
     "avatarUrl": "/uploads/avatars/avatar_20287_1774278995626.webp",
-    "sampledAt": "2026-10-11T13:26:39.974115+00:00",
-    "updatedAt": "2026-10-11T13:26:39.974115+00:00",
+    "sampledAt": "2026-10-11T15:15:23.274165+00:00",
+    "updatedAt": "2026-10-11T15:15:23.274165+00:00",
     "fail_count": 0
   },
   "freevoice904": {
@@ -24618,8 +24635,8 @@
     "isPrivate": false,
     "displayName": "𝕏",
     "avatarUrl": "/uploads/avatars/avatar_196_1774175153208.webp",
-    "sampledAt": "2026-10-11T13:26:24.801115+00:00",
-    "updatedAt": "2026-10-11T13:26:24.801115+00:00",
+    "sampledAt": "2026-10-11T15:15:08.222415+00:00",
+    "updatedAt": "2026-10-11T15:15:08.222415+00:00",
     "fail_count": 0
   },
   "ino461x": {
@@ -26568,10 +26585,9 @@
     "isPrivate": false,
     "displayName": "HiRo_Ziyukimama",
     "avatarUrl": "/uploads/avatars/avatar_17453_1774282391549.webp",
-    "sampledAt": "2026-10-11T13:20:04.244081+00:00",
-    "updatedAt": "2026-10-11T13:20:04.244081+00:00",
-    "fail_count": 1,
-    "lastFailureAt": "2026-10-11T15:05:50.071519+00:00"
+    "sampledAt": "2026-10-11T15:11:20.610880+00:00",
+    "updatedAt": "2026-10-11T15:11:20.610880+00:00",
+    "fail_count": 0
   },
   "tadokorokouzi": {
     "userId": "26879",
@@ -29772,7 +29788,7 @@
     "userId": "1135",
     "username": "64",
     "postsCount": 898,
-    "followersCount": 143,
+    "followersCount": 144,
     "followingCount": 205,
     "createdAt": "2026-03-22T13:43:31.528Z",
     "rate": 0.1843,
@@ -35853,8 +35869,8 @@
     "isPrivate": false,
     "displayName": "kamaci",
     "avatarUrl": "/uploads/avatars/avatar_23259_1774263226425.webp",
-    "sampledAt": "2026-10-11T13:24:29.883317+00:00",
-    "updatedAt": "2026-10-11T13:24:29.883317+00:00",
+    "sampledAt": "2026-10-11T15:13:23.150307+00:00",
+    "updatedAt": "2026-10-11T15:13:23.150307+00:00",
     "fail_count": 0
   },
   "a_mai": {
@@ -35963,10 +35979,9 @@
     "isPrivate": false,
     "displayName": "星野じゅり🌟💕JPVtuber6年目🌟",
     "avatarUrl": "/uploads/avatars/avatar_20672_1774244576313.webp",
-    "sampledAt": "2026-10-11T13:20:06.668905+00:00",
-    "updatedAt": "2026-10-11T13:20:06.668905+00:00",
-    "fail_count": 1,
-    "lastFailureAt": "2026-10-11T15:06:00.073179+00:00"
+    "sampledAt": "2026-10-11T15:11:23.117704+00:00",
+    "updatedAt": "2026-10-11T15:11:23.117704+00:00",
+    "fail_count": 0
   },
   "yajiru4": {
     "userId": "34762",
@@ -35980,10 +35995,9 @@
     "isPrivate": false,
     "displayName": "⬆︎やじる4",
     "avatarUrl": "/uploads/avatars/avatar_34762_1776633156011.webp",
-    "sampledAt": "2026-10-11T13:20:09.149829+00:00",
-    "updatedAt": "2026-10-11T13:20:09.149829+00:00",
-    "fail_count": 1,
-    "lastFailureAt": "2026-10-11T15:06:10.073680+00:00"
+    "sampledAt": "2026-10-11T15:11:25.620947+00:00",
+    "updatedAt": "2026-10-11T15:11:25.620947+00:00",
+    "fail_count": 0
   },
   "sakurq_t": {
     "userId": "32181",
@@ -36025,14 +36039,15 @@
     "followersCount": 710,
     "followingCount": 746,
     "createdAt": "2026-03-23T10:13:58.788Z",
-    "rate": 8.0517,
+    "rate": 8.0516,
     "isBot": false,
     "isPrivate": false,
     "displayName": "よいしょ",
     "avatarUrl": "/uploads/avatars/avatar_22996_1790149141643.webp",
-    "sampledAt": "2026-10-11T15:06:07.911292+00:00",
-    "updatedAt": "2026-10-11T15:06:07.911292+00:00",
-    "fail_count": 0
+    "sampledAt": "2026-10-11T15:09:40.676396+00:00",
+    "updatedAt": "2026-10-11T15:09:40.676396+00:00",
+    "fail_count": 2,
+    "lastFailureAt": "2026-10-11T15:13:31.779343+00:00"
   },
   "Sham": {
     "userId": "20593",
@@ -36210,8 +36225,8 @@
     "avatarUrl": "/uploads/avatars/avatar_17784_1791278574957.webp",
     "sampledAt": "2026-10-11T03:01:49.798355+00:00",
     "updatedAt": "2026-10-11T03:01:49.798355+00:00",
-    "fail_count": 4,
-    "lastFailureAt": "2026-10-11T09:05:55.879980+00:00"
+    "fail_count": 5,
+    "lastFailureAt": "2026-10-11T15:07:18.178983+00:00"
   },
   "re__kitaikuyo": {
     "userId": "26517",
@@ -36305,8 +36320,8 @@
     "isPrivate": false,
     "displayName": "doruminecrafter",
     "avatarUrl": "/uploads/avatars/avatar_107_1774675384593.webp",
-    "sampledAt": "2026-10-11T13:21:56.755975+00:00",
-    "updatedAt": "2026-10-11T13:21:56.755975+00:00",
+    "sampledAt": "2026-10-11T15:11:58.185759+00:00",
+    "updatedAt": "2026-10-11T15:11:58.185759+00:00",
     "fail_count": 0
   },
   "bananadesu": {
@@ -37052,8 +37067,8 @@
     "avatarUrl": "/uploads/avatars/avatar_36901_1785364000065.webp",
     "sampledAt": "2026-09-24T12:07:25.963319+00:00",
     "updatedAt": "2026-09-24T12:07:25.963319+00:00",
-    "fail_count": 69,
-    "lastFailureAt": "2026-10-11T09:09:06.816287+00:00"
+    "fail_count": 70,
+    "lastFailureAt": "2026-10-11T15:11:08.115381+00:00"
   },
   "meris10": {
     "userId": "37076",
@@ -37131,8 +37146,8 @@
     "isPrivate": false,
     "displayName": "お呪い",
     "avatarUrl": "/uploads/avatars/avatar_37108_1780917033947.webp",
-    "sampledAt": "2026-10-11T13:25:44.908438+00:00",
-    "updatedAt": "2026-10-11T13:25:44.908438+00:00",
+    "sampledAt": "2026-10-11T15:14:38.152885+00:00",
+    "updatedAt": "2026-10-11T15:14:38.152885+00:00",
     "fail_count": 0
   },
   "momijidayoooo": {
@@ -37147,8 +37162,8 @@
     "isPrivate": false,
     "displayName": "もみじ@プロフ必見/短気🧿",
     "avatarUrl": "https://cdn.discordapp.com/avatars/1504893775439466667/3547894c94b70498273e957e4ea55bc0.png",
-    "sampledAt": "2026-10-11T13:25:47.285698+00:00",
-    "updatedAt": "2026-10-11T13:25:47.285698+00:00",
+    "sampledAt": "2026-10-11T15:14:40.633669+00:00",
+    "updatedAt": "2026-10-11T15:14:40.633669+00:00",
     "fail_count": 0
   },
   "KimJongUn_PC": {
@@ -37163,8 +37178,8 @@
     "isPrivate": false,
     "displayName": "レロレーリ・レロレリオ1世（金正恩PC垢）",
     "avatarUrl": "/uploads/avatars/avatar_37682_1785216370551.webp",
-    "sampledAt": "2026-10-11T13:25:49.798956+00:00",
-    "updatedAt": "2026-10-11T13:25:49.798956+00:00",
+    "sampledAt": "2026-10-11T15:14:43.187296+00:00",
+    "updatedAt": "2026-10-11T15:14:43.187296+00:00",
     "fail_count": 0
   },
   "Jouon_bottle": {
@@ -37174,13 +37189,13 @@
     "followersCount": 17,
     "followingCount": 22,
     "createdAt": "2026-07-20T14:32:15.040Z",
-    "rate": 0.0332,
+    "rate": 0.0331,
     "isBot": false,
     "isPrivate": false,
     "displayName": "常温放置のペットボトル",
     "avatarUrl": "/uploads/avatars/avatar_37577_1784683435664.webp",
-    "sampledAt": "2026-10-11T13:25:52.315683+00:00",
-    "updatedAt": "2026-10-11T13:25:52.315683+00:00",
+    "sampledAt": "2026-10-11T15:14:45.667904+00:00",
+    "updatedAt": "2026-10-11T15:14:45.667904+00:00",
     "fail_count": 0
   },
   "KimJongNam": {
@@ -37190,13 +37205,13 @@
     "followersCount": 18,
     "followingCount": 3,
     "createdAt": "2026-04-18T17:49:55.128Z",
-    "rate": 0.0055,
+    "rate": 0.0054,
     "isBot": false,
     "isPrivate": false,
     "displayName": "金正男",
     "avatarUrl": "/uploads/avatars/avatar_35134_1786173383632.webp",
-    "sampledAt": "2026-10-11T13:25:54.912144+00:00",
-    "updatedAt": "2026-10-11T13:25:54.912144+00:00",
+    "sampledAt": "2026-10-11T15:14:48.219052+00:00",
+    "updatedAt": "2026-10-11T15:14:48.219052+00:00",
     "fail_count": 0
   },
   "komati_": {
@@ -37804,8 +37819,8 @@
     "isPrivate": false,
     "displayName": "adsfsdfafdafsffsd",
     "avatarUrl": "/uploads/avatars/avatar_36905_1786165656919.webp",
-    "sampledAt": "2026-10-11T13:21:36.699160+00:00",
-    "updatedAt": "2026-10-11T13:21:36.699160+00:00",
+    "sampledAt": "2026-10-11T15:08:15.414020+00:00",
+    "updatedAt": "2026-10-11T15:08:15.414020+00:00",
     "fail_count": 0
   },
   "mizuki_11": {
@@ -37820,8 +37835,8 @@
     "isPrivate": false,
     "displayName": "瑞希 / mizuki",
     "avatarUrl": "/uploads/avatars/avatar_34523_1776473658233.webp",
-    "sampledAt": "2026-10-11T13:21:39.185202+00:00",
-    "updatedAt": "2026-10-11T13:21:39.185202+00:00",
+    "sampledAt": "2026-10-11T15:08:17.878674+00:00",
+    "updatedAt": "2026-10-11T15:08:17.878674+00:00",
     "fail_count": 0
   },
   "realzero": {
@@ -37836,8 +37851,8 @@
     "isPrivate": false,
     "displayName": "REAL_ZERO",
     "avatarUrl": "/uploads/avatars/avatar_36145_1778155030317.webp",
-    "sampledAt": "2026-10-11T13:21:41.707924+00:00",
-    "updatedAt": "2026-10-11T13:21:41.707924+00:00",
+    "sampledAt": "2026-10-11T15:08:20.405650+00:00",
+    "updatedAt": "2026-10-11T15:08:20.405650+00:00",
     "fail_count": 0
   },
   "beni_zyake": {
@@ -37852,8 +37867,8 @@
     "isPrivate": false,
     "displayName": "beni_zyake",
     "avatarUrl": "/uploads/avatars/avatar_24487_1774273808616.webp",
-    "sampledAt": "2026-10-11T13:21:44.190101+00:00",
-    "updatedAt": "2026-10-11T13:21:44.190101+00:00",
+    "sampledAt": "2026-10-11T15:08:22.887659+00:00",
+    "updatedAt": "2026-10-11T15:08:22.887659+00:00",
     "fail_count": 0
   },
   "elza": {
@@ -37868,8 +37883,8 @@
     "isPrivate": false,
     "displayName": "えるざ",
     "avatarUrl": "/uploads/avatars/avatar_20766_1776140051215.webp",
-    "sampledAt": "2026-10-11T13:21:46.683364+00:00",
-    "updatedAt": "2026-10-11T13:21:46.683364+00:00",
+    "sampledAt": "2026-10-11T15:08:25.376876+00:00",
+    "updatedAt": "2026-10-11T15:08:25.376876+00:00",
     "fail_count": 0
   },
   "z0uy1n": {
@@ -37884,8 +37899,8 @@
     "isPrivate": false,
     "displayName": "奏音",
     "avatarUrl": "/uploads/avatars/avatar_36786_1779162557087.webp",
-    "sampledAt": "2026-10-11T13:21:49.219413+00:00",
-    "updatedAt": "2026-10-11T13:21:49.219413+00:00",
+    "sampledAt": "2026-10-11T15:08:27.925726+00:00",
+    "updatedAt": "2026-10-11T15:08:27.925726+00:00",
     "fail_count": 0
   },
   "10000": {
@@ -38734,8 +38749,8 @@
     "isPrivate": false,
     "displayName": "mikumiku_jp",
     "avatarUrl": "/uploads/avatars/avatar_36169_1778329223170.webp",
-    "sampledAt": "2026-10-11T13:26:42.375259+00:00",
-    "updatedAt": "2026-10-11T13:26:42.375259+00:00",
+    "sampledAt": "2026-10-11T15:15:26.037439+00:00",
+    "updatedAt": "2026-10-11T15:15:26.037439+00:00",
     "fail_count": 0
   },
   "ykak": {
@@ -38814,8 +38829,8 @@
     "isPrivate": false,
     "displayName": "味仙ざむらい",
     "avatarUrl": "/uploads/avatars/avatar_36659_1780914298921.webp",
-    "sampledAt": "2026-10-11T13:23:04.184245+00:00",
-    "updatedAt": "2026-10-11T13:23:04.184245+00:00",
+    "sampledAt": "2026-10-11T15:13:05.626901+00:00",
+    "updatedAt": "2026-10-11T15:13:05.626901+00:00",
     "fail_count": 0
   },
   "matome_news": {
@@ -38857,13 +38872,13 @@
     "followersCount": 324,
     "followingCount": 32,
     "createdAt": "2026-03-23T02:47:45.332Z",
-    "rate": 6.113,
+    "rate": 6.1129,
     "isBot": false,
     "isPrivate": false,
     "displayName": "砂糖いちごみるく",
     "avatarUrl": "/uploads/avatars/avatar_18996_1788647373663.webp",
-    "sampledAt": "2026-10-11T15:05:42.470993+00:00",
-    "updatedAt": "2026-10-11T15:05:42.470993+00:00",
+    "sampledAt": "2026-10-11T15:11:05.705547+00:00",
+    "updatedAt": "2026-10-11T15:11:05.705547+00:00",
     "fail_count": 0
   },
   "Rainel_chan1624": {
