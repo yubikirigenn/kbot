@@ -13,7 +13,8 @@
     "avatarUrl": "/uploads/avatars/avatar_1_1774523195871.webp",
     "sampledAt": "2026-10-22T21:35:08.693314+00:00",
     "updatedAt": "2026-10-22T21:35:08.693314+00:00",
-    "fail_count": 0
+    "fail_count": 1,
+    "lastFailureAt": "2026-10-22T23:32:15.184110+00:00"
   },
   "karotter": {
     "userId": "85",
@@ -29,7 +30,8 @@
     "avatarUrl": "/uploads/avatars/avatar_85_1779591535814.webp",
     "sampledAt": "2026-10-22T21:35:06.150210+00:00",
     "updatedAt": "2026-10-22T21:35:06.150210+00:00",
-    "fail_count": 0
+    "fail_count": 1,
+    "lastFailureAt": "2026-10-22T23:30:13.485357+00:00"
   },
   "Dr_mario": {
     "userId": "21206",
@@ -45,7 +47,8 @@
     "avatarUrl": "/uploads/avatars/avatar_21206_1779600547961.webp",
     "sampledAt": "2026-10-22T21:35:11.106469+00:00",
     "updatedAt": "2026-10-22T21:35:11.106469+00:00",
-    "fail_count": 0
+    "fail_count": 1,
+    "lastFailureAt": "2026-10-22T23:34:16.367659+00:00"
   },
   "0e": {
     "userId": "26513",
@@ -61,7 +64,8 @@
     "avatarUrl": "/uploads/avatars/avatar_26513_1774708379050.webp",
     "sampledAt": "2026-10-22T21:35:58.316959+00:00",
     "updatedAt": "2026-10-22T21:35:58.316959+00:00",
-    "fail_count": 0
+    "fail_count": 1,
+    "lastFailureAt": "2026-10-22T23:48:24.947421+00:00"
   },
   "Mutou": {
     "userId": "18779",
@@ -77,7 +81,8 @@
     "avatarUrl": "/uploads/avatars/avatar_18779_1775192378598.webp",
     "sampledAt": "2026-10-22T21:35:55.850284+00:00",
     "updatedAt": "2026-10-22T21:35:55.850284+00:00",
-    "fail_count": 0
+    "fail_count": 1,
+    "lastFailureAt": "2026-10-22T23:46:23.684451+00:00"
   },
   "v0": {
     "userId": "7968",
@@ -93,7 +98,8 @@
     "avatarUrl": "https://cdn.discordapp.com/avatars/1205604297518350340/a_a83615b5e98e8b03ed7ea8d98f4b33b6.gif",
     "sampledAt": "2026-10-22T21:35:45.784942+00:00",
     "updatedAt": "2026-10-22T21:35:45.784942+00:00",
-    "fail_count": 0
+    "fail_count": 1,
+    "lastFailureAt": "2026-10-22T23:40:19.868390+00:00"
   },
   "status": {
     "userId": "26477",
@@ -222,7 +228,8 @@
     "avatarUrl": "/uploads/avatars/avatar_1278_1786806371983.webp",
     "sampledAt": "2026-10-22T21:34:09.163942+00:00",
     "updatedAt": "2026-10-22T21:34:09.163942+00:00",
-    "fail_count": 0
+    "fail_count": 2,
+    "lastFailureAt": "2026-10-22T23:42:19.132279+00:00"
   },
   "ebitama": {
     "userId": "30198",
@@ -254,8 +261,8 @@
     "avatarUrl": "/uploads/avatars/avatar_18721_1784766040549.webp",
     "sampledAt": "2026-10-22T21:33:31.235842+00:00",
     "updatedAt": "2026-10-22T21:33:31.235842+00:00",
-    "fail_count": 2,
-    "lastFailureAt": "2026-10-22T22:29:33.302443+00:00"
+    "fail_count": 4,
+    "lastFailureAt": "2026-10-22T23:01:55.282668+00:00"
   },
   "siratori_hakuga": {
     "userId": "18197",
@@ -271,8 +278,8 @@
     "avatarUrl": "/uploads/avatars/avatar_18197_1774228685553.webp",
     "sampledAt": "2026-10-22T21:33:26.209839+00:00",
     "updatedAt": "2026-10-22T21:33:26.209839+00:00",
-    "fail_count": 2,
-    "lastFailureAt": "2026-10-22T22:25:30.517650+00:00"
+    "fail_count": 4,
+    "lastFailureAt": "2026-10-22T22:57:52.241509+00:00"
   },
   "clean": {
     "userId": "20771",
@@ -433,8 +440,8 @@
     "avatarUrl": "https://cdn.discordapp.com/avatars/1421756241901781073/a_0f9e607bfdcf8ce66d6829fab3b7c069.gif",
     "sampledAt": "2026-10-22T21:33:39.647721+00:00",
     "updatedAt": "2026-10-22T21:33:39.647721+00:00",
-    "fail_count": 2,
-    "lastFailureAt": "2026-10-22T22:35:35.987401+00:00"
+    "fail_count": 4,
+    "lastFailureAt": "2026-10-22T23:07:58.988393+00:00"
   },
   "KAMI": {
     "userId": "561",
@@ -848,7 +855,8 @@
     "avatarUrl": "/uploads/avatars/avatar_8117_1775405944261.webp",
     "sampledAt": "2026-10-22T21:35:16.114233+00:00",
     "updatedAt": "2026-10-22T21:35:16.114233+00:00",
-    "fail_count": 0
+    "fail_count": 1,
+    "lastFailureAt": "2026-10-22T23:36:17.568312+00:00"
   },
   "yozakura": {
     "userId": "17533",
@@ -1086,7 +1094,8 @@
     "avatarUrl": "/uploads/avatars/avatar_31487_1792312087075.webp",
     "sampledAt": "2026-10-22T21:36:00.885451+00:00",
     "updatedAt": "2026-10-22T21:36:00.885451+00:00",
-    "fail_count": 0
+    "fail_count": 1,
+    "lastFailureAt": "2026-10-22T23:50:27.054052+00:00"
   },
   "American": {
     "userId": "25290",
@@ -1134,8 +1143,8 @@
     "avatarUrl": "/uploads/avatars/avatar_19331_1784989709472.webp",
     "sampledAt": "2026-10-22T21:33:44.033177+00:00",
     "updatedAt": "2026-10-22T21:33:44.033177+00:00",
-    "fail_count": 2,
-    "lastFailureAt": "2026-10-22T22:37:37.307660+00:00"
+    "fail_count": 3,
+    "lastFailureAt": "2026-10-22T23:09:58.405186+00:00"
   },
   "oyuchamaa": {
     "userId": "27160",
@@ -1230,7 +1239,8 @@
     "avatarUrl": "/uploads/avatars/avatar_18425_1787575334486.webp",
     "sampledAt": "2026-10-22T21:34:04.033643+00:00",
     "updatedAt": "2026-10-22T21:34:04.033643+00:00",
-    "fail_count": 0
+    "fail_count": 2,
+    "lastFailureAt": "2026-10-22T23:38:17.368730+00:00"
   },
   "Rayella_sub": {
     "postsCount": 5948,
@@ -1340,7 +1350,8 @@
     "avatarUrl": "/uploads/avatars/avatar_17539_1786307510869.webp",
     "sampledAt": "2026-10-22T21:33:58.837395+00:00",
     "updatedAt": "2026-10-22T21:33:58.837395+00:00",
-    "fail_count": 0
+    "fail_count": 2,
+    "lastFailureAt": "2026-10-22T23:30:12.504414+00:00"
   },
   "Mumei_HK": {
     "userId": "34511",
@@ -2133,8 +2144,8 @@
     "avatarUrl": "/uploads/avatars/avatar_22232_1791275633759.webp",
     "sampledAt": "2026-10-22T21:33:36.212263+00:00",
     "updatedAt": "2026-10-22T21:33:36.212263+00:00",
-    "fail_count": 2,
-    "lastFailureAt": "2026-10-22T22:33:34.795210+00:00"
+    "fail_count": 4,
+    "lastFailureAt": "2026-10-22T23:05:57.696276+00:00"
   },
   "kamata_kuririn": {
     "userId": "29791",
@@ -2500,7 +2511,8 @@
     "avatarUrl": "/uploads/avatars/avatar_37399_1785153137339.webp",
     "sampledAt": "2026-10-22T21:35:43.315456+00:00",
     "updatedAt": "2026-10-22T21:35:43.315456+00:00",
-    "fail_count": 0
+    "fail_count": 1,
+    "lastFailureAt": "2026-10-22T23:38:18.694133+00:00"
   },
   "nakatayukkuri": {
     "userId": "35",
@@ -3725,7 +3737,8 @@
     "avatarUrl": "/uploads/avatars/avatar_1115_1791954698316.webp",
     "sampledAt": "2026-10-22T21:35:53.488714+00:00",
     "updatedAt": "2026-10-22T21:35:53.488714+00:00",
-    "fail_count": 0
+    "fail_count": 1,
+    "lastFailureAt": "2026-10-22T23:44:22.479879+00:00"
   },
   "a_ya": {
     "postsCount": 755,
@@ -3931,8 +3944,8 @@
     "avatarUrl": "/uploads/avatars/avatar_30465_1774591824054.webp",
     "sampledAt": "2026-10-22T21:33:21.198550+00:00",
     "updatedAt": "2026-10-22T21:33:21.198550+00:00",
-    "fail_count": 2,
-    "lastFailureAt": "2026-10-22T22:21:27.796399+00:00"
+    "fail_count": 4,
+    "lastFailureAt": "2026-10-22T22:53:50.799297+00:00"
   },
   "henoke": {
     "userId": "32997",
@@ -4219,8 +4232,8 @@
     "avatarUrl": "/uploads/avatars/avatar_42390_1792418142049.webp",
     "sampledAt": "2026-10-22T21:33:33.710838+00:00",
     "updatedAt": "2026-10-22T21:33:33.710838+00:00",
-    "fail_count": 2,
-    "lastFailureAt": "2026-10-22T22:31:33.680711+00:00"
+    "fail_count": 4,
+    "lastFailureAt": "2026-10-22T23:03:56.495948+00:00"
   },
   "cotume": {
     "userId": "34851",
@@ -4763,7 +4776,8 @@
     "avatarUrl": "/uploads/avatars/avatar_68_1774784179902.webp",
     "sampledAt": "2026-10-22T21:33:49.032437+00:00",
     "updatedAt": "2026-10-22T21:33:49.032437+00:00",
-    "fail_count": 0
+    "fail_count": 2,
+    "lastFailureAt": "2026-10-22T23:22:08.372195+00:00"
   },
   "Lumberjack": {
     "userId": "29708",
@@ -6950,7 +6964,8 @@
     "avatarUrl": "/uploads/avatars/avatar_24931_1774278270611.webp",
     "sampledAt": "2026-10-22T21:35:01.148539+00:00",
     "updatedAt": "2026-10-22T21:35:01.148539+00:00",
-    "fail_count": 0
+    "fail_count": 1,
+    "lastFailureAt": "2026-10-22T23:28:12.302832+00:00"
   },
   "CHIZIN_M": {
     "userId": "22775",
@@ -10002,7 +10017,8 @@
     "avatarUrl": "/uploads/avatars/avatar_34207_1776166684873.webp",
     "sampledAt": "2026-10-22T21:34:16.632185+00:00",
     "updatedAt": "2026-10-22T21:34:16.632185+00:00",
-    "fail_count": 0
+    "fail_count": 1,
+    "lastFailureAt": "2026-10-22T23:48:23.891275+00:00"
   },
   "Sophie_twilight": {
     "userId": "32380",
@@ -10018,7 +10034,8 @@
     "avatarUrl": "/uploads/avatars/avatar_32380_1790883817159.webp",
     "sampledAt": "2026-10-22T21:35:50.821847+00:00",
     "updatedAt": "2026-10-22T21:35:50.821847+00:00",
-    "fail_count": 0
+    "fail_count": 1,
+    "lastFailureAt": "2026-10-22T23:42:21.147168+00:00"
   },
   "koperunikusu": {
     "userId": "18747",
@@ -11580,7 +11597,8 @@
     "avatarUrl": "/uploads/avatars/avatar_35624_1776898766967.webp",
     "sampledAt": "2026-10-22T21:34:11.602004+00:00",
     "updatedAt": "2026-10-22T21:34:11.602004+00:00",
-    "fail_count": 0
+    "fail_count": 1,
+    "lastFailureAt": "2026-10-22T23:44:21.391486+00:00"
   },
   "yotsuba2": {
     "userId": "32319",
@@ -14275,7 +14293,8 @@
     "avatarUrl": "/uploads/avatars/avatar_27302_1774370069978.webp",
     "sampledAt": "2026-10-22T21:34:01.341354+00:00",
     "updatedAt": "2026-10-22T21:34:01.341354+00:00",
-    "fail_count": 0
+    "fail_count": 2,
+    "lastFailureAt": "2026-10-22T23:34:14.988579+00:00"
   },
   "ayh": {
     "userId": "24085",
@@ -14563,8 +14582,8 @@
     "avatarUrl": "/uploads/avatars/avatar_29398_1774466101316.webp",
     "sampledAt": "2026-10-22T21:33:18.729292+00:00",
     "updatedAt": "2026-10-22T21:33:18.729292+00:00",
-    "fail_count": 2,
-    "lastFailureAt": "2026-10-22T22:19:26.615926+00:00"
+    "fail_count": 4,
+    "lastFailureAt": "2026-10-22T22:51:49.584397+00:00"
   },
   "_Rion_": {
     "userId": "20167",
@@ -16841,7 +16860,8 @@
     "avatarUrl": "/uploads/avatars/avatar_23351_1788517653618.webp",
     "sampledAt": "2026-10-22T21:33:51.536167+00:00",
     "updatedAt": "2026-10-22T21:33:51.536167+00:00",
-    "fail_count": 0
+    "fail_count": 1,
+    "lastFailureAt": "2026-10-22T23:24:08.711203+00:00"
   },
   "514": {
     "userId": "23125",
@@ -18122,7 +18142,8 @@
     "avatarUrl": "/uploads/avatars/avatar_18503_1785857581043.webp",
     "sampledAt": "2026-10-22T21:33:59.036479+00:00",
     "updatedAt": "2026-10-22T21:33:59.036479+00:00",
-    "fail_count": 0
+    "fail_count": 2,
+    "lastFailureAt": "2026-10-22T23:32:12.830562+00:00"
   },
   "00p": {
     "userId": "16726",
@@ -35795,7 +35816,8 @@
     "avatarUrl": "/uploads/avatars/avatar_35120_1783298300788.webp",
     "sampledAt": "2026-10-22T21:33:56.556371+00:00",
     "updatedAt": "2026-10-22T21:33:56.556371+00:00",
-    "fail_count": 0
+    "fail_count": 1,
+    "lastFailureAt": "2026-10-22T23:28:11.300278+00:00"
   },
   "kujou": {
     "userId": "19628",
@@ -36017,7 +36039,8 @@
     "avatarUrl": "/uploads/avatars/avatar_10043_1786768119020.webp",
     "sampledAt": "2026-10-22T21:34:06.645000+00:00",
     "updatedAt": "2026-10-22T21:34:06.645000+00:00",
-    "fail_count": 0
+    "fail_count": 2,
+    "lastFailureAt": "2026-10-22T23:40:18.800512+00:00"
   },
   "yis": {
     "userId": "22996",
@@ -36033,8 +36056,8 @@
     "avatarUrl": "/uploads/avatars/avatar_22996_1790149141643.webp",
     "sampledAt": "2026-10-22T21:33:23.767113+00:00",
     "updatedAt": "2026-10-22T21:33:23.767113+00:00",
-    "fail_count": 2,
-    "lastFailureAt": "2026-10-22T22:23:28.150059+00:00"
+    "fail_count": 4,
+    "lastFailureAt": "2026-10-22T22:55:51.910006+00:00"
   },
   "Sham": {
     "userId": "20593",
@@ -36338,7 +36361,8 @@
     "avatarUrl": "/uploads/avatars/avatar_39986_1789481216842.webp",
     "sampledAt": "2026-10-22T21:34:01.594327+00:00",
     "updatedAt": "2026-10-22T21:34:01.594327+00:00",
-    "fail_count": 0
+    "fail_count": 1,
+    "lastFailureAt": "2026-10-22T23:36:16.198775+00:00"
   },
   "bananadesu": {
     "userId": "37409",
@@ -36819,7 +36843,8 @@
     "avatarUrl": "/uploads/avatars/avatar_37693_1785295230348.webp",
     "sampledAt": "2026-10-22T21:33:46.503307+00:00",
     "updatedAt": "2026-10-22T21:33:46.503307+00:00",
-    "fail_count": 0
+    "fail_count": 2,
+    "lastFailureAt": "2026-10-22T23:20:06.146153+00:00"
   },
   "tuka_sub": {
     "userId": "33085",
@@ -38533,7 +38558,8 @@
     "avatarUrl": "/uploads/avatars/avatar_30222_1790866396414.webp",
     "sampledAt": "2026-10-22T21:34:14.127500+00:00",
     "updatedAt": "2026-10-22T21:34:14.127500+00:00",
-    "fail_count": 0
+    "fail_count": 2,
+    "lastFailureAt": "2026-10-22T23:46:22.592180+00:00"
   },
   "kinnniku": {
     "userId": "22194",
@@ -38872,7 +38898,8 @@
     "avatarUrl": "/uploads/avatars/avatar_42592_1791844292948.webp",
     "sampledAt": "2026-10-22T21:33:54.011101+00:00",
     "updatedAt": "2026-10-22T21:33:54.011101+00:00",
-    "fail_count": 0
+    "fail_count": 1,
+    "lastFailureAt": "2026-10-22T23:26:09.986221+00:00"
   },
   "sato_pu_uq": {
     "userId": "18996",
@@ -38888,7 +38915,8 @@
     "avatarUrl": "/uploads/avatars/avatar_18996_1788647373663.webp",
     "sampledAt": "2026-10-22T21:34:19.114392+00:00",
     "updatedAt": "2026-10-22T21:34:19.114392+00:00",
-    "fail_count": 0
+    "fail_count": 1,
+    "lastFailureAt": "2026-10-22T23:26:11.102901+00:00"
   },
   "112345": {
     "userId": "42066",
@@ -39032,8 +39060,8 @@
     "avatarUrl": "/uploads/avatars/avatar_37380_1791473503924.webp",
     "sampledAt": "2026-10-22T21:33:28.726218+00:00",
     "updatedAt": "2026-10-22T21:33:28.726218+00:00",
-    "fail_count": 2,
-    "lastFailureAt": "2026-10-22T22:27:30.865679+00:00"
+    "fail_count": 4,
+    "lastFailureAt": "2026-10-22T22:59:54.094348+00:00"
   },
   "Melt": {
     "userId": "37313",
