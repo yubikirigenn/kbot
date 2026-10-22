@@ -205,8 +205,8 @@
     "avatarUrl": "/uploads/avatars/avatar_22931_1774848838332.webp",
     "sampledAt": "2026-10-22T21:33:16.208459+00:00",
     "updatedAt": "2026-10-22T21:33:16.208459+00:00",
-    "fail_count": 1,
-    "lastFailureAt": "2026-10-22T21:41:01.874701+00:00"
+    "fail_count": 4,
+    "lastFailureAt": "2026-10-22T22:49:48.173790+00:00"
   },
   "miyaaa_96": {
     "userId": "1278",
@@ -254,7 +254,8 @@
     "avatarUrl": "/uploads/avatars/avatar_18721_1784766040549.webp",
     "sampledAt": "2026-10-22T21:33:31.235842+00:00",
     "updatedAt": "2026-10-22T21:33:31.235842+00:00",
-    "fail_count": 0
+    "fail_count": 2,
+    "lastFailureAt": "2026-10-22T22:29:33.302443+00:00"
   },
   "siratori_hakuga": {
     "userId": "18197",
@@ -270,8 +271,8 @@
     "avatarUrl": "/uploads/avatars/avatar_18197_1774228685553.webp",
     "sampledAt": "2026-10-22T21:33:26.209839+00:00",
     "updatedAt": "2026-10-22T21:33:26.209839+00:00",
-    "fail_count": 1,
-    "lastFailureAt": "2026-10-22T21:49:07.201983+00:00"
+    "fail_count": 2,
+    "lastFailureAt": "2026-10-22T22:25:30.517650+00:00"
   },
   "clean": {
     "userId": "20771",
@@ -303,8 +304,8 @@
     "avatarUrl": "/uploads/avatars/avatar_23190_1785999622177.webp",
     "sampledAt": "2026-10-22T21:33:12.036708+00:00",
     "updatedAt": "2026-10-22T21:33:12.036708+00:00",
-    "fail_count": 1,
-    "lastFailureAt": "2026-10-22T21:40:31.221058+00:00"
+    "fail_count": 3,
+    "lastFailureAt": "2026-10-22T22:45:43.091553+00:00"
   },
   "nanoka": {
     "userId": "22704",
@@ -432,7 +433,8 @@
     "avatarUrl": "https://cdn.discordapp.com/avatars/1421756241901781073/a_0f9e607bfdcf8ce66d6829fab3b7c069.gif",
     "sampledAt": "2026-10-22T21:33:39.647721+00:00",
     "updatedAt": "2026-10-22T21:33:39.647721+00:00",
-    "fail_count": 0
+    "fail_count": 2,
+    "lastFailureAt": "2026-10-22T22:35:35.987401+00:00"
   },
   "KAMI": {
     "userId": "561",
@@ -1132,7 +1134,8 @@
     "avatarUrl": "/uploads/avatars/avatar_19331_1784989709472.webp",
     "sampledAt": "2026-10-22T21:33:44.033177+00:00",
     "updatedAt": "2026-10-22T21:33:44.033177+00:00",
-    "fail_count": 0
+    "fail_count": 2,
+    "lastFailureAt": "2026-10-22T22:37:37.307660+00:00"
   },
   "oyuchamaa": {
     "userId": "27160",
@@ -1940,8 +1943,8 @@
     "avatarUrl": "/uploads/avatars/avatar_30314_1792038788877.webp",
     "sampledAt": "2026-10-22T21:33:13.729195+00:00",
     "updatedAt": "2026-10-22T21:33:13.729195+00:00",
-    "fail_count": 1,
-    "lastFailureAt": "2026-10-22T21:40:46.543478+00:00"
+    "fail_count": 3,
+    "lastFailureAt": "2026-10-22T22:47:44.499408+00:00"
   },
   "tyotyoyu_1022": {
     "userId": "32373",
@@ -2130,7 +2133,8 @@
     "avatarUrl": "/uploads/avatars/avatar_22232_1791275633759.webp",
     "sampledAt": "2026-10-22T21:33:36.212263+00:00",
     "updatedAt": "2026-10-22T21:33:36.212263+00:00",
-    "fail_count": 0
+    "fail_count": 2,
+    "lastFailureAt": "2026-10-22T22:33:34.795210+00:00"
   },
   "kamata_kuririn": {
     "userId": "29791",
@@ -2782,8 +2786,8 @@
     "avatarUrl": "/uploads/avatars/avatar_29231_1786819471798.webp",
     "sampledAt": "2026-10-22T21:33:11.207446+00:00",
     "updatedAt": "2026-10-22T21:33:11.207446+00:00",
-    "fail_count": 2,
-    "lastFailureAt": "2026-10-22T21:40:14.307203+00:00"
+    "fail_count": 3,
+    "lastFailureAt": "2026-10-22T22:11:20.607819+00:00"
   },
   "ark": {
     "userId": "33567",
@@ -3927,8 +3931,8 @@
     "avatarUrl": "/uploads/avatars/avatar_30465_1774591824054.webp",
     "sampledAt": "2026-10-22T21:33:21.198550+00:00",
     "updatedAt": "2026-10-22T21:33:21.198550+00:00",
-    "fail_count": 1,
-    "lastFailureAt": "2026-10-22T21:45:03.571866+00:00"
+    "fail_count": 2,
+    "lastFailureAt": "2026-10-22T22:21:27.796399+00:00"
   },
   "henoke": {
     "userId": "32997",
@@ -4215,7 +4219,8 @@
     "avatarUrl": "/uploads/avatars/avatar_42390_1792418142049.webp",
     "sampledAt": "2026-10-22T21:33:33.710838+00:00",
     "updatedAt": "2026-10-22T21:33:33.710838+00:00",
-    "fail_count": 0
+    "fail_count": 2,
+    "lastFailureAt": "2026-10-22T22:31:33.680711+00:00"
   },
   "cotume": {
     "userId": "34851",
@@ -14558,8 +14563,8 @@
     "avatarUrl": "/uploads/avatars/avatar_29398_1774466101316.webp",
     "sampledAt": "2026-10-22T21:33:18.729292+00:00",
     "updatedAt": "2026-10-22T21:33:18.729292+00:00",
-    "fail_count": 1,
-    "lastFailureAt": "2026-10-22T21:43:02.205776+00:00"
+    "fail_count": 2,
+    "lastFailureAt": "2026-10-22T22:19:26.615926+00:00"
   },
   "_Rion_": {
     "userId": "20167",
@@ -17070,7 +17075,8 @@
     "avatarUrl": "/uploads/avatars/avatar_394_1774271965649.webp",
     "sampledAt": "2026-10-22T19:08:10.455687+00:00",
     "updatedAt": "2026-10-22T19:08:10.455687+00:00",
-    "fail_count": 0
+    "fail_count": 1,
+    "lastFailureAt": "2026-10-22T21:51:08.484092+00:00"
   },
   "nekomaru963": {
     "userId": "20607",
@@ -17102,7 +17108,8 @@
     "avatarUrl": "/uploads/avatars/avatar_1244_1774188837068.webp",
     "sampledAt": "2026-10-22T19:08:12.945370+00:00",
     "updatedAt": "2026-10-22T19:08:12.945370+00:00",
-    "fail_count": 0
+    "fail_count": 1,
+    "lastFailureAt": "2026-10-22T21:53:10.472173+00:00"
   },
   "RIRINIKI": {
     "userId": "16711",
@@ -17118,7 +17125,8 @@
     "avatarUrl": "/uploads/avatars/avatar_16711_1777337734398.webp",
     "sampledAt": "2026-10-22T19:08:15.411940+00:00",
     "updatedAt": "2026-10-22T19:08:15.411940+00:00",
-    "fail_count": 0
+    "fail_count": 1,
+    "lastFailureAt": "2026-10-22T21:55:12.083456+00:00"
   },
   "KL_notterr": {
     "userId": "21872",
@@ -17134,7 +17142,8 @@
     "avatarUrl": "/uploads/avatars/avatar_21872_1774251643977.webp",
     "sampledAt": "2026-10-22T19:08:17.925548+00:00",
     "updatedAt": "2026-10-22T19:08:17.925548+00:00",
-    "fail_count": 0
+    "fail_count": 1,
+    "lastFailureAt": "2026-10-22T21:57:13.469339+00:00"
   },
   "SNEKOS": {
     "userId": "390",
@@ -17150,7 +17159,8 @@
     "avatarUrl": "/uploads/avatars/avatar_390_1774179549096.webp",
     "sampledAt": "2026-10-22T19:08:20.447434+00:00",
     "updatedAt": "2026-10-22T19:08:20.447434+00:00",
-    "fail_count": 0
+    "fail_count": 1,
+    "lastFailureAt": "2026-10-22T21:59:14.750843+00:00"
   },
   "kyaroru": {
     "userId": "29115",
@@ -17166,7 +17176,8 @@
     "avatarUrl": "/uploads/avatars/avatar_29115_1774427069243.webp",
     "sampledAt": "2026-10-22T19:08:23.158446+00:00",
     "updatedAt": "2026-10-22T19:08:23.158446+00:00",
-    "fail_count": 0
+    "fail_count": 1,
+    "lastFailureAt": "2026-10-22T22:01:16.290232+00:00"
   },
   "karotter_52": {
     "userId": "21056",
@@ -17182,7 +17193,8 @@
     "avatarUrl": "/uploads/avatars/avatar_21056_1774245939171.webp",
     "sampledAt": "2026-10-22T19:08:25.431298+00:00",
     "updatedAt": "2026-10-22T19:08:25.431298+00:00",
-    "fail_count": 0
+    "fail_count": 1,
+    "lastFailureAt": "2026-10-22T22:03:16.629627+00:00"
   },
   "le": {
     "userId": "19761",
@@ -17198,7 +17210,8 @@
     "avatarUrl": "/uploads/avatars/avatar_19761_1774239224418.webp",
     "sampledAt": "2026-10-22T19:08:27.935432+00:00",
     "updatedAt": "2026-10-22T19:08:27.935432+00:00",
-    "fail_count": 0
+    "fail_count": 1,
+    "lastFailureAt": "2026-10-22T22:05:18.791643+00:00"
   },
   "LAN": {
     "userId": "24254",
@@ -17214,7 +17227,8 @@
     "avatarUrl": "/uploads/avatars/avatar_24254_1774271405679.webp",
     "sampledAt": "2026-10-22T19:08:30.434820+00:00",
     "updatedAt": "2026-10-22T19:08:30.434820+00:00",
-    "fail_count": 0
+    "fail_count": 1,
+    "lastFailureAt": "2026-10-22T22:09:20.394765+00:00"
   },
   "Lemon2026": {
     "userId": "2506",
@@ -17230,7 +17244,8 @@
     "avatarUrl": "/uploads/avatars/avatar_2506_1774233691969.webp",
     "sampledAt": "2026-10-22T19:08:32.920941+00:00",
     "updatedAt": "2026-10-22T19:08:32.920941+00:00",
-    "fail_count": 0
+    "fail_count": 1,
+    "lastFailureAt": "2026-10-22T22:11:22.493794+00:00"
   },
   "AnalX": {
     "userId": "26466",
@@ -17246,7 +17261,8 @@
     "avatarUrl": "/uploads/avatars/avatar_26466_1774330349048.webp",
     "sampledAt": "2026-10-22T19:08:35.648435+00:00",
     "updatedAt": "2026-10-22T19:08:35.648435+00:00",
-    "fail_count": 0
+    "fail_count": 1,
+    "lastFailureAt": "2026-10-22T22:13:22.855612+00:00"
   },
   "salmon": {
     "userId": "37316",
@@ -17278,7 +17294,8 @@
     "avatarUrl": "/uploads/avatars/avatar_33532_1775476744939.webp",
     "sampledAt": "2026-10-22T19:08:37.937719+00:00",
     "updatedAt": "2026-10-22T19:08:37.937719+00:00",
-    "fail_count": 0
+    "fail_count": 1,
+    "lastFailureAt": "2026-10-22T22:15:23.201347+00:00"
   },
   "eel": {
     "userId": "35385",
@@ -17310,7 +17327,8 @@
     "avatarUrl": "/uploads/avatars/avatar_23942_1774268703435.webp",
     "sampledAt": "2026-10-22T19:08:40.433007+00:00",
     "updatedAt": "2026-10-22T19:08:40.433007+00:00",
-    "fail_count": 0
+    "fail_count": 1,
+    "lastFailureAt": "2026-10-22T22:17:26.980174+00:00"
   },
   "memorinop": {
     "userId": "20240",
@@ -17326,7 +17344,8 @@
     "avatarUrl": "/uploads/avatars/avatar_20240_1774242288505.webp",
     "sampledAt": "2026-10-22T19:08:42.933407+00:00",
     "updatedAt": "2026-10-22T19:08:42.933407+00:00",
-    "fail_count": 0
+    "fail_count": 1,
+    "lastFailureAt": "2026-10-22T22:19:28.217439+00:00"
   },
   "Klas12U": {
     "userId": "20613",
@@ -17342,7 +17361,8 @@
     "avatarUrl": "/uploads/avatars/avatar_20613_1774261343255.webp",
     "sampledAt": "2026-10-22T19:08:45.441851+00:00",
     "updatedAt": "2026-10-22T19:08:45.441851+00:00",
-    "fail_count": 0
+    "fail_count": 1,
+    "lastFailureAt": "2026-10-22T22:21:29.500445+00:00"
   },
   "Penspinner": {
     "userId": "17876",
@@ -17358,7 +17378,8 @@
     "avatarUrl": "/uploads/avatars/avatar_17876_1774427056334.webp",
     "sampledAt": "2026-10-22T19:08:47.923752+00:00",
     "updatedAt": "2026-10-22T19:08:47.923752+00:00",
-    "fail_count": 0
+    "fail_count": 1,
+    "lastFailureAt": "2026-10-22T22:23:31.083763+00:00"
   },
   "roll": {
     "userId": "29234",
@@ -17406,7 +17427,8 @@
     "avatarUrl": "/uploads/avatars/avatar_34561_1776479724427.webp",
     "sampledAt": "2026-10-22T19:08:50.455306+00:00",
     "updatedAt": "2026-10-22T19:08:50.455306+00:00",
-    "fail_count": 0
+    "fail_count": 1,
+    "lastFailureAt": "2026-10-22T22:25:32.301993+00:00"
   },
   "lee": {
     "userId": "23267",
@@ -17422,7 +17444,8 @@
     "avatarUrl": "",
     "sampledAt": "2026-10-22T19:08:52.929774+00:00",
     "updatedAt": "2026-10-22T19:08:52.929774+00:00",
-    "fail_count": 0
+    "fail_count": 1,
+    "lastFailureAt": "2026-10-22T22:27:33.411991+00:00"
   },
   "mokouliszt": {
     "userId": "19841",
@@ -17438,7 +17461,8 @@
     "avatarUrl": "/uploads/avatars/avatar_19841_1774239245840.webp",
     "sampledAt": "2026-10-22T19:08:55.424915+00:00",
     "updatedAt": "2026-10-22T19:08:55.424915+00:00",
-    "fail_count": 0
+    "fail_count": 1,
+    "lastFailureAt": "2026-10-22T22:29:34.584484+00:00"
   },
   "Help": {
     "userId": "27579",
@@ -17454,7 +17478,8 @@
     "avatarUrl": "/uploads/avatars/avatar_27579_1775601126023.webp",
     "sampledAt": "2026-10-22T19:08:57.905814+00:00",
     "updatedAt": "2026-10-22T19:08:57.905814+00:00",
-    "fail_count": 0
+    "fail_count": 1,
+    "lastFailureAt": "2026-10-22T22:31:35.808669+00:00"
   },
   "napal398": {
     "userId": "1287",
@@ -17470,7 +17495,8 @@
     "avatarUrl": "/uploads/avatars/avatar_1287_1774191963140.webp",
     "sampledAt": "2026-10-22T19:09:00.418155+00:00",
     "updatedAt": "2026-10-22T19:09:00.418155+00:00",
-    "fail_count": 0
+    "fail_count": 1,
+    "lastFailureAt": "2026-10-22T22:33:36.144730+00:00"
   },
   "Leia": {
     "userId": "17973",
@@ -17502,7 +17528,8 @@
     "avatarUrl": "/uploads/avatars/avatar_22893_1774259941306.webp",
     "sampledAt": "2026-10-22T19:09:02.935464+00:00",
     "updatedAt": "2026-10-22T19:09:02.935464+00:00",
-    "fail_count": 0
+    "fail_count": 1,
+    "lastFailureAt": "2026-10-22T22:35:37.608521+00:00"
   },
   "DoaldTrup": {
     "userId": "22950",
@@ -17518,7 +17545,8 @@
     "avatarUrl": "/uploads/avatars/avatar_22950_1774261353378.webp",
     "sampledAt": "2026-10-22T19:09:07.933375+00:00",
     "updatedAt": "2026-10-22T19:09:07.933375+00:00",
-    "fail_count": 0
+    "fail_count": 1,
+    "lastFailureAt": "2026-10-22T22:37:39.055482+00:00"
   },
   "mihail": {
     "userId": "32834",
@@ -17534,7 +17562,8 @@
     "avatarUrl": "/uploads/avatars/avatar_32834_1774752461067.webp",
     "sampledAt": "2026-10-22T19:09:10.439591+00:00",
     "updatedAt": "2026-10-22T19:09:10.439591+00:00",
-    "fail_count": 0
+    "fail_count": 1,
+    "lastFailureAt": "2026-10-22T22:39:39.372630+00:00"
   },
   "9potential": {
     "userId": "20704",
@@ -17550,7 +17579,8 @@
     "avatarUrl": "/uploads/avatars/avatar_20704_1774244328487.webp",
     "sampledAt": "2026-10-22T19:09:12.934371+00:00",
     "updatedAt": "2026-10-22T19:09:12.934371+00:00",
-    "fail_count": 0
+    "fail_count": 1,
+    "lastFailureAt": "2026-10-22T22:41:42.373083+00:00"
   },
   "hello": {
     "userId": "18117",
@@ -18108,8 +18138,8 @@
     "avatarUrl": "/uploads/avatars/avatar_16726_1783957029997.webp",
     "sampledAt": "2026-10-22T21:33:09.545634+00:00",
     "updatedAt": "2026-10-22T21:33:09.545634+00:00",
-    "fail_count": 2,
-    "lastFailureAt": "2026-10-22T21:39:58.976702+00:00"
+    "fail_count": 3,
+    "lastFailureAt": "2026-10-22T22:09:19.468156+00:00"
   },
   "Pito3939": {
     "userId": "26789",
@@ -36003,8 +36033,8 @@
     "avatarUrl": "/uploads/avatars/avatar_22996_1790149141643.webp",
     "sampledAt": "2026-10-22T21:33:23.767113+00:00",
     "updatedAt": "2026-10-22T21:33:23.767113+00:00",
-    "fail_count": 1,
-    "lastFailureAt": "2026-10-22T21:47:05.352287+00:00"
+    "fail_count": 2,
+    "lastFailureAt": "2026-10-22T22:23:28.150059+00:00"
   },
   "Sham": {
     "userId": "20593",
@@ -39002,7 +39032,8 @@
     "avatarUrl": "/uploads/avatars/avatar_37380_1791473503924.webp",
     "sampledAt": "2026-10-22T21:33:28.726218+00:00",
     "updatedAt": "2026-10-22T21:33:28.726218+00:00",
-    "fail_count": 0
+    "fail_count": 2,
+    "lastFailureAt": "2026-10-22T22:27:30.865679+00:00"
   },
   "Melt": {
     "userId": "37313",
